@@ -1,0 +1,9 @@
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+qa/out/
+.env
+.vercel/
+seed/cache/tmp/
