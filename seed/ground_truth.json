@@ -1,0 +1,740 @@
+{
+  "generated": "2026-09-26",
+  "source": "CAP static files",
+  "cap_user_agent": "cite-intake-memo/0.1",
+  "filing": "seed/sample-motion.txt",
+  "pdf": "seed/sample-motion.pdf",
+  "label": "SYNTHETIC SAMPLE FILING — modeled on the fabricated citations described in Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023). Not a real court document. Party names are fictional.",
+  "counts_by_expected_class": {
+    "likely_fabricated": 3,
+    "not_in_free_corpus": 5,
+    "verified": 8,
+    "quote_not_found": 2,
+    "wrong_cite_exists": 1,
+    "unrecognized_reporter": 1
+  },
+  "cap_coverage": {
+    "us_max_volume": 572,
+    "us_volume_count": 572,
+    "us_last_volumes": [
+      [
+        "563",
+        2010,
+        2010
+      ],
+      [
+        "564",
+        null,
+        null
+      ],
+      [
+        "565",
+        2011,
+        2011
+      ],
+      [
+        "566",
+        2011,
+        2011
+      ],
+      [
+        "567",
+        2011,
+        2011
+      ],
+      [
+        "568",
+        2012,
+        2012
+      ],
+      [
+        "569",
+        2012,
+        2013
+      ],
+      [
+        "570",
+        2013,
+        2013
+      ],
+      [
+        "571",
+        2013,
+        2014
+      ],
+      [
+        "572",
+        2014,
+        2014
+      ]
+    ],
+    "f_supp_2d_max_volume": 999,
+    "f3d_max_volume": 935
+  },
+  "cap_http_log": {
+    "https://static.case.law/us/516/CasesMetadata.json": 200,
+    "https://static.case.law/us/516/cases/0217-01.json": 200,
+    "https://static.case.law/us/525/CasesMetadata.json": 200,
+    "https://static.case.law/us/525/cases/0155-01.json": 200,
+    "https://static.case.law/us/540/CasesMetadata.json": 200,
+    "https://static.case.law/us/540/cases/0644-01.json": 200,
+    "https://static.case.law/us/470/CasesMetadata.json": 200,
+    "https://static.case.law/us/470/cases/0392-01.json": 200,
+    "https://static.case.law/us/499/CasesMetadata.json": 200,
+    "https://static.case.law/us/499/cases/0530-01.json": 200,
+    "https://static.case.law/f3d/925/CasesMetadata.json": 200,
+    "https://static.case.law/f3d/925/cases/1291-01.json": 200,
+    "https://static.case.law/f3d/174/CasesMetadata.json": 200,
+    "https://static.case.law/f3d/174/cases/0352-01.json": 200,
+    "https://static.case.law/us/550/CasesMetadata.json": 200,
+    "https://static.case.law/us/550/cases/0544-01.json": 200,
+    "https://static.case.law/us/556/CasesMetadata.json": 200,
+    "https://static.case.law/us/556/cases/0662-01.json": 200,
+    "https://static.case.law/us/490/CasesMetadata.json": 200,
+    "https://static.case.law/us/490/cases/0122-01.json": 200,
+    "https://static.case.law/f-supp-2d/905/CasesMetadata.json": 200,
+    "https://static.case.law/us/VolumesMetadata.json": 200,
+    "https://static.case.law/f-supp-2d/VolumesMetadata.json": 200
+  },
+  "items": [
+    {
+      "id": "mata-varghese",
+      "cite_text": "Varghese v. China Southern Airlines Co., 925 F.3d 1339 (11th Cir. 2019)",
+      "reporter": "F.3d",
+      "volume": 925,
+      "page": 1339,
+      "year": 2019,
+      "parties": "Varghese v. China Southern Airlines Co.",
+      "expected_class": "likely_fabricated",
+      "accepted_classes": [
+        "likely_fabricated"
+      ],
+      "quote": null,
+      "real_case_at_page": {
+        "name_abbreviation": "J.D. v. Azar",
+        "first_page": 1291,
+        "last_page": 1349,
+        "decision_date": "2019-06-14",
+        "file_name": "1291-01",
+        "court": "Court of Appeals of the District of Columbia",
+        "official_cite": "925 F.3d 1291"
+      },
+      "cap_urls": [
+        "https://static.case.law/f3d/VolumesMetadata.json",
+        "https://static.case.law/f3d/925/CasesMetadata.json"
+      ],
+      "source_of_fake": "Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023) (public record)",
+      "note": "CAP holds volume 925 F.3d (ends at page 1384); page 1339 is inside J.D. v. Azar, which runs 1291-1349; no case named Varghese in the volume; expected rule path: step 6/7 -> likely_fabricated."
+    },
+    {
+      "id": "mata-petersen",
+      "cite_text": "Petersen v. Iran Air, 905 F. Supp. 2d 121 (D.D.C. 2012)",
+      "reporter": "F. Supp. 2d",
+      "volume": 905,
+      "page": 121,
+      "year": 2012,
+      "parties": "Petersen v. Iran Air",
+      "expected_class": "likely_fabricated",
+      "accepted_classes": [
+        "likely_fabricated"
+      ],
+      "quote": null,
+      "real_case_at_page": {
+        "name_abbreviation": "United States v. ISS Marine Services, Inc.",
+        "first_page": 121,
+        "last_page": 142,
+        "decision_date": "2012-11-21",
+        "file_name": "0121-01",
+        "court": "United States District Court for the District of Columbia",
+        "official_cite": "905 F. Supp. 2d 121"
+      },
+      "cap_urls": [
+        "https://static.case.law/f-supp-2d/VolumesMetadata.json",
+        "https://static.case.law/f-supp-2d/905/CasesMetadata.json"
+      ],
+      "source_of_fake": "Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023) (public record)",
+      "note": "CAP holds volume 905 F. Supp. 2d (ends at page 1357); begins at page 121 (same first page; different case name); no case named Petersen in the volume; expected rule path: step 6/7 -> likely_fabricated."
+    },
+    {
+      "id": "mata-miller",
+      "cite_text": "Miller v. United Airlines, Inc., 174 F.3d 366 (2d Cir. 1999)",
+      "reporter": "F.3d",
+      "volume": 174,
+      "page": 366,
+      "year": 1999,
+      "parties": "Miller v. United Airlines, Inc.",
+      "expected_class": "likely_fabricated",
+      "accepted_classes": [
+        "likely_fabricated"
+      ],
+      "quote": null,
+      "real_case_at_page": {
+        "name_abbreviation": "Greenleaf v. Garlock, Inc.",
+        "first_page": 352,
+        "last_page": 368,
+        "decision_date": "1999-04-26",
+        "file_name": "0352-01",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "official_cite": "174 F.3d 352"
+      },
+      "cap_urls": [
+        "https://static.case.law/f3d/VolumesMetadata.json",
+        "https://static.case.law/f3d/174/CasesMetadata.json"
+      ],
+      "source_of_fake": "Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023) (public record)",
+      "note": "CAP holds volume 174 F.3d (ends at page 1382); page 366 is inside Greenleaf v. Garlock, Inc., which runs 352-368; no case named Miller in the volume; expected rule path: step 6/7 -> likely_fabricated."
+    },
+    {
+      "id": "mata-shaboon",
+      "cite_text": "Shaboon v. Egyptair, 2013 IL App (1st) 111279",
+      "reporter": "IL App (1st)",
+      "volume": 2013,
+      "page": 111279,
+      "year": 2013,
+      "parties": "Shaboon v. Egyptair",
+      "expected_class": "not_in_free_corpus",
+      "accepted_classes": [
+        "not_in_free_corpus"
+      ],
+      "quote": null,
+      "real_case_at_page": null,
+      "cap_urls": [],
+      "source_of_fake": "Mata v. Avianca (public record)",
+      "note": "eyecite extracts FullCaseCitation volume=2013 reporter='IL App (1st)' page=111279, no year/court; reporters_db cite_type 'neutral' (Illinois public-domain citation); no CAP slug -> route neutral/public-domain cites to not_in_free_corpus ('state slip / public-domain citation; not checkable in CAP')."
+    },
+    {
+      "id": "mata-martinez",
+      "cite_text": "Martinez v. Delta Air Lines, Inc., 2019 WL 4639462 (Tex. App. 2019)",
+      "reporter": "WL",
+      "volume": 2019,
+      "page": 4639462,
+      "year": 2019,
+      "parties": "Martinez v. Delta Air Lines, Inc.",
+      "expected_class": "not_in_free_corpus",
+      "accepted_classes": [
+        "not_in_free_corpus"
+      ],
+      "quote": null,
+      "real_case_at_page": null,
+      "cap_urls": [],
+      "source_of_fake": "Mata v. Avianca (public record)",
+      "note": "eyecite extracts FullCaseCitation reporter='WL' (reporters_db cite_type 'specialty_west'), year 2019, court texapp; rule step 2 -> not_in_free_corpus ('Westlaw-only citation')."
+    },
+    {
+      "id": "mata-durden",
+      "cite_text": "Estate of Durden v. KLM Royal Dutch Airlines, 2017 WL 2418825 (Ga. Ct. App. 2017)",
+      "reporter": "WL",
+      "volume": 2017,
+      "page": 2418825,
+      "year": 2017,
+      "parties": "Estate of Durden v. KLM Royal Dutch Airlines",
+      "expected_class": "not_in_free_corpus",
+      "accepted_classes": [
+        "not_in_free_corpus"
+      ],
+      "quote": null,
+      "real_case_at_page": null,
+      "cap_urls": [],
+      "source_of_fake": "Mata v. Avianca (public record)",
+      "note": "eyecite extracts FullCaseCitation reporter='WL', year 2017, court gactapp, plaintiff 'Estate  Durden' (eyecite drops 'of'); rule step 2 -> not_in_free_corpus ('Westlaw-only citation')."
+    },
+    {
+      "id": "real-zicherman",
+      "cite_text": "Zicherman v. Korean Air Lines Co., 516 U.S. 217 (1996)",
+      "reporter": "U.S.",
+      "volume": 516,
+      "page": 217,
+      "year": 1996,
+      "parties": "Zicherman v. Korean Air Lines Co.",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "Absent such legislation, however, Articles 17 and 24(2) provide nothing more than a pass-through, authorizing us to apply the law that would govern in absence of the Warsaw Convention.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "Absent such legislation, however, Articles 17 and 24(2) provide nothing more than a pass-through, authorizing us to apply the law that would govern in absence of the Warsaw Convention.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Zicherman ex rel. Estate of Kole v. Korean Air Lines Co.",
+        "first_page": 217,
+        "last_page": 232,
+        "decision_date": "1996-01-16",
+        "file_name": "0217-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "516 U.S. 217"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/516/CasesMetadata.json",
+        "https://static.case.law/us/516/cases/0217-01.json"
+      ],
+      "note": "Case begins at page 217 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination)."
+    },
+    {
+      "id": "real-tseng",
+      "cite_text": "El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng, 525 U.S. 155 (1999)",
+      "reporter": "U.S.",
+      "volume": 525,
+      "page": 155,
+      "year": 1999,
+      "parties": "El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "In Article 17 of the Convention, carriers are denied the contractual prerogative to exclude or limit their liability for personal injury.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "In Article 17 of the Convention, carriers are denied the contractual prerogative to exclude or limit their liability for personal injury.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng",
+        "first_page": 155,
+        "last_page": 181,
+        "decision_date": "1999-01-12",
+        "file_name": "0155-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "525 U.S. 155"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/525/CasesMetadata.json",
+        "https://static.case.law/us/525/cases/0155-01.json"
+      ],
+      "note": "Case begins at page 155 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination)."
+    },
+    {
+      "id": "real-husain",
+      "cite_text": "Olympic Airways v. Husain, 540 U.S. 644 (2004)",
+      "reporter": "U.S.",
+      "volume": 540,
+      "page": 644,
+      "year": 2004,
+      "parties": "Olympic Airways v. Husain",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "Thus, Article 17 creates a presumption of air carrier liability and shifts the burden to the air carrier to prove lack of negligence under Article 20.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "Thus, Article 17 creates a presumption of air carrier liability and shifts the burden to the air carrier to prove lack of negligence under Article 20.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Olympic Airways v. Husain",
+        "first_page": 644,
+        "last_page": 667,
+        "decision_date": "2004-02-24",
+        "file_name": "0644-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "540 U.S. 644"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/540/CasesMetadata.json",
+        "https://static.case.law/us/540/cases/0644-01.json"
+      ],
+      "note": "Case begins at page 644 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination)."
+    },
+    {
+      "id": "real-saks",
+      "cite_text": "Air France v. Saks, 470 U.S. 392 (1985)",
+      "reporter": "U.S.",
+      "volume": 470,
+      "page": 392,
+      "year": 1985,
+      "parties": "Air France v. Saks",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "Any injury is the product of a chain of causes, and we require only that the passenger be able to prove that some link in the chain was an unusual or unexpected event external to the passenger.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "Any injury is the product of a chain of causes, and we require only that the passenger be able to prove that some link in the chain was an unusual or unexpected event external to the passenger.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Air France v. Saks",
+        "first_page": 392,
+        "last_page": 408,
+        "decision_date": "1985-03-04",
+        "file_name": "0392-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "470 U.S. 392"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/470/CasesMetadata.json",
+        "https://static.case.law/us/470/cases/0392-01.json"
+      ],
+      "note": "Case begins at page 392 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination)."
+    },
+    {
+      "id": "real-floyd",
+      "cite_text": "Eastern Airlines, Inc. v. Floyd, 499 U.S. 530 (1991)",
+      "reporter": "U.S.",
+      "volume": 499,
+      "page": 530,
+      "year": 1991,
+      "parties": "Eastern Airlines, Inc. v. Floyd",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "This case presents the question whether Article 17 allows recovery for mental or psychic injuries unaccompanied by physical injury or physical manifestation of injury.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "This case presents the question whether Article 17 allows recovery for mental or psychic injuries unaccompanied by physical injury or physical manifestation of injury.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Eastern Airlines, Inc. v. Floyd",
+        "first_page": 530,
+        "last_page": 553,
+        "decision_date": "1991-04-17",
+        "file_name": "0530-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "499 U.S. 530"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/499/CasesMetadata.json",
+        "https://static.case.law/us/499/cases/0530-01.json"
+      ],
+      "note": "Case begins at page 530 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination)."
+    },
+    {
+      "id": "real-azar",
+      "cite_text": "J.D. v. Azar, 925 F.3d 1291 (D.C. Cir. 2019)",
+      "reporter": "F.3d",
+      "volume": 925,
+      "page": 1291,
+      "year": 2019,
+      "parties": "J.D. v. Azar",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "Once the district court deems a Rule 23 class valid, the subsequent mootness of individual claims does not terminate litigation.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "Once the district court deems a Rule 23 class valid, the subsequent mootness of individual claims does not terminate litigation.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "J.D. v. Azar",
+        "first_page": 1291,
+        "last_page": 1349,
+        "decision_date": "2019-06-14",
+        "file_name": "1291-01",
+        "court": "Court of Appeals of the District of Columbia",
+        "official_cite": "925 F.3d 1291"
+      },
+      "cap_urls": [
+        "https://static.case.law/f3d/VolumesMetadata.json",
+        "https://static.case.law/f3d/925/CasesMetadata.json",
+        "https://static.case.law/f3d/925/cases/1291-01.json"
+      ],
+      "note": "Case begins at page 1291 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination)."
+    },
+    {
+      "id": "real-greenleaf",
+      "cite_text": "Greenleaf v. Garlock, Inc., 174 F.3d 352 (3d Cir. 1999)",
+      "reporter": "F.3d",
+      "volume": 174,
+      "page": 352,
+      "year": 1999,
+      "parties": "Greenleaf v. Garlock, Inc.",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "It further cautioned that the jury must conduct a separate analysis of the evidence, and make a separate decision on, the proximate cause issue with respect to each defendant.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "It further cautioned that the jury must conduct a separate analysis of the evidence, and make a separate decision on, the proximate cause issue with respect to each defendant.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Greenleaf v. Garlock, Inc.",
+        "first_page": 352,
+        "last_page": 368,
+        "decision_date": "1999-04-26",
+        "file_name": "0352-01",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "official_cite": "174 F.3d 352"
+      },
+      "cap_urls": [
+        "https://static.case.law/f3d/VolumesMetadata.json",
+        "https://static.case.law/f3d/174/CasesMetadata.json",
+        "https://static.case.law/f3d/174/cases/0352-01.json"
+      ],
+      "note": "Case begins at page 352 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination). Court in CAP is the Third Circuit (BUILD-NOTES §4 said 2d Cir.; corrected to 3d Cir. in the filing)."
+    },
+    {
+      "id": "real-twombly",
+      "cite_text": "Bell Atlantic Corp. v. Twombly, 550 U.S. 544 (2007)",
+      "reporter": "U.S.",
+      "volume": 550,
+      "page": 544,
+      "year": 2007,
+      "parties": "Bell Atlantic Corp. v. Twombly",
+      "expected_class": "verified",
+      "accepted_classes": [
+        "verified"
+      ],
+      "quote": "Here, in contrast, we do not require heightened fact pleading of specifics, but only enough facts to state a claim to relief that is plausible on its face.",
+      "quote_check": {
+        "found_verbatim": true,
+        "opinion_index": 0,
+        "opinion_type": "majority",
+        "cap_sentence": "Here, in contrast, we do not require heightened fact pleading of specifics, but only enough facts to state a claim to relief that is plausible on its face.",
+        "partial_ratio": 100.0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Bell Atlantic Corp. v. Twombly",
+        "first_page": 544,
+        "last_page": 597,
+        "decision_date": "2007-05-21",
+        "file_name": "0544-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "550 U.S. 544"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/550/CasesMetadata.json",
+        "https://static.case.law/us/550/cases/0544-01.json"
+      ],
+      "note": "Case begins at page 544 in CAP; quote copied verbatim from casebody.opinions[0].text (majority); pin cite not verifiable (CAP has no star pagination)."
+    },
+    {
+      "id": "misq-iqbal",
+      "cite_text": "Ashcroft v. Iqbal, 556 U.S. 662 (2009)",
+      "reporter": "U.S.",
+      "volume": 556,
+      "page": 662,
+      "year": 2009,
+      "parties": "Ashcroft v. Iqbal",
+      "expected_class": "quote_not_found",
+      "accepted_classes": [
+        "quote_not_found"
+      ],
+      "quote": "A claim has facial plausibility when the plaintiff alleges factual content that permits the court to draw a reasonable inference that the defendant is responsible for the misconduct alleged.",
+      "real_sentence": "A claim has facial plausibility when the plaintiff pleads factual content that allows the court to draw the reasonable inference that the defendant is liable for the misconduct alleged.",
+      "alteration": "4 words changed: pleads->alleges, allows->permits, the->a, liable->responsible",
+      "quote_check": {
+        "altered_quote_partial_ratio_vs_opinion": 90.5,
+        "altered_vs_real_sentence_partial_ratio": 90.3,
+        "real_sentence_opinion_index": 0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Ashcroft v. Iqbal",
+        "first_page": 662,
+        "last_page": 700,
+        "decision_date": "2009-05-18",
+        "file_name": "0662-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "556 U.S. 662"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/556/CasesMetadata.json",
+        "https://static.case.law/us/556/cases/0662-01.json"
+      ],
+      "note": "Real case at the cited page; the quoted sentence is altered (4 words changed: pleads->alleges, allows->permits, the->a, liable->responsible); the real sentence is in casebody.opinions[0].text. Expect 'closest passage' in the 70-91% band."
+    },
+    {
+      "id": "misq-chan",
+      "cite_text": "Chan v. Korean Air Lines, Ltd., 490 U.S. 122 (1989)",
+      "reporter": "U.S.",
+      "volume": 490,
+      "page": 122,
+      "year": 1989,
+      "parties": "Chan v. Korean Air Lines, Ltd.",
+      "expected_class": "quote_not_found",
+      "accepted_classes": [
+        "quote_not_found"
+      ],
+      "quote": "But where the text is clear, as it is here, we have no authority to add an exception.",
+      "real_sentence": "But where the text is clear, as it is here, we have no power to insert an amendment.",
+      "alteration": "3 words changed: power->authority, insert->add, amendment->exception",
+      "quote_check": {
+        "altered_quote_partial_ratio_vs_opinion": 81.2,
+        "altered_vs_real_sentence_partial_ratio": 82.5,
+        "real_sentence_opinion_index": 0
+      },
+      "real_case_at_page": {
+        "name_abbreviation": "Chan v. Korean Air Lines, Ltd.",
+        "first_page": 122,
+        "last_page": 152,
+        "decision_date": "1989-04-18",
+        "file_name": "0122-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "490 U.S. 122"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/490/CasesMetadata.json",
+        "https://static.case.law/us/490/cases/0122-01.json"
+      ],
+      "note": "Real case at the cited page; the quoted sentence is altered (3 words changed: power->authority, insert->add, amendment->exception); the real sentence is in casebody.opinions[0].text. Expect 'closest passage' in the 70-91% band. Substituted for 'one more from the list above' in BUILD-NOTES §4 so no cite text appears twice in the filing; Chan is a real Warsaw Convention case."
+    },
+    {
+      "id": "cov-biden-nebraska",
+      "cite_text": "Biden v. Nebraska, 600 U.S. 477 (2023)",
+      "reporter": "U.S.",
+      "volume": 600,
+      "page": 477,
+      "year": 2023,
+      "parties": "Biden v. Nebraska",
+      "expected_class": "not_in_free_corpus",
+      "accepted_classes": [
+        "not_in_free_corpus",
+        "verified"
+      ],
+      "quote": null,
+      "real_case_at_page": null,
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/600/CasesMetadata.json"
+      ],
+      "cap_http": {
+        "https://static.case.law/us/600/CasesMetadata.json": 404,
+        "https://static.case.law/us/600/VolumeMetadata.json": 404
+      },
+      "note": "Real Supreme Court case. CAP 'us' reporter has 572 volumes, max volume 572 (2014); volume 600 URL returns HTTP 404. Volume 600 is within a plausible growth of ~1-3 U.S. volumes/year after 2014, so rule step 4 -> not_in_free_corpus; 'verified' accepted when a CourtListener token resolves it. eyecite parses volume=600 reporter='U.S.' page=477 year=2023 court=scotus."
+    },
+    {
+      "id": "cov-loper-bright",
+      "cite_text": "Loper Bright Enterprises v. Raimondo, 603 U.S. 369 (2024)",
+      "reporter": "U.S.",
+      "volume": 603,
+      "page": 369,
+      "year": 2024,
+      "parties": "Loper Bright Enterprises v. Raimondo",
+      "expected_class": "not_in_free_corpus",
+      "accepted_classes": [
+        "not_in_free_corpus",
+        "verified"
+      ],
+      "quote": null,
+      "real_case_at_page": null,
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/603/CasesMetadata.json"
+      ],
+      "cap_http": {
+        "https://static.case.law/us/603/CasesMetadata.json": 404,
+        "https://static.case.law/us/603/VolumeMetadata.json": 404
+      },
+      "note": "Real Supreme Court case. CAP 'us' reporter has 572 volumes, max volume 572 (2014); volume 603 URL returns HTTP 404. Volume 603 is within a plausible growth of ~1-3 U.S. volumes/year after 2014, so rule step 4 -> not_in_free_corpus; 'verified' accepted when a CourtListener token resolves it. eyecite parses volume=603 reporter='U.S.' page=369 year=2024 court=scotus."
+    },
+    {
+      "id": "wrong-zicherman-230",
+      "cite_text": "Zicherman v. Korean Air Lines Co., 516 U.S. 230 (1996)",
+      "reporter": "U.S.",
+      "volume": 516,
+      "page": 230,
+      "year": 1996,
+      "parties": "Zicherman v. Korean Air Lines Co.",
+      "expected_class": "wrong_cite_exists",
+      "accepted_classes": [
+        "wrong_cite_exists"
+      ],
+      "quote": null,
+      "real_case_at_page": {
+        "name_abbreviation": "Zicherman ex rel. Estate of Kole v. Korean Air Lines Co.",
+        "first_page": 217,
+        "last_page": 232,
+        "decision_date": "1996-01-16",
+        "file_name": "0217-01",
+        "court": "Supreme Court of the United States",
+        "official_cite": "516 U.S. 217"
+      },
+      "cap_urls": [
+        "https://static.case.law/us/VolumesMetadata.json",
+        "https://static.case.law/us/516/CasesMetadata.json"
+      ],
+      "note": "Page 230 is inside Zicherman (217-232) and the party names match the spanning case -> rule step 6 'wrong_page' branch, class wrong_cite_exists ('230 is a pin page of Zicherman, which begins at 217'). The filing also contains a separate 'Id. at 230.' (IdCitation, listed as skipped)."
+    },
+    {
+      "id": "unrec-alvarez",
+      "cite_text": "Alvarez v. Skyline Cargo, 88 Fed. Air Rptr. 3d 412 (2018)",
+      "reporter": "Fed. Air Rptr. 3d",
+      "volume": 88,
+      "page": 412,
+      "year": 2018,
+      "parties": "Alvarez v. Skyline Cargo",
+      "expected_class": "unrecognized_reporter",
+      "accepted_classes": [
+        "unrecognized_reporter"
+      ],
+      "quote": null,
+      "real_case_at_page": null,
+      "cap_urls": [
+        "https://static.case.law/ReportersMetadata.json"
+      ],
+      "note": "Invented reporter. eyecite returns NO citation for this string (silently dropped), so the regex catch on uncovered spans must find '88 Fed. Air Rptr. 3d 412'. No reporter containing 'Air' exists in CAP ReportersMetadata (401 reporters) or reporters_db."
+    }
+  ],
+  "skipped_expected": [
+    {
+      "text": "Id. at 230.",
+      "eyecite_class": "IdCitation",
+      "expected": "skipped",
+      "note": "Follows the Zicherman 516 U.S. 217 citation; pin cite 230."
+    },
+    {
+      "text": "28 U.S.C. § 1332",
+      "eyecite_class": "FullLawCitation",
+      "expected": "skipped",
+      "note": "Statute; out of scope."
+    }
+  ],
+  "extra_in_label": {
+    "cite_text": "Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023)",
+    "where": "the SYNTHETIC SAMPLE FILING label on page 1 (required wording)",
+    "eyecite": "FullCaseCitation volume=678 reporter='F. Supp. 3d' page=443 year=2023",
+    "expected_class": "not_in_free_corpus",
+    "accepted_classes": [
+      "not_in_free_corpus",
+      "verified"
+    ],
+    "counted_in_eval": false,
+    "note": "Real case, cited in the disclaimer label, not by the fictional filer. CAP's f-supp-3d series ends in 2019; volume 678 is beyond free coverage. The eval must exclude this row (match by cite_text) so the seed stays at 20 scored citations; the memo may still show it."
+  },
+  "eval_rule": "predicted class counts as correct when it is in accepted_classes; report accuracy over the 20 items and the number of items with real_case_at_page whose first_page == page (real cases) predicted likely_fabricated (target 0).",
+  "pdf_extraction_check": {
+    "tool": "pdfplumber 0.11.10 + eyecite 2.7.8 clean_text(['all_whitespace'])",
+    "pages": 6,
+    "FullCaseCitation": 20,
+    "IdCitation": 1,
+    "FullLawCitation": 1,
+    "note": "20 = the 19 seed citations eyecite recognises (Alvarez/'Fed. Air Rptr. 3d' is dropped) + Mata v. Avianca from the page-1 label (see extra_in_label)."
+  },
+  "eyecite_notes": [
+    "metadata.year is unreliable when a citation has no year parenthetical or another citation follows soon after: on this filing eyecite reports year 2019 for Eastern Airlines v. Floyd, 499 U.S. 530 (1991) and for Shaboon (2013 IL App), both in the .txt and in the PDF text. Take the year from a regex on the ~40 chars after the cite (e.g. r'\\((?:[^()]*?\\s)?(\\d{4})\\)') and fall back to metadata.year.",
+    "eyecite reports court=None for '(3d Cir. 1999)' (Greenleaf) although it resolves '2d Cir.', '11th Cir.', 'D.C. Cir.', 'D.D.C.', 'Tex. App.', 'Ga. Ct. App.'.",
+    "reporters_db REPORTERS is keyed by the base reporter: 'F.' holds editions F., F.2d, F.3d, F.4th; 'F. Supp.' holds F. Supp., F. Supp. 2d, F. Supp. 3d. 'IL App (1st)' has cite_type 'neutral'; 'WL' has cite_type 'specialty_west'.",
+    "The unrecognized reporter 'Fed. Air Rptr. 3d' yields no citation at all; the regex catch on uncovered spans is required for item unrec-alvarez."
+  ]
+}

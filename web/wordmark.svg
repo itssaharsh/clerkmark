@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 48" width="264" height="48" role="img" aria-labelledby="t"><title id="t">Clerkmark</title>
+<style>.w{font-family:"Courier Prime","Courier New",ui-monospace,monospace;font-weight:700;font-size:30px;letter-spacing:-0.02em;fill:#1B1A17}.m{fill:none;stroke:#BE1E2D;stroke-width:1.5;stroke-linecap:round}@media (prefers-color-scheme:dark){.w{fill:#FCFBF7}}</style>
+<text class="w" x="8" y="34">Clerkmark</text>
+<path class="m" transform="rotate(-8 17 24)" d="M18 9C27 10 30 16 29 24C28 33 24 39 16 39C8 39 4 33 5 24C6 15 10 8 18 9Z"/>
+</svg>

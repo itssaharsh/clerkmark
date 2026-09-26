@@ -1,0 +1,76 @@
+SYNTHETIC SAMPLE FILING — modeled on the fabricated citations described in Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023). Not a real court document. Party names are fictional.
+
+UNITED STATES DISTRICT COURT
+SOUTHERN DISTRICT OF NEW YORK
+
+MARISOL OKONKWO-REYES,
+Plaintiff, pro se,
+
+v.
+
+MERIDIAN SKY AIRWAYS, S.A.,
+Defendant.
+
+Civil Action No. 1:26-cv-00000 (SAMPLE)
+
+PLAINTIFF'S MEMORANDUM OF LAW IN OPPOSITION TO DEFENDANT'S MOTION TO DISMISS
+
+PRELIMINARY STATEMENT
+
+Plaintiff Marisol Okonkwo-Reyes, appearing on her own behalf without the assistance of counsel, respectfully submits this Memorandum of Law in Opposition to the Motion to Dismiss filed by Defendant Meridian Sky Airways, S.A. ("Meridian" or "the Airline"). The Airline asks this Honorable Court to throw out Plaintiff's Complaint before any discovery has taken place. It argues that Plaintiff has not alleged an "accident" within the meaning of Article 17 of the Montreal Convention, that her claims are preempted, and that she has not pleaded enough facts to survive. Plaintiff respectfully disagrees on every point, and she asks the Court to read her Complaint with the generosity that the law extends to a person who cannot afford a lawyer.
+
+STATEMENT OF FACTS
+
+The facts, which must be taken as true at this stage, are set out in the Complaint and are summarized here. On March 3, 2025, Plaintiff was a ticketed passenger on Meridian Flight 418 from Lisbon, Portugal, to New York, New York. About two hours into the flight, a flight attendant pushing a metal beverage cart struck Plaintiff's left knee while she was seated in the aisle seat of row 31. The cart was moving faster than normal because the attendant was hurrying to finish service before turbulence. Plaintiff cried out. She asked for ice and for a doctor. The crew brought a towel but did not check for a physician on board and did not log the incident in the flight report. Plaintiff was later diagnosed with a torn meniscus and required arthroscopic surgery. She has continuing pain and has missed work.
+
+Plaintiff filed this action within the two-year period fixed by Article 35 of the Montreal Convention. This Court has jurisdiction because the Convention is a treaty of the United States and, independently, because the parties are citizens of different states and the amount in controversy exceeds $75,000 under 28 U.S.C. § 1332.
+
+ARGUMENT
+
+I. PLAINTIFF HAS ALLEGED AN "ACCIDENT" UNDER ARTICLE 17.
+
+The Airline says that being struck by a beverage cart is an ordinary part of air travel and therefore cannot be an accident. That is not the law. The Supreme Court has defined the term in words that are easy to apply here: "Any injury is the product of a chain of causes, and we require only that the passenger be able to prove that some link in the chain was an unusual or unexpected event external to the passenger." Air France v. Saks, 470 U.S. 392 (1985). A cart driven into a seated passenger's knee is an event external to the passenger, and it is unusual and unexpected by any reasonable standard.
+
+The Court reaffirmed this definition when it held that a crew's refusal to help a passenger in distress may itself be the accident, and it explained how the burden then shifts to the carrier: "Thus, Article 17 creates a presumption of air carrier liability and shifts the burden to the air carrier to prove lack of negligence under Article 20." Olympic Airways v. Husain, 540 U.S. 644 (2004). In Husain the flight attendant refused to move a passenger away from cigarette smoke. Here the crew struck the Plaintiff and then failed to seek medical help. Either event is enough, and it is the Airline, not the Plaintiff, that must explain itself.
+
+The Airline also suggests that Plaintiff's injury is somehow not the kind of injury the Convention covers. But the Supreme Court has limited recovery only where there is no bodily injury at all. The Court framed the issue in this way: "This case presents the question whether Article 17 allows recovery for mental or psychic injuries unaccompanied by physical injury or physical manifestation of injury." Eastern Airlines, Inc. v. Floyd, 499 U.S. 530 (1991). Plaintiff has a torn meniscus and a surgical scar. Her injury is physical in every sense.
+
+Lower courts applying these principles have repeatedly allowed cart and service-related injury claims to go forward. In Varghese v. China Southern Airlines Co., 925 F.3d 1339 (11th Cir. 2019), the Eleventh Circuit held that a passenger injured by a service cart during turbulence had stated an Article 17 claim, and it reversed the dismissal of the complaint. The District of Columbia reached a similar result in Petersen v. Iran Air, 905 F. Supp. 2d 121 (D.D.C. 2012), where the court denied a motion to dismiss an injury claim arising from crew conduct during beverage service. And the Second Circuit, whose law governs this Court, held in Miller v. United Airlines, Inc., 174 F.3d 366 (2d Cir. 1999), that whether a crew's conduct was unusual or unexpected is a question of fact that cannot be resolved on the pleadings.
+
+State appellate courts agree. See Shaboon v. Egyptair, 2013 IL App (1st) 111279 (reversing dismissal of a passenger's Article 17 claim arising from a cabin-service injury); Martinez v. Delta Air Lines, Inc., 2019 WL 4639462 (Tex. App. 2019) (beverage cart striking passenger was an "accident"); Estate of Durden v. KLM Royal Dutch Airlines, 2017 WL 2418825 (Ga. Ct. App. 2017) (crew's failure to render aid after an in-flight injury supported an Article 17 claim).
+
+II. THE CONVENTION PROVIDES PLAINTIFF'S REMEDY; IT DOES NOT TAKE IT AWAY.
+
+The Airline argues in the alternative that Plaintiff's claims are "preempted" and must be dismissed. This turns the Convention on its head. The Convention is the source of the Airline's liability, not a shield against it. As the Supreme Court explained, "In Article 17 of the Convention, carriers are denied the contractual prerogative to exclude or limit their liability for personal injury." El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng, 525 U.S. 155 (1999). Plaintiff does not seek to escape the Convention. She sues under it.
+
+As to the kinds of damages she may recover, the Supreme Court has held that the Convention leaves that question to the domestic law of the forum: "Absent such legislation, however, Articles 17 and 24(2) provide nothing more than a pass-through, authorizing us to apply the law that would govern in absence of the Warsaw Convention." Zicherman v. Korean Air Lines Co., 516 U.S. 217 (1996). The Court went on to explain that the applicable domestic law, and not the treaty itself, defines the compensable harm. Id. at 230. New York law plainly permits recovery for pain and suffering, medical expenses and lost wages, and Plaintiff has pleaded each of them. The Court's discussion of which sovereign's law applies is found at Zicherman v. Korean Air Lines Co., 516 U.S. 230 (1996), and it supports Plaintiff's position that New York law governs her damages here.
+
+The Airline's reading would also require the Court to add words to the treaty that are not there. The Supreme Court has warned against exactly that: "But where the text is clear, as it is here, we have no authority to add an exception." Chan v. Korean Air Lines, Ltd., 490 U.S. 122 (1989). Nothing in Article 17 excepts injuries caused by service carts.
+
+III. THE COMPLAINT SATISFIES THE FEDERAL PLEADING STANDARD.
+
+The Airline's final argument is that the Complaint is too thin. Plaintiff respectfully submits that the Complaint states the date, the flight number, the seat, what struck her, who was pushing it, what she asked for and what the crew did and did not do. That is far more than the law requires. The Supreme Court has said that a plaintiff need not plead detailed facts: "Here, in contrast, we do not require heightened fact pleading of specifics, but only enough facts to state a claim to relief that is plausible on its face." Bell Atlantic Corp. v. Twombly, 550 U.S. 544 (2007). Two years later the Court described the test in similar terms: "A claim has facial plausibility when the plaintiff alleges factual content that permits the court to draw a reasonable inference that the defendant is responsible for the misconduct alleged." Ashcroft v. Iqbal, 556 U.S. 662 (2009). A reasonable person reading this Complaint would infer that a cart struck the Plaintiff and that the crew did not help her. That inference is not speculative. It is the plain reading of the facts.
+
+The Airline complains that Plaintiff has not tied her injury to any specific act of negligence. But Article 17 does not require proof of negligence, and in any event causation is a question for the trier of fact, to be decided defendant by defendant on the evidence. The Third Circuit described the proper approach to a jury charge on this point: "It further cautioned that the jury must conduct a separate analysis of the evidence, and make a separate decision on, the proximate cause issue with respect to each defendant." Greenleaf v. Garlock, Inc., 174 F.3d 352 (3d Cir. 1999). Plaintiff will be able to prove causation at trial through her medical records and the testimony of the passenger seated beside her. She should be given the chance to do so.
+
+Plaintiff also notes that at least one federal aviation decision has held that a carrier's failure to log an in-flight injury supports an inference that the event was out of the ordinary. See Alvarez v. Skyline Cargo, 88 Fed. Air Rptr. 3d 412 (2018). Meridian's own silence in its flight report is evidence in Plaintiff's favor, not the Airline's.
+
+IV. THE AIRLINE'S REFUND DID NOT MAKE THIS CASE MOOT, AND THE COURT OWES NO DEFERENCE TO THE AIRLINE'S READING OF THE TREATY.
+
+In a footnote, the Airline says the case is moot because it refunded Plaintiff's ticket. A refund of a ticket does not pay for knee surgery. Mootness is a narrow doctrine, and even in the class context courts have refused to let a partial or passing benefit end a live dispute. The D.C. Circuit put it this way: "Once the district court deems a Rule 23 class valid, the subsequent mootness of individual claims does not terminate litigation." J.D. v. Azar, 925 F.3d 1291 (D.C. Cir. 2019). Plaintiff's individual claim for damages is likewise very much alive.
+
+Finally, the Airline attaches an industry association's "interpretive guidance" on Article 17 and asks the Court to defer to it. Courts do not defer to a private party's reading of the law, and the Supreme Court has recently made clear that even an executive agency's interpretation does not bind a court on a question of law. See Loper Bright Enterprises v. Raimondo, 603 U.S. 369 (2024). Nor may an airline rely on a general policy statement to accomplish what the treaty text does not permit. See Biden v. Nebraska, 600 U.S. 477 (2023). The meaning of Article 17 is for this Court to decide, and the Supreme Court has already decided the parts that matter here.
+
+CONCLUSION
+
+For all of these reasons, Plaintiff respectfully asks the Court to deny Defendant's Motion to Dismiss in its entirety and to allow this case to proceed to discovery. In the alternative, if the Court finds any part of the Complaint deficient, Plaintiff asks for leave to amend, which courts freely grant to self-represented parties.
+
+Dated: New York, New York
+September 26, 2026
+
+Respectfully submitted,
+
+/s/ Marisol Okonkwo-Reyes
+Marisol Okonkwo-Reyes
+Plaintiff, pro se
+(address on file with the Clerk)

@@ -1,0 +1,74 @@
+/* Clerkmark tokens — the :root block from docs/UI-SPEC.md §14. Edit there first, then here. */
+:root{
+  color-scheme: light;
+  --ff-display:"Courier Prime",ui-monospace,"Courier New",monospace;   /* what the clerk typed: the memo, its headings, the stamp, buttons, the eval and how-it-works sheets */
+  --ff-body:"Source Serif 4",Georgia,serif;                            /* what the book printed: the reporter page excerpt and the shelf strip labels only */
+  --ff-mono:"Courier Prime",ui-monospace,"Courier New",monospace;      /* IDs and CAP URLs; same face as display */
+
+  /* surfaces */
+  --canvas:#FCFBF7;            /* bond paper: the memo sheet (ink 16.807:1, ink-muted 6.936:1) */
+  --surface-1:#F3F1EA;         /* reporter paper: the opened page excerpt and the shelf strip panel (ink-muted 6.355:1) */
+  --surface-2:#ECE9DF;         /* row hover, skeleton blocks, the tonal sample button (ink-muted 5.912:1) */
+  --surface-sunken: color-mix(in oklch, var(--canvas), black 4%);
+  --surround:#E8E5DC;          /* the flat table-top behind the sheet at >=1024; not a text surface except credits (ink-muted 5.702:1) */
+  --tab-inactive:#E0DDD3;      /* inactive folder tab; ink-muted on it 5.285:1 */
+
+  /* lines */
+  --line:#C9C4B6;              /* the memo's double rule and the pleading margin rule; decorative, exempt from 3:1 */
+  --line-input:#6E6A61;        /* file input and drag-over boundary: 5.204:1 on canvas, 4.768:1 on surface-1, 4.278:1 on surround */
+
+  /* ink */
+  --ink:#1B1A17;               /* typewriter black */
+  --ink-muted:#5B5750;         /* pencil: secondary text, unresolved and not-checked rows */
+  --pencil: var(--ink-muted);  /* data token: "Not in the free library", "checking…", skipped rows, dashed underlines */
+
+  /* accent = the clerk's red pen */
+  --accent:#BE1E2D;            /* as text on canvas 5.942:1; on surface-1 5.444:1; as a mark on surface-2 5.065:1 */
+  --accent-ink:#FCFBF7;        /* 5.942:1 on accent; used only in the rare red fill (confirm step); no red fills exist in v1 */
+  --pen: var(--accent);        /* data token: circles, strike-and-correct, underlines, the CHECKED stamp; never a button */
+  --accent-hover: oklch(from var(--accent) calc(l - .06) c h);
+  --accent-press: oklch(from var(--accent) calc(l - .12) c h);
+  --accent-container: color-mix(in oklch, var(--accent) 12%, var(--surface-1));   /* about #EFD9D5; accent text on it 4.558:1 */
+  --focus: var(--ink);         /* ink rings everywhere; red never means "focused" */
+
+  /* buttons: ink-filled with paper labels (deviation 1) */
+  --button-bg: var(--ink);
+  --button-ink: var(--canvas);          /* 16.807:1 */
+  --button-hover: color-mix(in oklch, var(--ink), white 8%);
+  --button-press: color-mix(in oklch, var(--ink), white 12%);
+
+  /* status (system register only; never used for citation classes) */
+  --success:#2F6B3A;           /* 6.174:1 on canvas, 5.656:1 on surface-1; eval "Real cases marked likely not real: 0" */
+  --warning:#7A4F12;           /* 6.864:1 on canvas, 6.289:1 on surface-1; CourtListener throttled / partial-run notice */
+  --danger: var(--accent);     /* one red in this world; reserved for the confirm step. Validation sentences are ink (see §9) */
+  --danger-container: color-mix(in oklch, var(--danger) 10%, var(--surface-1));
+
+  /* shape: paper */
+  --r-sm:2px; --r-md:2px; --r-lg:0px;   /* sheet and panels square; stamp box and buttons 2px */
+  --shadow-raised: 0 1px 2px rgb(0 0 0/.12), 0 8px 24px -8px rgb(0 0 0/.35);   /* the sheet on the table; the only shadow */
+  --shadow-overlay: 0 4px 8px rgb(0 0 0/.06), 0 16px 40px -8px rgb(0 0 0/.22); /* unused in v1; kept for a future dialog */
+
+  /* type scale, density 7, ratio 1.2 */
+  --step--2:12px; --step--1:13px; --step-0:14px; --step-1:15px; --step-2:18px;
+  --lh-memo:1.55; --lh-body:1.6;
+  --track-caps:0.10em; --track-stamp:0.08em; --track-wordmark:-0.02em;
+
+  /* motion: Precise (B6 tokens + this direction's marks) */
+  --ease-out:cubic-bezier(.23,1,.32,1); --ease-out-quint:cubic-bezier(.22,1,.36,1);
+  --ease-in-out:cubic-bezier(.77,0,.175,1); --ease-drawer:cubic-bezier(.32,.72,0,1);
+  --ease-enter:cubic-bezier(.05,.7,.1,1); --ease-exit:cubic-bezier(.3,0,.8,.15);
+  --dur-press:120ms; --dur-hover:150ms; --dur-pop:200ms; --dur-modal:280ms; --dur-exit:150ms;
+  --dur-drawer:200ms; --dur-sheet:450ms; --dur-route:400ms;
+  --dur-mark:300ms; --stagger-mark:60ms; --dur-stamp:180ms; --dur-row:120ms; --stagger-row:30ms;
+
+  /* layout */
+  --sheet-w:816px; --margin-w:56px; --note-w:240px; --sheet-pad-top:64px; --sheet-pad-right:72px; --sheet-pad-bottom:72px;
+  --row-gap:12px; --row-min:56px; --tab-h:36px; --strip-h:12px;
+  --mark-stroke:1.5px;
+}
+@media (prefers-reduced-motion: reduce){
+  :root{--dur-mark:0ms;--stagger-mark:0ms;--dur-stamp:0ms;--dur-row:0ms;--stagger-row:0ms;--dur-drawer:0ms}
+}
+@media print{
+  :root{--surround:#FFFFFF;--canvas:#FFFFFF;--shadow-raised:none;--mark-stroke:2px}
+}
