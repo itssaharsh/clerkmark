@@ -359,8 +359,10 @@
         "bash scripts/verify.sh"
       ],
       "rollback": "git revert the T07 commit",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "",
+      "base": "6c6240c",
+      "started_after": 21
     },
     {
       "id": "T08",
