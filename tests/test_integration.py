@@ -524,3 +524,262 @@ def test_offline_miss_is_not_checked_not_red(tmp_path):
     memo = memo_mod.run_memo(text="Varghese v. China Southern Airlines Co., 925 F.3d 1339 (11th Cir. 2019).", filename="pasted-text", cap=cap)
     assert memo.results[0].class_ == "not_checked"
     assert memo.offline is True
+
+
+# --------------------------------------------------------------------------- #
+# T07 — AC-12 limits (4 MB body, 200k chars, 250 citations, 10 runs/min per IP),
+# AC-6 over HTTP (every corpus fetch fails → 200 with not_checked rows), and the
+# read-only cache directory fallback (Vercel: only /tmp is writable).
+# Each HTTP test uses its own X-Forwarded-For address so the per-IP rate limit
+# never couples one test to another.
+# --------------------------------------------------------------------------- #
+
+
+def _xff(ip: str) -> dict:
+    return {"X-Forwarded-For": ip}
+
+
+def test_limits_constants_match_adr_0005():
+    from citememo import limits
+
+    assert limits.MAX_BODY_BYTES == 4 * 1024 * 1024
+    assert limits.MAX_TEXT_CHARS == 200_000
+    assert limits.MAX_CITATIONS == 250
+    assert limits.RATE_LIMIT_RUNS == 10 and limits.RATE_LIMIT_WINDOW_S == 60.0
+
+
+def test_limits_oversize_body_is_too_large_413(client):
+    from citememo import limits
+
+    big = b"%PDF-1.4\n" + b"0" * (limits.MAX_BODY_BYTES + 1024)
+    r = client.post("/api/memo", files={"file": ("big.pdf", io.BytesIO(big), "application/pdf")}, headers=_xff("203.0.113.1"))
+    assert r.status_code == 413, r.text
+    body = r.json()
+    assert body["error"]["code"] == "too_large"
+    assert "4 MB" in body["error"]["message"]
+    assert body["error"]["hint"]
+
+
+def test_limits_oversize_chunked_upload_is_too_large_413(client):
+    """No Content-Length (chunked): the handler measures the bytes it read."""
+    from citememo import limits
+
+    boundary = "clerkmark-b0undary"
+    head = (
+        f"--{boundary}\r\n"
+        'Content-Disposition: form-data; name="file"; filename="big.pdf"\r\n'
+        "Content-Type: application/pdf\r\n\r\n"
+    ).encode()
+    tail = f"\r\n--{boundary}--\r\n".encode()
+    payload = b"%PDF-1.4\n" + b"0" * (limits.MAX_BODY_BYTES + 1024)
+
+    def chunks():
+        yield head
+        for i in range(0, len(payload), 1 << 20):
+            yield payload[i : i + (1 << 20)]
+        yield tail
+
+    headers = {"Content-Type": f"multipart/form-data; boundary={boundary}", **_xff("203.0.113.2")}
+    r = client.post("/api/memo", content=chunks(), headers=headers)
+    assert r.status_code == 413, r.text
+    assert r.json()["error"]["code"] == "too_large"
+
+
+def test_limits_text_over_200k_chars_is_too_large_413(client):
+    from citememo import limits
+
+    r = client.post("/api/memo", data={"text": "x" * (limits.MAX_TEXT_CHARS + 1)}, headers=_xff("203.0.113.3"))
+    assert r.status_code == 413, r.text
+    body = r.json()
+    assert body["error"]["code"] == "too_large"
+    assert "200,000" in body["error"]["message"]
+    assert body["error"]["hint"]
+    # exactly at the limit is accepted
+    at_limit = "Air France v. Saks, 470 U.S. 392 (1985). "
+    at_limit = at_limit + "x" * (limits.MAX_TEXT_CHARS - len(at_limit))
+    assert len(at_limit) == limits.MAX_TEXT_CHARS
+    r = client.post("/api/memo", data={"text": at_limit}, headers=_xff("203.0.113.3"))
+    assert r.status_code == 200, r.text
+    assert r.json()["counts"]["total"] == 1
+    assert not r.json()["warnings"]
+
+
+def test_limits_more_than_250_full_citations_are_truncated(client):
+    from citememo import limits
+    from citememo.extract import extract_citations
+
+    n = limits.MAX_CITATIONS + 12
+    text = " ".join(f"Party{i} v. Carrier{i}, {2000 + i % 20} WL {100000 + i} (Tex. App. 2019)." for i in range(n))
+    n_full = sum(1 for c in extract_citations(text) if c.kind == "full")
+    assert n_full > limits.MAX_CITATIONS, n_full
+    r = client.post("/api/memo", data={"text": text}, headers=_xff("203.0.113.4"))
+    assert r.status_code == 200, r.text
+    memo = r.json()
+    full_rows = [row for row in memo["results"] if row["citation"]["kind"] == "full"]
+    assert len(full_rows) == limits.MAX_CITATIONS
+    assert memo["counts"]["total"] == limits.MAX_CITATIONS
+    assert [row["row"] for row in memo["results"]] == list(range(1, memo["counts"]["total"] + 1))
+    truncated = [w for w in memo["warnings"] if w.startswith("Truncated:")]
+    assert len(truncated) == 1, memo["warnings"]
+    assert str(limits.MAX_CITATIONS) in truncated[0] and str(n_full) in truncated[0]
+    assert memo["counts"]["likely_fabricated"] == 0
+
+
+def test_limits_memo_truncates_text_beyond_200k_chars(offline_env):
+    """A PDF that passed the 4 MB gate can still hold > 200k characters: the run reads the first 200k and says so."""
+    from citememo import limits
+    from citememo import memo as memo_mod
+
+    head = "Air France v. Saks, 470 U.S. 392 (1985). "
+    filler = "Plain prose about a flight, a cart and an aisle, with no citation in it.\n"
+    tail = "Greenleaf v. Garlock, Inc., 174 F.3d 352 (3d Cir. 1999)."
+    body = filler * ((limits.MAX_TEXT_CHARS - len(head)) // len(filler) + 1)
+    text = head + body + tail
+    assert len(text) > limits.MAX_TEXT_CHARS
+    memo = memo_mod.run_memo(text=text, filename="pasted-text")
+    texts = [r.citation.text for r in memo.results]
+    assert "470 U.S. 392" in texts
+    assert "174 F.3d 352" not in texts
+    assert memo.results[0].class_ == "verified"
+    truncated = [w for w in memo.warnings if w.startswith("Truncated:")]
+    assert len(truncated) == 1 and "200,000" in truncated[0]
+    # the filing's size is reported on the whole input, not the part that was read
+    assert memo.filing.words == len(text.split())
+    assert memo.filing.bytes == len(text.encode("utf-8"))
+    # under the limit nothing is cut and nothing is said
+    memo2 = memo_mod.run_memo(text=head + tail, filename="pasted-text")
+    assert memo2.counts.total == 2 and memo2.warnings == []
+
+
+def test_limits_rate_limiter_sliding_window():
+    from citememo.limits import RateLimiter
+
+    now = [1000.0]
+    rl = RateLimiter(limit=3, window_s=60.0, clock=lambda: now[0])
+    assert [rl.hit("a")[0] for _ in range(3)] == [True, True, True]
+    allowed, retry_after = rl.hit("a")
+    assert allowed is False and 0 < retry_after <= 60.0
+    assert rl.hit("b")[0] is True  # keys are independent
+    now[0] += 30.0
+    assert rl.hit("a")[0] is False  # still inside the window
+    now[0] += 30.5
+    assert rl.hit("a")[0] is True  # the oldest hit left the window
+    rl.reset()
+    assert rl.hit("a")[0] is True
+
+
+def test_limits_client_key_uses_forwarded_for_first_hop():
+    from citememo.limits import client_key
+
+    assert client_key({"x-forwarded-for": "203.0.113.5, 10.0.0.1"}, "10.0.0.2") == "203.0.113.5"
+    assert client_key({"X-Forwarded-For": "203.0.113.5"}, "10.0.0.2") == "203.0.113.5"
+    assert client_key({}, "10.0.0.2") == "10.0.0.2"
+    assert client_key({"x-forwarded-for": " , "}, "10.0.0.2") == "10.0.0.2"
+    assert client_key({}, None) == "unknown"
+
+
+def test_limits_rate_limited_after_10_runs_per_minute(client):
+    from citememo import limits
+
+    h = _xff("203.0.113.10")
+    for i in range(limits.RATE_LIMIT_RUNS):
+        r = client.post("/api/memo", data={"text": "Prose without any citation in it."}, headers=h)
+        assert r.status_code == 200, (i, r.text)
+    r = client.post("/api/memo", data={"text": "Prose without any citation in it."}, headers=h)
+    assert r.status_code == 429, r.text
+    body = r.json()
+    assert body["error"]["code"] == "rate_limited"
+    assert "10" in body["error"]["message"] and "minute" in body["error"]["message"]
+    assert body["error"]["hint"]
+    assert 1 <= int(r.headers["retry-after"]) <= 60
+    # a second refusal does not extend the wait (refused attempts are not counted)
+    r2 = client.post("/api/memo", data={"text": "Prose."}, headers=h)
+    assert r2.status_code == 429
+    # another address is not throttled
+    assert client.post("/api/memo", data={"text": "Prose without any citation in it."}, headers=_xff("203.0.113.11")).status_code == 200
+    # the sample endpoint and /api/eval are exempt for the throttled address
+    assert client.get("/api/eval", headers=h).status_code == 200
+    assert client.post("/api/memo/sample/sample-motion", headers=h).status_code == 200
+
+
+def test_unreachable_corpus_still_returns_a_memo_over_http(client, tmp_path, monkeypatch):
+    """AC-6: every CAP fetch fails (unreachable host); the memo comes back 200 with those rows not_checked.
+
+    Contract wording: rows whose volume could not be fetched carry the label
+    "Could not reach the free library." (class ``not_checked``, register coverage,
+    counted in ``counts.not_checked``, run-level ``warnings``); ``Memo`` has no
+    ``partial`` field (T05 RULINGS 1).
+    """
+    import main
+    from citememo.cache import DiskCache
+    from citememo.cap import CapClient
+
+    def unreachable(request: httpx.Request) -> httpx.Response:
+        raise httpx.ConnectError("connection refused", request=request)
+
+    cache = DiskCache(write_dir=tmp_path / "cap", read_dirs=[tmp_path / "cap"])  # nothing cached, no seed fallback
+    cap = CapClient(cache=cache, transport=httpx.MockTransport(unreachable), offline=False, retries=0, base_url="https://cap.invalid")
+    monkeypatch.setattr(main.state, "cap", cap)
+    r = client.post("/api/memo", data={"text": SAMPLE_TXT.read_text()}, headers=_xff("203.0.113.6"))
+    assert r.status_code == 200, r.text
+    memo = r.json()
+    rows = {row["cite_text"]: row for row in memo["results"]}
+    for key in (
+        "Miller v. United Airlines, Inc., 174 F.3d 366 (2d Cir. 1999)",
+        "Varghese v. China Southern Airlines Co., 925 F.3d 1339 (11th Cir. 2019)",
+        "J.D. v. Azar, 925 F.3d 1291 (D.C. Cir. 2019)",
+        "Air France v. Saks, 470 U.S. 392 (1985)",
+        "Biden v. Nebraska, 600 U.S. 477 (2023)",
+    ):
+        row = rows[key]
+        assert row["class"] == "not_checked", (key, row["reasons"])
+        assert row["label"] == "Could not reach the free library."
+        assert row["reasons"][0].startswith("Could not be checked: the free corpus did not answer for")
+        assert "connection error" in row["reasons"][0]
+        assert row["register"] == "coverage" and row["mark"] == "none" and row["drawer"] is None
+    # rows that never touch the corpus keep their classes; nothing is ever red
+    assert rows["Shaboon v. Egyptair, 2013 IL App (1st) 111279"]["class"] == "not_in_free_corpus"
+    assert rows["Martinez v. Delta Air Lines, Inc., 2019 WL 4639462 (Tex. App. 2019)"]["class"] == "not_in_free_corpus"
+    assert rows["Alvarez v. Skyline Cargo, 88 Fed. Air Rptr. 3d 412 (2018)"]["class"] == "unrecognized_reporter"
+    c = memo["counts"]
+    assert c["likely_fabricated"] == 0 and c["verified"] == 0
+    assert c["not_checked"] == sum(1 for row in memo["results"] if row["class"] == "not_checked") >= 15
+    assert c["skipped"] == 2 and c["total"] == 23
+    assert memo["read_these_first"].endswith(f"{c['not_checked']} not answered yet.")
+    assert any("did not answer" in w for w in memo["warnings"])
+    assert memo["offline"] is False
+    assert memo["sources_used"]["cap"] is True
+
+
+def test_limits_read_only_seed_dir_falls_back_to_tmp(tmp_path):
+    """Vercel's filesystem is read-only except /tmp: the cache must degrade, never crash."""
+    import os
+
+    from citememo import cache as cache_mod
+    from citememo import memo as memo_mod
+    from citememo.cap import CapClient
+
+    seed = tmp_path / "seed-cap"
+    seed.mkdir()
+    fallback = tmp_path / "tmp-cache"
+    os.chmod(seed, 0o500)
+    try:
+        if cache_mod.is_writable_dir(seed):
+            pytest.skip("directory permissions are not enforced for this user (root)")
+        chosen = cache_mod.resolve_cache_dir(env={}, seed_dir=seed, tmp_dir=fallback)
+        assert chosen == fallback and fallback.is_dir()
+        # an unwritable CITEMEMO_CACHE_DIR falls through the same way
+        assert cache_mod.resolve_cache_dir(env={"CITEMEMO_CACHE_DIR": str(seed)}, seed_dir=seed, tmp_dir=fallback) == fallback
+        # a cache whose write dir is read-only never raises: writes degrade to memory, reads still come from the committed seed
+        ro = cache_mod.DiskCache(write_dir=seed)
+        assert ro.put("zzz/1/CasesMetadata.json", [{"id": 1}]) is None
+        assert ro.put_absent("zzz/VolumesMetadata.json") is None
+        assert ro.get("zzz/1/CasesMetadata.json") == [{"id": 1}]
+        assert ro.get("us/VolumesMetadata.json") is not cache_mod.MISSING
+        cap = CapClient(cache=ro, offline=True)
+        assert cap.cache_dir == seed
+        memo = memo_mod.run_sample("sample-motion", cap=cap)
+        assert memo.counts.total == 23 and memo.counts.likely_fabricated == 3 and memo.counts.not_checked == 0
+        assert not any(seed.iterdir())
+    finally:
+        os.chmod(seed, 0o700)

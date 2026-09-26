@@ -10,7 +10,7 @@ evidence: .prod-build/reports/T02.md
 verified_at: 2026-09-26@bbd070e
 relates: 
 supersedes: 
-helpful: 0
+helpful: 1
 harmful: 0
 cite_hash: e3b0c44298fc1c14
 created: 2026-09-26

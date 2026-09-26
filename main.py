@@ -9,33 +9,46 @@ Routes: ``GET /`` (web/index.html), ``/static/*`` (web/static), ``/favicon.svg``
 Run locally: ``uvicorn main:app --reload``. Vercel detects ``app`` in ``main.py``
 zero-config (BUILD-NOTES §6). Env (all optional): ``COURTLISTENER_TOKEN``,
 ``ANTHROPIC_API_KEY``, ``CITEMEMO_OFFLINE=1``, ``CITEMEMO_CACHE_DIR`` (.env.example).
-Size caps and rate limits are T07's.
+
+Limits (ADR-0005, ``citememo/limits.py``): ``POST /api/memo`` bodies over 4 MB → 413
+``too_large`` (checked on ``Content-Length`` before the body is parsed, then on the bytes
+read); pasted text over 200,000 characters → 413 ``too_large``; more than 10 memo runs a
+minute from one address → 429 ``rate_limited`` with ``Retry-After`` (in-memory sliding
+window keyed by the first ``X-Forwarded-For`` hop, else the client host; the sample
+endpoint and ``/api/eval`` are exempt). More than 250 full citations, or PDF text over
+200,000 characters, is processed up to the limit with a "Truncated:" line in
+``memo.warnings`` (memo.py). A corpus outage never fails the memo: those rows come back
+``not_checked`` ("Could not reach the free library.") with the memo at HTTP 200.
 """
 
 from __future__ import annotations
 
 import json
 import logging
+import math
 import threading
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Optional
+from typing import Optional, get_args
 
 from fastapi import FastAPI, File, Form, Request, UploadFile
 from fastapi.concurrency import run_in_threadpool
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.datastructures import Headers
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.types import ASGIApp, Receive, Scope, Send
 
 from citememo import __version__
 from citememo import advisory as advisory_mod
 from citememo import evaluate as evaluate_mod
+from citememo import limits
 from citememo import memo as memo_mod
 from citememo.cap import CapClient
 from citememo.courtlistener import CourtListenerClient
 from citememo.extract import NoTextLayer, UnreadablePdf
-from citememo.models import ErrorBody, ErrorEnvelope, EvalReport, Health, Memo
+from citememo.models import ErrorBody, ErrorCode, ErrorEnvelope, EvalReport, Health, Memo
 
 ROOT = Path(__file__).resolve().parent
 WEB = ROOT / "web"
@@ -60,9 +73,15 @@ class ApiError(Exception):
         self.hint = hint
 
 
+_KNOWN_CODES = frozenset(get_args(ErrorCode))
+
+
 def envelope(status: int, code: str, message: str, hint: Optional[str] = None) -> JSONResponse:
-    body = ErrorEnvelope(error=ErrorBody(code=code, message=message, hint=hint))  # type: ignore[arg-type]
-    return JSONResponse(status_code=status, content=body.model_dump(mode="json"))
+    if code in _KNOWN_CODES:
+        content = ErrorEnvelope(error=ErrorBody(code=code, message=message, hint=hint)).model_dump(mode="json")  # type: ignore[arg-type]
+    else:  # ``rate_limited`` (ADR-0005) is not in models.ErrorCode; same shape, built by hand
+        content = {"error": {"code": code, "message": message, "hint": hint}}
+    return JSONResponse(status_code=status, content=content)
 
 
 NO_TEXT_LAYER = ("No text layer in this PDF. It looks like a scan; this prototype does not run OCR.", "Try a PDF saved from a word processor, or the sample filing.")
@@ -79,6 +98,7 @@ state = SimpleNamespace(
     courtlistener=CourtListenerClient(),
     last_sample={},  # sample_id -> Memo
     lock=threading.Lock(),
+    limiter=limits.RateLimiter(),  # 10 memo runs / minute / address (ADR-0005)
 )
 
 
@@ -88,6 +108,48 @@ def json_model(model, status: int = 200) -> JSONResponse:
 
 app = FastAPI(title="Clerkmark citation memo", version=__version__, docs_url=None, redoc_url=None)
 app.mount("/static", StaticFiles(directory=str(WEB / "static")), name="static")
+
+
+# --------------------------------------------------------------------------- #
+# Limits (ADR-0005): before the body is parsed, for POST /api/memo only
+# --------------------------------------------------------------------------- #
+
+
+def rate_limited_response(retry_after_s: float) -> JSONResponse:
+    resp = envelope(429, "rate_limited", *limits.RATE_LIMITED)
+    resp.headers["Retry-After"] = str(max(1, math.ceil(retry_after_s)))
+    return resp
+
+
+class LimitsMiddleware:
+    """Refuse a throttled address (429) or an oversize ``Content-Length`` (413) before reading the body.
+
+    Applies to ``POST /api/memo`` only: the sample endpoint and ``/api/eval`` are exempt,
+    and every other route is untouched. A body without ``Content-Length`` (chunked) is
+    measured by the route handler after it is read.
+    """
+
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        if scope["type"] == "http" and scope.get("method") == "POST" and scope.get("path") == "/api/memo":
+            headers = Headers(scope=scope)
+            client = scope.get("client")
+            key = limits.client_key(headers, client[0] if client else None)
+            allowed, retry_after = state.limiter.hit(key)
+            if not allowed:
+                log.info("rate limited %s (retry after %.0f s)", key, retry_after)
+                await rate_limited_response(retry_after)(scope, receive, send)
+                return
+            length = headers.get("content-length", "")
+            if length.isdigit() and int(length) > limits.MAX_BODY_BYTES:
+                await envelope(413, "too_large", *limits.TOO_LARGE_PDF)(scope, receive, send)
+                return
+        await self.app(scope, receive, send)
+
+
+app.add_middleware(LimitsMiddleware)
 
 
 @app.exception_handler(ApiError)
@@ -101,6 +163,8 @@ async def _http_error(_: Request, exc: StarletteHTTPException) -> JSONResponse:
         return envelope(404, "not_found", "No such page or route.", "See docs/API.md for the routes.")
     if exc.status_code == 405:
         return envelope(405, "internal", "Method not allowed.", None)
+    if exc.status_code == 400 and "maximum size" in str(exc.detail or "").lower():  # multipart part > 1 MB (Starlette)
+        return envelope(413, "too_large", *limits.TOO_LARGE_TEXT)
     return envelope(exc.status_code, "internal", str(exc.detail or "Request failed."), None)
 
 
@@ -184,6 +248,8 @@ async def post_memo(file: Optional[UploadFile] = File(default=None), text: Optio
     data: Optional[bytes] = None
     if file is not None:
         data = await file.read()
+        if len(data) > limits.MAX_BODY_BYTES:  # a chunked upload has no Content-Length for the middleware to read
+            raise ApiError(413, "too_large", *limits.TOO_LARGE_PDF)
         if not data:
             data = None
     if data is not None:
@@ -192,6 +258,8 @@ async def post_memo(file: Optional[UploadFile] = File(default=None), text: Optio
                 data = None
             else:
                 raise ApiError(415, "unsupported_type", *UNSUPPORTED)
+    if data is None and text is not None and len(text) > limits.MAX_TEXT_CHARS:
+        raise ApiError(413, "too_large", *limits.TOO_LARGE_TEXT)
     if data is None and not (text and text.strip()):
         raise ApiError(400, "empty", *EMPTY)
     if data is not None:

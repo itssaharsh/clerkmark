@@ -10,7 +10,7 @@ evidence: ARCHITECTURE.md#Failure-boundaries
 verified_at: 2026-09-26@e81940d
 relates: 
 supersedes: 
-helpful: 0
+helpful: 1
 harmful: 0
 cite_hash: 4c53612711f65dbd
 created: 2026-09-26

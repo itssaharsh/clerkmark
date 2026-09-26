@@ -4,7 +4,11 @@ Pipeline (DECISION-RULE §1.6 → §2 → §4 → §6; every stage is timed):
 
 1. **extract** — ``pdf_to_text`` (or the pasted text) → ``extract_citations`` (eyecite +
    the unrecognized-reporter catch). ``NoTextLayer`` / ``UnreadablePdf`` propagate to
-   the API layer, which maps them to the error envelope.
+   the API layer, which maps them to the error envelope. Limits (ADR-0005,
+   ``citememo/limits.py``): text beyond 200,000 characters is not read and citations
+   beyond the 250th full one are dropped; each cut adds a "Truncated:" line to
+   ``memo.warnings`` (``Memo`` has no ``truncated`` field). ``filing.pages``/``words``
+   describe the whole input.
 2. **group** — consecutive full cites ≤ 3 chars apart with the same parties and year
    form one row (parallel cites, §1.6 item 3); the run limit (``MAX_VOLUMES`` distinct
    ``(slug, volume)`` pairs) marks later volumes ``not_checked``.
@@ -51,7 +55,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from . import advisory as advisory_mod
-from . import names, quotes, rules
+from . import limits, names, quotes, rules
 from .cap import CapClient, CorpusUnavailable
 from .courtlistener import CourtListenerClient
 from .extract import clean_filing_text, extract_citations, pdf_to_text
@@ -373,11 +377,13 @@ def run_memo(
         digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()
     pages = raw.count("\f") + 1 if raw else 0
     words = len(raw.split())
+    raw, cut_text_note = limits.truncate_text(raw)  # ADR-0005: read at most 200,000 characters
     cleaned, _to_raw = clean_filing_text(raw)
-    cites = extract_citations(raw)
+    cites, cut_cites_note = limits.cap_citations(extract_citations(raw))  # at most 250 full citations
     stage_extract = _ms(t0)
 
     run = _Run(cap=cap, text=cleaned)
+    run.warnings.extend(n for n in (cut_text_note, cut_cites_note) if n)
 
     # 2. group + run limit --------------------------------------------------- #
     groups: list[list[Any]] = []
