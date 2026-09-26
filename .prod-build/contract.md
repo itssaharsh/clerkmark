@@ -39,7 +39,7 @@ WON'T now: accounts or login; storing uploaded filings; OCR; Westlaw/Lexis integ
 ## Journeys (≤3)
 - J1 Sample run (the vertical slice): open `/` → click "Use the sample filing" → status line (four named steps, elapsed timer) → `POST /api/memo/sample/sample-motion` → memo with marks; row 8 (Miller) red circle + rule; row 9 (Shaboon) pencil "Not in the free library"; [Show the page] on Varghese shows "925 F.3d 1291 · J.D. v. AZAR"; stamp shows counts and seconds.
 - J2 Own filing: drop a PDF or paste text → same pipeline → memo; a scan without a text layer, a non-PDF, an oversize file or a server error each shows its UI-SPEC §9 string and keeps the input.
-- J3 Evaluation and How it works: Evaluation tab shows 20 rows expected vs said, correct count, "Real cases marked likely not real: 0 of 12"; How it works shows the numbered rule, sources, limits and credits.
+- J3 Evaluation and How it works: Evaluation tab shows 20 rows expected vs said, correct count, "Real cases marked likely not real: 0 of 11" (the 11 ground-truth rows with a real case at the cited page; the two beyond-coverage rows are real but not page hits); How it works shows the numbered rule, sources, limits and credits.
 
 ## Surfaces (UI-SPEC §3 ids)
 S1 first-run (drop zone + sample) · S2 loading (status block) · S3 memo · S4 evidence drawer (page / shelf) · S5 evaluation · S6 how it works · states: first-run, loading, partial, error, no-results · print view.

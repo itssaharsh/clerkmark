@@ -11,6 +11,8 @@ Every `CitationResult` carries `class`, `reasons: list[str]` (plain sentences, t
 
 ---
 
+> Wording note (2026-09-26, after T04): where this document's §7 "contains" column and docs/UI-SPEC.md §9's rule sentences differ, the §9 sentences are what `citememo/rules.py` prints; §7 fragments are asserted case-insensitively in tests/test_rules.py. Row 46's court for Griffith v. United States is the Eleventh Circuit per CAP, not the Federal Circuit.
+
 ## 1. Inputs and normalization (`extract.py`, `cap.py`)
 
 ### 1.1 Text
