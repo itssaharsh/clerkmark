@@ -102,8 +102,10 @@
         ".venv/bin/python -m pytest -q tests/test_cap.py tests/test_courtlistener.py"
       ],
       "rollback": "git revert the T02 commit",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "",
+      "base": "935f267",
+      "started_after": 3
     },
     {
       "id": "T03",
@@ -142,8 +144,10 @@
         ".venv/bin/python -m pytest -q tests/test_extract.py tests/test_quotes.py"
       ],
       "rollback": "git revert the T03 commit",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "",
+      "base": "935f267",
+      "started_after": 3
     },
     {
       "id": "T04",
@@ -180,8 +184,10 @@
         ".venv/bin/python -m pytest -q tests/test_rules.py"
       ],
       "rollback": "git revert the T04 commit",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "",
+      "base": "935f267",
+      "started_after": 3
     },
     {
       "id": "T05",
