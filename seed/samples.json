@@ -1,0 +1,15 @@
+[
+  {
+    "id": "sample-motion",
+    "title": "Sample filing: memorandum in opposition to a motion to dismiss (synthetic)",
+    "label": "Synthetic sample filing — Memorandum in Opposition to Motion to Dismiss. Not a real court document; modeled on the fabricated citations described in Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023). Party names are fictional.",
+    "file": "seed/sample-motion.pdf",
+    "filename": "sample-motion.pdf",
+    "pages": 6,
+    "words": 1933,
+    "citations": 23,
+    "scored": 20,
+    "synthetic": true,
+    "cached": true
+  }
+]

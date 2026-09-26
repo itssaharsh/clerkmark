@@ -489,6 +489,16 @@ def _classify(cite: CitationInput, ctx: RuleContext, *, row: int, cite_text: Opt
         return _result(cite, ctx, "skipped", ["Short-form citation (Id., supra or short form); the full citation it points to is checked instead."], row=row, cite_text=cite_text)
     if cite.kind == "statute":
         return _result(cite, ctx, "skipped", ["Statute, regulation or journal citation; out of scope."], row=row, cite_text=cite_text)
+    # §1.6 items 1–2: extract.py marks these on ExtractedCitation (history / slip_op); CitationInput has neither.
+    history = getattr(cite, "history", None)
+    if history:
+        return _result(cite, ctx, "skipped", [f"Subsequent-history citation ({history}); not checked."], row=row, cite_text=cite_text)
+    if getattr(cite, "slip_op", False):
+        return _result(
+            cite, ctx, "not_in_free_corpus",
+            ["State slip citation; not in the free library. Slip opinion; not held by the free corpus."],
+            row=row, cite_text=cite_text,
+        )
     if ctx.not_checked_reason:
         return _result(cite, ctx, "not_checked", [f"Could not be checked: {ctx.not_checked_reason}. Run again or check by hand."], row=row, cite_text=cite_text)
 
