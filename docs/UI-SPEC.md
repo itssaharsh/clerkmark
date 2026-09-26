@@ -226,7 +226,7 @@ States (label · mark · rule sentence source):
   wrong_cite_exists ... "Exists, but not at this page." · strike-correct · "{case} begins at {first_page}; page {page} is inside it."
   not_in_free_corpus .. "Not in the free library. Check Westlaw or Lexis." · underline-pencil · "U.S. Reports volumes after 572 are not in the Caselaw Access Project." / "Westlaw-only citation; no free text exists." / "Volume {v} is missing from the free library."
   unrecognized_reporter "No reporter by this name." · circle-reporter · "No reporter called '{R}' in reporters_db or the Caselaw Access Project."
-  likely_fabricated ... "Likely not a real case." · circle-all · "Page {p} belongs to {real case}, {v} {R} {first}–{last}. No case named {party} in volume {v}." / "{R} did not publish in {year} (edition runs {start}–{end})." / "Volume {v} ends at page {max}." / "Volume {v} does not exist yet: {R} reached {vmax} by the library's end year."
+  likely_fabricated ... "Likely not a real case." · circle-all · "Page {p} belongs to {real case}, {v} {R} {first}–{last}. No case named {party} in volume {v}." / "{Real case} begins at page {p}; no case named {party} in volume {v}." / "{R} ended at volume 999; volume {v} cannot exist."
   skipped ............. "Not checked (Id., supra or short form)." / "Not checked (statute)." · none · —
   checking (partial) .. "Could not reach the free library." · none · "Timed out after 20 s. [Retry {n} citations] at the foot."
 Transitions: driven by C-02.
