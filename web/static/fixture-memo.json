@@ -1,0 +1,2138 @@
+{
+  "run_id": "cb904531-26c4-446b-8c0d-a03aff90776c",
+  "created_at": "2026-09-26T14:37:51+00:00",
+  "app_version": "0.1.0",
+  "filing": {
+    "filename": "sample-motion.pdf",
+    "pages": 6,
+    "words": 1933,
+    "label": "Synthetic sample filing — Memorandum in Opposition to Motion to Dismiss. Not a real court document; modeled on the fabricated citations described in Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023). Party names are fictional.",
+    "bytes": 10175
+  },
+  "sources_used": {
+    "cap": true,
+    "courtlistener": false,
+    "advisory": false
+  },
+  "results": [
+    {
+      "row": 1,
+      "cite_text": "Mata v. Avianca, Inc., 678 F. Supp. 3d 443 (S.D.N.Y. 2023)",
+      "class": "not_in_free_corpus",
+      "label": "Not in the free library. Check Westlaw or Lexis.",
+      "reasons": [
+        "F. Supp. 3d volumes after 392 (the free corpus ends 2019 for F. Supp. 3d) are not in the free corpus; check CourtListener/Westlaw.",
+        "Volume 678 is beyond the last volume the Caselaw Access Project holds for Federal Supplement, 3d Series (392, 2019); the citation is internally consistent and nothing here suggests it is not real.",
+        "This citation is in the page-1 label of the synthetic sample, not in the filer's argument; it is not scored in the evaluation."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "F. Supp. 3d",
+          "vmin": 1,
+          "vmax": 392,
+          "held": false,
+          "cited": 678,
+          "cap_end_year": 2019,
+          "max_last_page": null,
+          "note": "Federal Supplement, 3d Series · volumes 1–392 in the free library · cited: 678"
+        },
+        "edition_range": {
+          "reporter": "F. Supp. 3d",
+          "start": 1968,
+          "end": 2019,
+          "note": "Caselaw Access Project coverage for F. Supp. 3d: 1968–2019."
+        },
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "678 F. Supp. 3d 443",
+        "span": [
+          98,
+          117
+        ],
+        "filing_page": 1,
+        "volume": 678,
+        "reporter": "F. Supp. 3d",
+        "page": 443,
+        "pin_cite": null,
+        "year": 2023,
+        "court": "S.D.N.Y.",
+        "plaintiff": "Mata",
+        "defendant": "Avianca, Inc.",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "underline-pencil",
+      "register": "coverage",
+      "drawer": "shelf"
+    },
+    {
+      "row": 2,
+      "cite_text": "28 U.S.C. § 1332",
+      "class": "skipped",
+      "label": "Not checked (statute).",
+      "reasons": [
+        "Statute or regulation; out of scope."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": null,
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "none",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "28 U.S.C. § 1332",
+        "span": [
+          2356,
+          2372
+        ],
+        "filing_page": 2,
+        "volume": null,
+        "reporter": "U.S.C.",
+        "page": null,
+        "pin_cite": null,
+        "year": null,
+        "court": null,
+        "plaintiff": null,
+        "defendant": null,
+        "quotes": [],
+        "kind": "statute"
+      },
+      "mark": "none",
+      "register": "grey",
+      "drawer": null
+    },
+    {
+      "row": 3,
+      "cite_text": "Air France v. Saks, 470 U.S. 392 (1985)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: Air France v. Saks, 470 U.S. 392 (Supreme Court of the United States, 1985-03-04).",
+        "Quoted passage found in the opinion text."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Air France v. Saks",
+          "first_page": 392,
+          "last_page": 408,
+          "decision_date": "1985-03-04",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "470 U.S. 392",
+          "file_name": "0392-01",
+          "id": 11299359,
+          "parallel_cites": [
+            "84 L. Ed. 2d 289",
+            "105 S. Ct. 1338",
+            "1985 U.S. LEXIS 62",
+            "SCDB 1984-043"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 470,
+          "cap_end_year": 2014,
+          "max_last_page": 1089,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 470"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "cidents. See Landress v. Phoenix Mutual Life Ins. Co., 291 U. S., at 499 (Cardozo, J., dissenting). Any injury is the product of a chain of causes, and we require only that the passenger be able to prove that some link in the chain was an unusual or unexpected event external to the passenger. Until Article 17 of the Warsaw Convention is changed by the signatories, it cannot be stretched to ",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            293
+          ]
+        },
+        "running_head": "470 U.S. 392 · AIR FRANCE v. SAKS · U.S. · March 4, 1985",
+        "page_marker": "392",
+        "excerpt": "cidents. See Landress v. Phoenix Mutual Life Ins. Co., 291 U. S., at 499 (Cardozo, J., dissenting). Any injury is the product of a chain of causes, and we require only that the passenger be able to prove that some link in the chain was an unusual or unexpected event external to the passenger. Until Article 17 of the Warsaw Convention is changed by the signatories, it cannot be stretched to ",
+        "excerpt_highlight": [
+          100,
+          293
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/470/CasesMetadata.json",
+          "https://static.case.law/us/470/cases/0392-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "Any injury is the product of a chain of causes, and we require only that the passenger be able to prove that some link in the chain was an unusual or unexpected event external to the passenger.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "470 U.S. 392",
+        "span": [
+          2879,
+          2891
+        ],
+        "filing_page": 2,
+        "volume": 470,
+        "reporter": "U.S.",
+        "page": 392,
+        "pin_cite": null,
+        "year": 1985,
+        "court": "scotus",
+        "plaintiff": "Air France",
+        "defendant": "Saks",
+        "quotes": [
+          "Any injury is the product of a chain of causes, and we require only that the passenger be able to prove that some link in the chain was an unusual or unexpected event external to the passenger."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 4,
+      "cite_text": "Olympic Airways v. Husain, 540 U.S. 644 (2004)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: Olympic Airways v. Husain, 540 U.S. 644 (Supreme Court of the United States, 2004-02-24).",
+        "Quoted passage found in the opinion text.",
+        "The volume also lists two one-page order entries for this case at 540 U.S. 807 and 964; the opinion at 644 is the one cited."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Olympic Airways v. Husain",
+          "first_page": 644,
+          "last_page": 667,
+          "decision_date": "2004-02-24",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "540 U.S. 644",
+          "file_name": "0644-01",
+          "id": 8897862,
+          "parallel_cites": [
+            "124 S. Ct. 1221",
+            "157 L. Ed. 2d 1146",
+            "2004 U.S. LEXIS 1620",
+            "SCDB 2003-033"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [
+          {
+            "name": "Olympic Airways v. Husain",
+            "first_page": 807,
+            "last_page": 807,
+            "decision_date": "2003-10-06",
+            "court": "Supreme Court of the United States",
+            "court_abbreviation": "U.S.",
+            "cite": "540 U.S. 807",
+            "file_name": "0807-02",
+            "id": 8900712,
+            "parallel_cites": []
+          },
+          {
+            "name": "Olympic Airways v. Husain",
+            "first_page": 964,
+            "last_page": 964,
+            "decision_date": "2003-10-20",
+            "court": "Supreme Court of the United States",
+            "court_abbreviation": "U.S.",
+            "cite": "540 U.S. 964",
+            "file_name": "0964-05",
+            "id": 8976866,
+            "parallel_cites": []
+          }
+        ],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 540,
+          "cap_end_year": 2014,
+          "max_last_page": 1230,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 540"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "avoid the damage or that it was impossible for [the airline] to take such measures.” 49 Stat. 3019. Thus, Article 17 creates a presumption of air carrier liability and shifts the burden to the air carrier to prove lack of negligence under Article 20. Lowenfeld & Mendel-sohn, The United States and the Warsaw Convention, 80 Harv. L. Rev. 497, 521 (19",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            250
+          ]
+        },
+        "running_head": "540 U.S. 644 · OLYMPIC AIRWAYS v. HUSAIN · U.S. · February 24, 2004",
+        "page_marker": "644",
+        "excerpt": "avoid the damage or that it was impossible for [the airline] to take such measures.” 49 Stat. 3019. Thus, Article 17 creates a presumption of air carrier liability and shifts the burden to the air carrier to prove lack of negligence under Article 20. Lowenfeld & Mendel-sohn, The United States and the Warsaw Convention, 80 Harv. L. Rev. 497, 521 (19",
+        "excerpt_highlight": [
+          100,
+          250
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/540/CasesMetadata.json",
+          "https://static.case.law/us/540/cases/0644-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "Thus, Article 17 creates a presumption of air carrier liability and shifts the burden to the air carrier to prove lack of negligence under Article 20.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "540 U.S. 644",
+        "span": [
+          3417,
+          3429
+        ],
+        "filing_page": 2,
+        "volume": 540,
+        "reporter": "U.S.",
+        "page": 644,
+        "pin_cite": null,
+        "year": 2004,
+        "court": "scotus",
+        "plaintiff": "Olympic Airways",
+        "defendant": "Husain",
+        "quotes": [
+          "Thus, Article 17 creates a presumption of air carrier liability and shifts the burden to the air carrier to prove lack of negligence under Article 20."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 5,
+      "cite_text": "Eastern Airlines, Inc. v. Floyd, 499 U.S. 530 (1991)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: Eastern Airlines, Inc. v. Floyd, 499 U.S. 530 (Supreme Court of the United States, 1991-04-17).",
+        "Quoted passage found in the opinion text."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Eastern Airlines, Inc. v. Floyd",
+          "first_page": 530,
+          "last_page": 553,
+          "decision_date": "1991-04-17",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "499 U.S. 530",
+          "file_name": "0530-01",
+          "id": 11319494,
+          "parallel_cites": [
+            "113 L. Ed. 2d 569",
+            "111 S. Ct. 1489",
+            "SCDB 1990-060",
+            "1991 U.S. LEXIS 2222"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 499,
+          "cap_end_year": 2014,
+          "max_last_page": 1301,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 499"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": " conditions under which an international air carrier can be held liable for injuries to passengers. This case presents the question whether Article 17 allows recovery for mental or psychic injuries unaccompanied by physical injury or physical manifestation of injury.\nI\nOn May 5, 1983, an Eastern Airlines flight departed from Miami, bound for the Bahamas. Shortly af",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            267
+          ]
+        },
+        "running_head": "499 U.S. 530 · EASTERN AIRLINES, INC. v. FLOYD · U.S. · April 17, 1991",
+        "page_marker": "530",
+        "excerpt": " conditions under which an international air carrier can be held liable for injuries to passengers. This case presents the question whether Article 17 allows recovery for mental or psychic injuries unaccompanied by physical injury or physical manifestation of injury.\nI\nOn May 5, 1983, an Eastern Airlines flight departed from Miami, bound for the Bahamas. Shortly af",
+        "excerpt_highlight": [
+          100,
+          267
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/499/CasesMetadata.json",
+          "https://static.case.law/us/499/cases/0530-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "This case presents the question whether Article 17 allows recovery for mental or psychic injuries unaccompanied by physical injury or physical manifestation of injury.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "499 U.S. 530",
+        "span": [
+          4129,
+          4141
+        ],
+        "filing_page": 3,
+        "volume": 499,
+        "reporter": "U.S.",
+        "page": 530,
+        "pin_cite": null,
+        "year": 1991,
+        "court": "scotus",
+        "plaintiff": "Eastern Airlines, Inc.",
+        "defendant": "Floyd",
+        "quotes": [
+          "This case presents the question whether Article 17 allows recovery for mental or psychic injuries unaccompanied by physical injury or physical manifestation of injury."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 6,
+      "cite_text": "Varghese v. China Southern Airlines Co., 925 F.3d 1339 (11th Cir. 2019)",
+      "class": "likely_fabricated",
+      "label": "Likely not a real case.",
+      "reasons": [
+        "Page 1339 of 925 F.3d belongs to J.D. v. Azar (1291–1349). No case in volume 925 F.3d is named Varghese or China Southern Airlines Co.. Verify before relying on this.",
+        "Nearest caption in the volume: McGlothin v. State Farm Mut. Ins. Co., 925 F.3d 741 (best name score 56.2 of 100; a match needs 80 on both parties)."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "J.D. v. Azar",
+          "first_page": 1291,
+          "last_page": 1349,
+          "decision_date": "2019-06-14",
+          "court": "Court of Appeals of the District of Columbia",
+          "court_abbreviation": "D.C. Cir.",
+          "cite": "925 F.3d 1291",
+          "file_name": "1291-01",
+          "id": 12521273,
+          "parallel_cites": []
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "F.3d",
+          "vmin": 1,
+          "vmax": 935,
+          "held": true,
+          "cited": 925,
+          "cap_end_year": 2019,
+          "max_last_page": 1384,
+          "note": "Federal Reporter, 3d Series · volumes 1–935 in the free library · cited: 925"
+        },
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": "925 F.3d 1291 · J.D. v. AZAR · D.C. Cir. · June 14, 2019 · begins at 1291",
+        "page_marker": "1339",
+        "excerpt": "Dissenting opinion filed by Senior Circuit Judge Silberman.\nPer Curiam:\nAmong the scores of persons who come to the United States each year without lawful immigration status, several thousand are \"unaccompanied alien children.\" Unaccompanied alien children hav",
+        "excerpt_highlight": null,
+        "links": [
+          "https://static.case.law/f3d/VolumesMetadata.json",
+          "https://static.case.law/f3d/925/CasesMetadata.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [
+          "Varghese",
+          "China Southern Airlines Co."
+        ],
+        "nearest_caption": {
+          "name": "McGlothin v. State Farm Mut. Ins. Co.",
+          "first_page": 741,
+          "last_page": 749,
+          "decision_date": "2019-05-31",
+          "court": "United States Court of Appeals for the Fifth Circuit",
+          "court_abbreviation": "5th Cir.",
+          "cite": "925 F.3d 741",
+          "file_name": "0741-01",
+          "id": 12521332,
+          "parallel_cites": [],
+          "score": 56.2,
+          "match": "none",
+          "court_consistent": null
+        },
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "925 F.3d 1339",
+        "span": [
+          4401,
+          4414
+        ],
+        "filing_page": 3,
+        "volume": 925,
+        "reporter": "F.3d",
+        "page": 1339,
+        "pin_cite": null,
+        "year": 2019,
+        "court": "11th Cir.",
+        "plaintiff": "Varghese",
+        "defendant": "China Southern Airlines Co.",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "circle-all",
+      "register": "red",
+      "drawer": "page"
+    },
+    {
+      "row": 7,
+      "cite_text": "Petersen v. Iran Air, 905 F. Supp. 2d 121 (D.D.C. 2012)",
+      "class": "likely_fabricated",
+      "label": "Likely not a real case.",
+      "reasons": [
+        "Page 121 of 905 F. Supp. 2d is where United States v. ISS Marine Services, Inc. begins (121–142). No case in volume 905 F. Supp. 2d is named Petersen or Iran Air. Verify before relying on this.",
+        "Nearest caption in the volume: Farzam v. Isaacson, 905 F. Supp. 2d 95 (best name score 46.2 of 100; a match needs 80 on both parties).",
+        "Opinion text for the case at this page is not in the local cache; the drawer shows the volume listing only."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "United States v. ISS Marine Services, Inc.",
+          "first_page": 121,
+          "last_page": 142,
+          "decision_date": "2012-11-21",
+          "court": "United States District Court for the District of Columbia",
+          "court_abbreviation": "D.D.C.",
+          "cite": "905 F. Supp. 2d 121",
+          "file_name": "0121-01",
+          "id": 3825190,
+          "parallel_cites": []
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "F. Supp. 2d",
+          "vmin": 1,
+          "vmax": 999,
+          "held": true,
+          "cited": 905,
+          "cap_end_year": 2014,
+          "max_last_page": 1357,
+          "note": "Federal Supplement, 2d Series · volumes 1–999 in the free library · cited: 905"
+        },
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": "905 F. Supp. 2d 121 · UNITED STATES v. ISS MARINE SERVICES, INC. · D.D.C. · November 21, 2012 · begins at 121",
+        "page_marker": "121",
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [
+          "https://static.case.law/f-supp-2d/VolumesMetadata.json",
+          "https://static.case.law/f-supp-2d/905/CasesMetadata.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [
+          "Petersen",
+          "Iran Air"
+        ],
+        "nearest_caption": {
+          "name": "Farzam v. Isaacson",
+          "first_page": 95,
+          "last_page": 99,
+          "decision_date": "2012-11-21",
+          "court": "United States District Court for the District of Columbia",
+          "court_abbreviation": "D.D.C.",
+          "cite": "905 F. Supp. 2d 95",
+          "file_name": "0095-01",
+          "id": 3824513,
+          "parallel_cites": [],
+          "score": 46.2,
+          "match": "none",
+          "court_consistent": null
+        },
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "905 F. Supp. 2d 121",
+        "span": [
+          4675,
+          4694
+        ],
+        "filing_page": 3,
+        "volume": 905,
+        "reporter": "F. Supp. 2d",
+        "page": 121,
+        "pin_cite": null,
+        "year": 2012,
+        "court": "D.D.C.",
+        "plaintiff": "Petersen",
+        "defendant": "Iran Air",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "circle-all",
+      "register": "red",
+      "drawer": "page"
+    },
+    {
+      "row": 8,
+      "cite_text": "Miller v. United Airlines, Inc., 174 F.3d 366 (2d Cir. 1999)",
+      "class": "likely_fabricated",
+      "label": "Likely not a real case.",
+      "reasons": [
+        "Page 366 of 174 F.3d belongs to Greenleaf v. Garlock, Inc. (352–368). No case in volume 174 F.3d is named Miller v. United Airlines, Inc.; the nearest caption, Miller v. City of Philadelphia (3d Cir., 174 F.3d 368), fails the filing's court (2d Cir.) and its second party. Verify before relying on this.",
+        "Nearest caption in the volume: Miller v. City of Philadelphia, 174 F.3d 368 (best name score 100.0 of 100; a match needs 80 on both parties)."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Greenleaf v. Garlock, Inc.",
+          "first_page": 352,
+          "last_page": 368,
+          "decision_date": "1999-04-26",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "court_abbreviation": "3d Cir.",
+          "cite": "174 F.3d 352",
+          "file_name": "0352-01",
+          "id": 11620144,
+          "parallel_cites": []
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "F.3d",
+          "vmin": 1,
+          "vmax": 935,
+          "held": true,
+          "cited": 174,
+          "cap_end_year": 2019,
+          "max_last_page": 1382,
+          "note": "Federal Reporter, 3d Series · volumes 1–935 in the free library · cited: 174"
+        },
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": "174 F.3d 352 · GREENLEAF v. GARLOCK, INC. · 3d Cir. · April 26, 1999 · begins at 352",
+        "page_marker": "366",
+        "excerpt": "OPINION OF THE COURT\nSTAPLETON, Circuit Judge:\nGarlock, Inc. (“Garlock”) and Owens Corning Fiberglas Corp. (“Owens”) appeal the District Court’s orders denying their motions to alter or amend a ’judgment holding them liable- for Charles Greenleaf, Jr.’s injuri",
+        "excerpt_highlight": null,
+        "links": [
+          "https://static.case.law/f3d/VolumesMetadata.json",
+          "https://static.case.law/f3d/174/CasesMetadata.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [
+          "Miller",
+          "United Airlines, Inc."
+        ],
+        "nearest_caption": {
+          "name": "Miller v. City of Philadelphia",
+          "first_page": 368,
+          "last_page": 391,
+          "decision_date": "1999-04-26",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "court_abbreviation": "3d Cir.",
+          "cite": "174 F.3d 368",
+          "file_name": "0368-01",
+          "id": 11620269,
+          "parallel_cites": [],
+          "score": 100.0,
+          "match": "partial",
+          "court_consistent": false
+        },
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "174 F.3d 366",
+        "span": [
+          4915,
+          4927
+        ],
+        "filing_page": 3,
+        "volume": 174,
+        "reporter": "F.3d",
+        "page": 366,
+        "pin_cite": null,
+        "year": 1999,
+        "court": "2d Cir.",
+        "plaintiff": "Miller",
+        "defendant": "United Airlines, Inc.",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "circle-all",
+      "register": "red",
+      "drawer": "page"
+    },
+    {
+      "row": 9,
+      "cite_text": "Shaboon v. Egyptair, 2013 IL App (1st) 111279",
+      "class": "not_in_free_corpus",
+      "label": "Not in the free library. Check Westlaw or Lexis.",
+      "reasons": [
+        "Public-domain neutral citation; the free corpus does not index this format; check the court's own site.",
+        "Illinois public-domain citation (2013 IL App (1st) 111279). Check the Illinois courts' site or Westlaw/Lexis."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": null,
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [],
+        "cite_type": "neutral",
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "none",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "2013 IL App (1st) 111279",
+        "span": [
+          5119,
+          5143
+        ],
+        "filing_page": 3,
+        "volume": 2013,
+        "reporter": "IL App (1st)",
+        "page": 111279,
+        "pin_cite": null,
+        "year": 2013,
+        "court": null,
+        "plaintiff": "Shaboon",
+        "defendant": "Egyptair",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "underline-pencil",
+      "register": "coverage",
+      "drawer": null
+    },
+    {
+      "row": 10,
+      "cite_text": "Martinez v. Delta Air Lines, Inc., 2019 WL 4639462 (Tex. App. 2019)",
+      "class": "not_in_free_corpus",
+      "label": "Not in the free library. Check Westlaw or Lexis.",
+      "reasons": [
+        "Proprietary citation (Westlaw/Lexis); not checkable in a free corpus.",
+        "Westlaw-only citation; no free text exists. Check Westlaw or Lexis for the case."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": null,
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [],
+        "cite_type": "specialty_west",
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "none",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "2019 WL 4639462",
+        "span": [
+          5272,
+          5287
+        ],
+        "filing_page": 3,
+        "volume": 2019,
+        "reporter": "WL",
+        "page": 4639462,
+        "pin_cite": null,
+        "year": 2019,
+        "court": "Tex. App.",
+        "plaintiff": "Martinez",
+        "defendant": "Delta Air Lines, Inc.",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "underline-pencil",
+      "register": "coverage",
+      "drawer": null
+    },
+    {
+      "row": 11,
+      "cite_text": "Estate of Durden v. KLM Royal Dutch Airlines, 2017 WL 2418825 (Ga. Ct. App. 2017)",
+      "class": "not_in_free_corpus",
+      "label": "Not in the free library. Check Westlaw or Lexis.",
+      "reasons": [
+        "Proprietary citation (Westlaw/Lexis); not checkable in a free corpus.",
+        "Westlaw-only citation; no free text exists. Check Westlaw or Lexis for the case."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": null,
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [],
+        "cite_type": "specialty_west",
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "none",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "2017 WL 2418825",
+        "span": [
+          5405,
+          5420
+        ],
+        "filing_page": 3,
+        "volume": 2017,
+        "reporter": "WL",
+        "page": 2418825,
+        "pin_cite": null,
+        "year": 2017,
+        "court": "Ga. Ct. App.",
+        "plaintiff": "Estate  Durden",
+        "defendant": "KLM Royal Dutch Airlines",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "underline-pencil",
+      "register": "coverage",
+      "drawer": null
+    },
+    {
+      "row": 12,
+      "cite_text": "El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng, 525 U.S. 155 (1999)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng, 525 U.S. 155 (Supreme Court of the United States, 1999-01-12).",
+        "Quoted passage found in the opinion text."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng",
+          "first_page": 155,
+          "last_page": 181,
+          "decision_date": "1999-01-12",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "525 U.S. 155",
+          "file_name": "0155-01",
+          "id": 11076427,
+          "parallel_cites": [
+            "142 L. Ed. 2d 576",
+            "119 S. Ct. 662",
+            "1999 U.S. LEXIS 505",
+            "SCDB 1998-011"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [
+          {
+            "name": "El Al Israel Airlines, Ltd. v. Tsui Yuan Tseng",
+            "first_page": 958,
+            "last_page": 958,
+            "decision_date": "1998-11-02",
+            "court": "Supreme Court of the United States",
+            "court_abbreviation": "U.S.",
+            "cite": "525 U.S. 958",
+            "file_name": "0958-07",
+            "id": 11136143,
+            "parallel_cites": []
+          }
+        ],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 525,
+          "cap_end_year": 2014,
+          "max_last_page": 1301,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 525"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "the Convention as a compromise between the interests of air carriers and their customers worldwide. In Article 17 of the Convention, carriers are denied the contractual prerogative to exclude or limit their liability for personal injury. In Articles 22 and 24, passengers are limited in the amount of damages they may recover, and are re",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            237
+          ]
+        },
+        "running_head": "525 U.S. 155 · EL AL ISRAEL AIRLINES, LTD. v. TSUI YUAN TSENG · U.S. · January 12, 1999",
+        "page_marker": "155",
+        "excerpt": "the Convention as a compromise between the interests of air carriers and their customers worldwide. In Article 17 of the Convention, carriers are denied the contractual prerogative to exclude or limit their liability for personal injury. In Articles 22 and 24, passengers are limited in the amount of damages they may recover, and are re",
+        "excerpt_highlight": [
+          100,
+          237
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/525/CasesMetadata.json",
+          "https://static.case.law/us/525/cases/0155-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "In Article 17 of the Convention, carriers are denied the contractual prerogative to exclude or limit their liability for personal injury.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "525 U.S. 155",
+        "span": [
+          6047,
+          6059
+        ],
+        "filing_page": 4,
+        "volume": 525,
+        "reporter": "U.S.",
+        "page": 155,
+        "pin_cite": null,
+        "year": 1999,
+        "court": "scotus",
+        "plaintiff": "El Al Israel Airlines, Ltd.",
+        "defendant": "Tsui Yuan Tseng",
+        "quotes": [
+          "In Article 17 of the Convention, carriers are denied the contractual prerogative to exclude or limit their liability for personal injury."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 13,
+      "cite_text": "Zicherman v. Korean Air Lines Co., 516 U.S. 217 (1996)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: Zicherman ex rel. Estate of Kole v. Korean Air Lines Co., 516 U.S. 217 (Supreme Court of the United States, 1996-01-16).",
+        "Quoted passage found in the opinion text."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Zicherman ex rel. Estate of Kole v. Korean Air Lines Co.",
+          "first_page": 217,
+          "last_page": 232,
+          "decision_date": "1996-01-16",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "516 U.S. 217",
+          "file_name": "0217-01",
+          "id": 327173,
+          "parallel_cites": [
+            "133 L. Ed. 2d 596",
+            "116 S. Ct. 629",
+            "1996 U.S. LEXIS 469",
+            "SCDB 1995-016"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 516,
+          "cap_end_year": 2014,
+          "max_last_page": 1302,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 516"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "ovisions applicable to Warsaw Convention cases, as some countries have done. See supra, at 227-228. Absent such legislation, however, Articles 17 and 24(2) provide nothing more than a pass-through, authorizing us to apply the law that would govern in absence of the Warsaw Convention. There is little doubt what that law is in this case.\nSection 761 of DOHSA provides:\n“Whenever the d",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            284
+          ]
+        },
+        "running_head": "516 U.S. 217 · ZICHERMAN EX REL. ESTATE OF KOLE v. KOREAN AIR LINES CO. · U.S. · January 16, 1996",
+        "page_marker": "217",
+        "excerpt": "ovisions applicable to Warsaw Convention cases, as some countries have done. See supra, at 227-228. Absent such legislation, however, Articles 17 and 24(2) provide nothing more than a pass-through, authorizing us to apply the law that would govern in absence of the Warsaw Convention. There is little doubt what that law is in this case.\nSection 761 of DOHSA provides:\n“Whenever the d",
+        "excerpt_highlight": [
+          100,
+          284
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/516/CasesMetadata.json",
+          "https://static.case.law/us/516/cases/0217-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "Absent such legislation, however, Articles 17 and 24(2) provide nothing more than a pass-through, authorizing us to apply the law that would govern in absence of the Warsaw Convention.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "516 U.S. 217",
+        "span": [
+          6505,
+          6517
+        ],
+        "filing_page": 4,
+        "volume": 516,
+        "reporter": "U.S.",
+        "page": 217,
+        "pin_cite": null,
+        "year": 1996,
+        "court": "scotus",
+        "plaintiff": "Zicherman",
+        "defendant": "Korean Air Lines Co.",
+        "quotes": [
+          "Absent such legislation, however, Articles 17 and 24(2) provide nothing more than a pass-through, authorizing us to apply the law that would govern in absence of the Warsaw Convention."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 14,
+      "cite_text": "Id. at 230.",
+      "class": "skipped",
+      "label": "Not checked (Id., supra or short form).",
+      "reasons": [
+        "Short-form citation (Id./supra); the full citation it points to is checked instead.",
+        "Points to Zicherman v. Korean Air Lines Co., 516 U.S. 217 (line 13)."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": null,
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "none",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "Id. at 230",
+        "span": [
+          6646,
+          6656
+        ],
+        "filing_page": 4,
+        "volume": null,
+        "reporter": null,
+        "page": null,
+        "pin_cite": "at 230",
+        "year": null,
+        "court": null,
+        "plaintiff": null,
+        "defendant": null,
+        "quotes": [],
+        "kind": "id"
+      },
+      "mark": "none",
+      "register": "grey",
+      "drawer": null
+    },
+    {
+      "row": 15,
+      "cite_text": "Zicherman v. Korean Air Lines Co., 516 U.S. 230 (1996)",
+      "class": "wrong_cite_exists",
+      "label": "Exists, but not at this page.",
+      "reasons": [
+        "Zicherman ex rel. Estate of Kole v. Korean Air Lines Co. begins at 516 U.S. 217; page 230 is inside it (217–232).",
+        "The party names match the case that spans this page; the filing cites a pin page as if it were the first page. The correct first page is 217."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Zicherman ex rel. Estate of Kole v. Korean Air Lines Co.",
+          "first_page": 217,
+          "last_page": 232,
+          "decision_date": "1996-01-16",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "516 U.S. 217",
+          "file_name": "0217-01",
+          "id": 327173,
+          "parallel_cites": [
+            "133 L. Ed. 2d 596",
+            "116 S. Ct. 629",
+            "1996 U.S. LEXIS 469",
+            "SCDB 1995-016"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 516,
+          "cap_end_year": 2014,
+          "max_last_page": 1302,
+          "note": "Zicherman ex rel. Estate of Kole v. Korean Air Lines Co. · pages 217–232 · cited: 230"
+        },
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": "516 U.S. 217 · ZICHERMAN EX REL. ESTATE OF KOLE v. KOREAN AIR LINES CO. · U.S. · January 16, 1996 · begins at 217",
+        "page_marker": "230",
+        "excerpt": "Justice Scalia\ndelivered the opinion of the Court.\nThis action presents the question whether, in a suit brought under Article 17 of the Warsaw Convention governing international air transportation, Convention for the Unification of Certain Rules Relating to In",
+        "excerpt_highlight": null,
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/516/CasesMetadata.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "516 U.S. 230",
+        "span": [
+          6896,
+          6908
+        ],
+        "filing_page": 4,
+        "volume": 516,
+        "reporter": "U.S.",
+        "page": 230,
+        "pin_cite": null,
+        "year": 1996,
+        "court": "scotus",
+        "plaintiff": "Zicherman",
+        "defendant": "Korean Air Lines Co.",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "strike-correct",
+      "register": "amber",
+      "drawer": "page"
+    },
+    {
+      "row": 16,
+      "cite_text": "Chan v. Korean Air Lines, Ltd., 490 U.S. 122 (1989)",
+      "class": "quote_not_found",
+      "label": "Found, but this quote is not in the opinion.",
+      "reasons": [
+        "The quoted passage differs from the opinion text in 3 word(s): 'authority' → 'power', 'add' → 'insert', 'exception' → 'amendment'. The opinion's passage is shown.",
+        "Found in the free corpus: Chan v. Korean Air Lines, Ltd., 490 U.S. 122 (Supreme Court of the United States, 1989-04-18)."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Chan v. Korean Air Lines, Ltd.",
+          "first_page": 122,
+          "last_page": 152,
+          "decision_date": "1989-04-18",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "490 U.S. 122",
+          "file_name": "0122-01",
+          "id": 605499,
+          "parallel_cites": [
+            "104 L. Ed. 2d 113",
+            "109 S. Ct. 1676",
+            "1989 U.S. LEXIS 2026",
+            "SCDB 1988-074"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 490,
+          "cap_end_year": 2014,
+          "max_last_page": 1117,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 490"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "sulted to elucidate a text that is ambiguous, see, e. g., Air France v. Saks, 470 U. S. 392 (1985). But where the text is clear, as it is here, we have no power to insert an amendment. As Justice Story wrote for the Court more than a century and a half ago:\n“[T]o alter, amend, or add",
+          "similarity": 81.2,
+          "diff_tokens": [
+            {
+              "filed": "authority",
+              "opinion": "power"
+            },
+            {
+              "filed": "add",
+              "opinion": "insert"
+            },
+            {
+              "filed": "exception",
+              "opinion": "amendment"
+            }
+          ],
+          "status": "differs",
+          "highlight": [
+            100,
+            184
+          ]
+        },
+        "running_head": "490 U.S. 122 · CHAN v. KOREAN AIR LINES, LTD. · U.S. · April 18, 1989 · closest passage, 81.2% similar",
+        "page_marker": "122",
+        "excerpt": "sulted to elucidate a text that is ambiguous, see, e. g., Air France v. Saks, 470 U. S. 392 (1985). But where the text is clear, as it is here, we have no power to insert an amendment. As Justice Story wrote for the Court more than a century and a half ago:\n“[T]o alter, amend, or add",
+        "excerpt_highlight": [
+          100,
+          184
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/490/CasesMetadata.json",
+          "https://static.case.law/us/490/cases/0122-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "differs",
+        "quote": "But where the text is clear, as it is here, we have no authority to add an exception.",
+        "similarity": 81.2,
+        "segments": 1,
+        "diff": [
+          {
+            "filed": "authority",
+            "opinion": "power"
+          },
+          {
+            "filed": "add",
+            "opinion": "insert"
+          },
+          {
+            "filed": "exception",
+            "opinion": "amendment"
+          }
+        ]
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "490 U.S. 122",
+        "span": [
+          7267,
+          7279
+        ],
+        "filing_page": 4,
+        "volume": 490,
+        "reporter": "U.S.",
+        "page": 122,
+        "pin_cite": null,
+        "year": 1989,
+        "court": "scotus",
+        "plaintiff": "Chan",
+        "defendant": "Korean Air Lines, Ltd.",
+        "quotes": [
+          "But where the text is clear, as it is here, we have no authority to add an exception."
+        ],
+        "kind": "full"
+      },
+      "mark": "underline-quote",
+      "register": "amber",
+      "drawer": "page"
+    },
+    {
+      "row": 17,
+      "cite_text": "Bell Atlantic Corp. v. Twombly, 550 U.S. 544 (2007)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: Bell Atlantic Corp. v. Twombly, 550 U.S. 544 (Supreme Court of the United States, 2007-05-21).",
+        "Quoted passage found in the opinion text."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Bell Atlantic Corp. v. Twombly",
+          "first_page": 544,
+          "last_page": 597,
+          "decision_date": "2007-05-21",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "550 U.S. 544",
+          "file_name": "0544-01",
+          "id": 3556136,
+          "parallel_cites": [
+            "167 L. Ed. 2d 929",
+            "127 S. Ct. 1955",
+            "2007 U.S. LEXIS 5901",
+            "SCDB 2006-045"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 550,
+          "cap_end_year": 2014,
+          "max_last_page": 661,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 550"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "yond those necessary to state his claim and the grounds showing entitlement to relief. Id., at 508.\nHere, in contrast, we do not require heightened fact pleading of specifics, but only enough facts to state a claim to relief that is plausible on its face. Because the plaintiffs here have not nudged their claims across the line from conceivable to plausi",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            255
+          ]
+        },
+        "running_head": "550 U.S. 544 · BELL ATLANTIC CORP. v. TWOMBLY · U.S. · May 21, 2007",
+        "page_marker": "544",
+        "excerpt": "yond those necessary to state his claim and the grounds showing entitlement to relief. Id., at 508.\nHere, in contrast, we do not require heightened fact pleading of specifics, but only enough facts to state a claim to relief that is plausible on its face. Because the plaintiffs here have not nudged their claims across the line from conceivable to plausi",
+        "excerpt_highlight": [
+          100,
+          255
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/550/CasesMetadata.json",
+          "https://static.case.law/us/550/cases/0544-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "Here, in contrast, we do not require heightened fact pleading of specifics, but only enough facts to state a claim to relief that is plausible on its face.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "550 U.S. 544",
+        "span": [
+          7971,
+          7983
+        ],
+        "filing_page": 4,
+        "volume": 550,
+        "reporter": "U.S.",
+        "page": 544,
+        "pin_cite": null,
+        "year": 2007,
+        "court": "scotus",
+        "plaintiff": "Bell Atlantic Corp.",
+        "defendant": "Twombly",
+        "quotes": [
+          "Here, in contrast, we do not require heightened fact pleading of specifics, but only enough facts to state a claim to relief that is plausible on its face."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 18,
+      "cite_text": "Ashcroft v. Iqbal, 556 U.S. 662 (2009)",
+      "class": "quote_not_found",
+      "label": "Found, but this quote is not in the opinion.",
+      "reasons": [
+        "The quoted passage was not found in the opinion text; the closest passage is 90.5% similar and is shown.",
+        "Found in the free corpus: Ashcroft v. Iqbal, 556 U.S. 662 (Supreme Court of the United States, 2009-05-18)."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Ashcroft v. Iqbal",
+          "first_page": 662,
+          "last_page": 700,
+          "decision_date": "2009-05-18",
+          "court": "Supreme Court of the United States",
+          "court_abbreviation": "U.S.",
+          "cite": "556 U.S. 662",
+          "file_name": "0662-01",
+          "id": 3653744,
+          "parallel_cites": [
+            "173 L. Ed. 2d 868",
+            "129 S. Ct. 1937",
+            "2009 U.S. LEXIS 3472",
+            "SCDB 2008-056"
+          ]
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": true,
+          "cited": 556,
+          "cap_end_year": 2014,
+          "max_last_page": 1403,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 556"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": " matter, accepted as true, to “state a claim to relief that is plausible on its face.” Id., at 570. A claim has facial plausibility when the plaintiff pleads factual content that allows the court to draw the reasonable inference that the defendant is liable for the misconduct alleged. Id., at 556. The plausibility standard is not akin to a “probability requirement,” but it asks for ",
+          "similarity": 90.5,
+          "diff_tokens": [
+            {
+              "filed": "alleges",
+              "opinion": "pleads"
+            },
+            {
+              "filed": "permits",
+              "opinion": "allows"
+            },
+            {
+              "filed": "a",
+              "opinion": "the"
+            },
+            {
+              "filed": "responsible",
+              "opinion": "liable"
+            }
+          ],
+          "status": "not_found",
+          "highlight": [
+            100,
+            285
+          ]
+        },
+        "running_head": "556 U.S. 662 · ASHCROFT v. IQBAL · U.S. · May 18, 2009 · closest passage, 90.5% similar",
+        "page_marker": "662",
+        "excerpt": " matter, accepted as true, to “state a claim to relief that is plausible on its face.” Id., at 570. A claim has facial plausibility when the plaintiff pleads factual content that allows the court to draw the reasonable inference that the defendant is liable for the misconduct alleged. Id., at 556. The plausibility standard is not akin to a “probability requirement,” but it asks for ",
+        "excerpt_highlight": [
+          100,
+          285
+        ],
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/556/CasesMetadata.json",
+          "https://static.case.law/us/556/cases/0662-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "not_found",
+        "quote": "A claim has facial plausibility when the plaintiff alleges factual content that permits the court to draw a reasonable inference that the defendant is responsible for the misconduct alleged.",
+        "similarity": 90.5,
+        "segments": 1,
+        "diff": [
+          {
+            "filed": "alleges",
+            "opinion": "pleads"
+          },
+          {
+            "filed": "permits",
+            "opinion": "allows"
+          },
+          {
+            "filed": "a",
+            "opinion": "the"
+          },
+          {
+            "filed": "responsible",
+            "opinion": "liable"
+          }
+        ]
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "556 U.S. 662",
+        "span": [
+          8269,
+          8281
+        ],
+        "filing_page": 5,
+        "volume": 556,
+        "reporter": "U.S.",
+        "page": 662,
+        "pin_cite": null,
+        "year": 2009,
+        "court": "scotus",
+        "plaintiff": "Ashcroft",
+        "defendant": "Iqbal",
+        "quotes": [
+          "A claim has facial plausibility when the plaintiff alleges factual content that permits the court to draw a reasonable inference that the defendant is responsible for the misconduct alleged."
+        ],
+        "kind": "full"
+      },
+      "mark": "underline-quote",
+      "register": "amber",
+      "drawer": "page"
+    },
+    {
+      "row": 19,
+      "cite_text": "Greenleaf v. Garlock, Inc., 174 F.3d 352 (3d Cir. 1999)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: Greenleaf v. Garlock, Inc., 174 F.3d 352 (United States Court of Appeals for the Third Circuit, 1999-04-26).",
+        "Quoted passage found in the opinion text."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "Greenleaf v. Garlock, Inc.",
+          "first_page": 352,
+          "last_page": 368,
+          "decision_date": "1999-04-26",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "court_abbreviation": "3d Cir.",
+          "cite": "174 F.3d 352",
+          "file_name": "0352-01",
+          "id": 11620144,
+          "parallel_cites": []
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "F.3d",
+          "vmin": 1,
+          "vmax": 935,
+          "held": true,
+          "cited": 174,
+          "cap_end_year": 2019,
+          "max_last_page": 1382,
+          "note": "Federal Reporter, 3d Series · volumes 1–935 in the free library · cited: 174"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "y that the plaintiffs had the burden of proving proximate cause and explained that concept to them. It further cautioned that the jury must conduct a separate analysis of the evidence, and make a separate decision on, the proximate cause issue with respect to each defendant. The District Court’s charge on these points is entirely consistent with our understanding of the Pe",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            275
+          ]
+        },
+        "running_head": "174 F.3d 352 · GREENLEAF v. GARLOCK, INC. · 3d Cir. · April 26, 1999",
+        "page_marker": "352",
+        "excerpt": "y that the plaintiffs had the burden of proving proximate cause and explained that concept to them. It further cautioned that the jury must conduct a separate analysis of the evidence, and make a separate decision on, the proximate cause issue with respect to each defendant. The District Court’s charge on these points is entirely consistent with our understanding of the Pe",
+        "excerpt_highlight": [
+          100,
+          275
+        ],
+        "links": [
+          "https://static.case.law/f3d/VolumesMetadata.json",
+          "https://static.case.law/f3d/174/CasesMetadata.json",
+          "https://static.case.law/f3d/174/cases/0352-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "It further cautioned that the jury must conduct a separate analysis of the evidence, and make a separate decision on, the proximate cause issue with respect to each defendant.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "174 F.3d 352",
+        "span": [
+          9040,
+          9052
+        ],
+        "filing_page": 5,
+        "volume": 174,
+        "reporter": "F.3d",
+        "page": 352,
+        "pin_cite": null,
+        "year": 1999,
+        "court": "3d Cir.",
+        "plaintiff": "Greenleaf",
+        "defendant": "Garlock, Inc.",
+        "quotes": [
+          "It further cautioned that the jury must conduct a separate analysis of the evidence, and make a separate decision on, the proximate cause issue with respect to each defendant."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 20,
+      "cite_text": "Alvarez v. Skyline Cargo, 88 Fed. Air Rptr. 3d 412 (2018)",
+      "class": "unrecognized_reporter",
+      "label": "No reporter by this name.",
+      "reasons": [
+        "Citation-like string with a reporter this tool does not know: 'Fed. Air Rptr. 3d'. Check the reporter abbreviation by hand.",
+        "No reporter called 'Fed. Air Rptr. 3d' in reporters_db or the Caselaw Access Project's list of 401 reporters."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": null,
+        "edition_range": null,
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [
+          "https://static.case.law/ReportersMetadata.json"
+        ],
+        "cite_type": null,
+        "matched_text": "88 Fed. Air Rptr. 3d 412",
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "none",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "88 Fed. Air Rptr. 3d 412",
+        "span": [
+          9461,
+          9485
+        ],
+        "filing_page": 5,
+        "volume": 88,
+        "reporter": "Fed. Air Rptr. 3d",
+        "page": 412,
+        "pin_cite": null,
+        "year": 2018,
+        "court": null,
+        "plaintiff": "Alvarez",
+        "defendant": "Skyline Cargo",
+        "quotes": [],
+        "kind": "unrecognized"
+      },
+      "mark": "circle-reporter",
+      "register": "unknown_reporter",
+      "drawer": null
+    },
+    {
+      "row": 21,
+      "cite_text": "J.D. v. Azar, 925 F.3d 1291 (D.C. Cir. 2019)",
+      "class": "verified",
+      "label": "Found. Quote matches.",
+      "reasons": [
+        "Found in the free corpus: J.D. v. Azar, 925 F.3d 1291 (Court of Appeals of the District of Columbia, 2019-06-14).",
+        "Quoted passage found in the opinion text."
+      ],
+      "evidence": {
+        "real_case_at_page": {
+          "name": "J.D. v. Azar",
+          "first_page": 1291,
+          "last_page": 1349,
+          "decision_date": "2019-06-14",
+          "court": "Court of Appeals of the District of Columbia",
+          "court_abbreviation": "D.C. Cir.",
+          "cite": "925 F.3d 1291",
+          "file_name": "1291-01",
+          "id": 12521273,
+          "parallel_cites": []
+        },
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "F.3d",
+          "vmin": 1,
+          "vmax": 935,
+          "held": true,
+          "cited": 925,
+          "cap_end_year": 2019,
+          "max_last_page": 1384,
+          "note": "Federal Reporter, 3d Series · volumes 1–935 in the free library · cited: 925"
+        },
+        "edition_range": null,
+        "closest_passage": {
+          "text": "epends on whether the claim is potentially fleeting, we must determine what qualifies as too brief. Once the district court deems a Rule 23 class valid, the subsequent mootness of individual claims does not terminate litigation. See Sosna , 419 U.S. at 399, 402, 95 S.Ct. 553 ; see also Genesis Healthcare , 569 U.S. at 75, 133 ",
+          "similarity": 100.0,
+          "diff_tokens": [],
+          "status": "verbatim",
+          "highlight": [
+            100,
+            228
+          ]
+        },
+        "running_head": "925 F.3d 1291 · J.D. v. AZAR · D.C. Cir. · June 14, 2019",
+        "page_marker": "1291",
+        "excerpt": "epends on whether the claim is potentially fleeting, we must determine what qualifies as too brief. Once the district court deems a Rule 23 class valid, the subsequent mootness of individual claims does not terminate litigation. See Sosna , 419 U.S. at 399, 402, 95 S.Ct. 553 ; see also Genesis Healthcare , 569 U.S. at 75, 133 ",
+        "excerpt_highlight": [
+          100,
+          228
+        ],
+        "links": [
+          "https://static.case.law/f3d/VolumesMetadata.json",
+          "https://static.case.law/f3d/925/CasesMetadata.json",
+          "https://static.case.law/f3d/925/cases/1291-01.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": {
+        "status": "verbatim",
+        "quote": "Once the district court deems a Rule 23 class valid, the subsequent mootness of individual claims does not terminate litigation.",
+        "similarity": 100.0,
+        "segments": 1,
+        "diff": []
+      },
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "925 F.3d 1291",
+        "span": [
+          10174,
+          10187
+        ],
+        "filing_page": 5,
+        "volume": 925,
+        "reporter": "F.3d",
+        "page": 1291,
+        "pin_cite": null,
+        "year": 2019,
+        "court": "D.C. Cir.",
+        "plaintiff": "J.D.",
+        "defendant": "Azar",
+        "quotes": [
+          "Once the district court deems a Rule 23 class valid, the subsequent mootness of individual claims does not terminate litigation."
+        ],
+        "kind": "full"
+      },
+      "mark": "check",
+      "register": "green",
+      "drawer": "page"
+    },
+    {
+      "row": 22,
+      "cite_text": "Loper Bright Enterprises v. Raimondo, 603 U.S. 369 (2024)",
+      "class": "not_in_free_corpus",
+      "label": "Not in the free library. Check Westlaw or Lexis.",
+      "reasons": [
+        "U.S. volumes after 572 (the free corpus ends 2014 for U.S.) are not in the free corpus; check CourtListener/Westlaw.",
+        "Volume 603 is beyond the last volume the Caselaw Access Project holds for U.S. Reports (572, 2014); the citation is internally consistent and nothing here suggests it is not real."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": false,
+          "cited": 603,
+          "cap_end_year": 2014,
+          "max_last_page": null,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 603"
+        },
+        "edition_range": {
+          "reporter": "U.S.",
+          "start": 1754,
+          "end": 2014,
+          "note": "Caselaw Access Project coverage for U.S.: 1754–2014."
+        },
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/603/CasesMetadata.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "603 U.S. 369",
+        "span": [
+          10647,
+          10659
+        ],
+        "filing_page": 6,
+        "volume": 603,
+        "reporter": "U.S.",
+        "page": 369,
+        "pin_cite": null,
+        "year": 2024,
+        "court": "scotus",
+        "plaintiff": "Loper Bright Enterprises",
+        "defendant": "Raimondo",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "underline-pencil",
+      "register": "coverage",
+      "drawer": "shelf"
+    },
+    {
+      "row": 23,
+      "cite_text": "Biden v. Nebraska, 600 U.S. 477 (2023)",
+      "class": "not_in_free_corpus",
+      "label": "Not in the free library. Check Westlaw or Lexis.",
+      "reasons": [
+        "U.S. volumes after 572 (the free corpus ends 2014 for U.S.) are not in the free corpus; check CourtListener/Westlaw.",
+        "Volume 600 is beyond the last volume the Caselaw Access Project holds for U.S. Reports (572, 2014); the citation is internally consistent and nothing here suggests it is not real."
+      ],
+      "evidence": {
+        "real_case_at_page": null,
+        "name_hit": null,
+        "other_entries": [],
+        "volume_range": {
+          "reporter": "U.S.",
+          "vmin": 1,
+          "vmax": 572,
+          "held": false,
+          "cited": 600,
+          "cap_end_year": 2014,
+          "max_last_page": null,
+          "note": "U.S. Reports · volumes 1–572 in the free library · cited: 600"
+        },
+        "edition_range": {
+          "reporter": "U.S.",
+          "start": 1754,
+          "end": 2014,
+          "note": "Caselaw Access Project coverage for U.S.: 1754–2014."
+        },
+        "closest_passage": null,
+        "running_head": null,
+        "page_marker": null,
+        "excerpt": null,
+        "excerpt_highlight": null,
+        "links": [
+          "https://static.case.law/us/VolumesMetadata.json",
+          "https://static.case.law/us/600/CasesMetadata.json"
+        ],
+        "cite_type": null,
+        "matched_text": null,
+        "searched_names": [],
+        "nearest_caption": null,
+        "year_mismatch": null,
+        "plausibility": null,
+        "parallel_mismatch": null
+      },
+      "source": "CAP",
+      "pincite_unverified": false,
+      "quote_check": null,
+      "parallel_cites": [],
+      "advisory": null,
+      "timings_ms": {},
+      "citation": {
+        "text": "600 U.S. 477",
+        "span": [
+          10797,
+          10809
+        ],
+        "filing_page": 6,
+        "volume": 600,
+        "reporter": "U.S.",
+        "page": 477,
+        "pin_cite": null,
+        "year": 2023,
+        "court": "scotus",
+        "plaintiff": "Biden",
+        "defendant": "Nebraska",
+        "quotes": [],
+        "kind": "full"
+      },
+      "mark": "underline-pencil",
+      "register": "coverage",
+      "drawer": "shelf"
+    }
+  ],
+  "counts": {
+    "verified": 8,
+    "quote_not_found": 2,
+    "wrong_cite_exists": 1,
+    "not_in_free_corpus": 6,
+    "unrecognized_reporter": 1,
+    "likely_fabricated": 3,
+    "not_checked": 0,
+    "skipped": 2,
+    "total": 23
+  },
+  "read_these_first": "Read these first: 3 likely not real cases, 1 no reporter by this name, 2 quotes not in the opinion, 1 exists at another page. Then: 8 found; 6 not in the free library; 2 not checked. Of 23 citations.",
+  "elapsed_ms": 2323.2,
+  "stage_timings_ms": {
+    "extract": 1241.6,
+    "lookup": 672.4,
+    "classify": 333.1,
+    "quotes": 76.0,
+    "advisory": null
+  },
+  "offline": true,
+  "replay": true,
+  "fixture": true,
+  "sample_id": "sample-motion",
+  "warnings": [],
+  "notes": [
+    "Fixture for the front end, built 2026-09-26 by the models agent from seed/ground_truth.json and seed/cache/cap (CAP static files fetched 2026-09-26). Not a recorded pipeline run: the classes are the ground-truth expected classes; every name, page, date, cite and excerpt is read from the cached CAP JSON.",
+    "Timings are measured on the building machine from the cache: pdfplumber + eyecite on seed/sample-motion.pdf (extract), loading the 12 cached volume indexes and 12 case files (lookup), rapidfuzz on the 10 quotes (quotes), the name searches over three volumes (classify). No advisory run.",
+    "F. Supp. 3d volume range (1–392, 2019) was read from https://static.case.law/f-supp-3d/VolumesMetadata.json on 2026-09-26; that file is not in seed/cache."
+  ]
+}
