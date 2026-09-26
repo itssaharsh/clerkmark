@@ -68,3 +68,11 @@ Total 20. The eval table = predicted vs expected per citation; report accuracy, 
 - Credit Princeton CITP's LePhantomCite work, the Caselaw Access Project, Free Law Project/CourtListener and eyecite in README and the in-app "How it works".
 - Declare every API/library/model in README's tech-stack table (LexHack rule) plus a live-vs-simulated table.
 - No sponsor products are used (none fits). A .xyz domain may host the live URL.
+
+## 6. Deploy facts (Vercel docs, opened 2026-09-26; user deploys from their own account)
+- Vercel detects a FastAPI app zero-config when a `FastAPI` instance named `app` sits in `main.py` (or app.py / index.py / server.py) at the repo root; dependencies from `requirements.txt`; local run via `uvicorn main:app --reload` (or `vercel dev`, CLI ≥ 48.1.8).
+- Static front end: `app.mount("/static", StaticFiles(directory="web/static"), name="static")` is promoted to the CDN at build time; serve `index.html` from a route `GET /` (FileResponse) so `?demo=1` / `?state=` query params reach the same page. Do NOT put files in `public/` and also mount it.
+- `vercel.json`: `{"$schema": "https://openapi.vercel.sh/vercel.json", "functions": {"main.py": {"maxDuration": 60}}}`.
+- Runtime filesystem is read-only except `/tmp`: the CAP cache must write to `CITEMEMO_CACHE_DIR` if set, else `seed/cache` when writable, else `/tmp/citememo-cache`. The committed `seed/cache/**` files are readable at runtime and let the seeded sample run without network.
+- Also provide `Procfile` (`web: uvicorn main:app --host 0.0.0.0 --port $PORT`) and a `render.yaml`-free README section for Render/Fly/Railway as alternatives. No Docker locally.
+- Env vars (all optional): `COURTLISTENER_TOKEN`, `ANTHROPIC_API_KEY`, `CITEMEMO_OFFLINE=1`, `CITEMEMO_CACHE_DIR`. Document in README and `.env.example`.
