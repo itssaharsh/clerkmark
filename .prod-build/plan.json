@@ -403,8 +403,10 @@
         "observe: demo flow run three times in a row with a reset between runs; screenshots at 320/390/1024/1440 reviewed; skeptical evaluator names the product, user and differentiator from still 1 and 2"
       ],
       "rollback": "git revert the T08 commit",
-      "status": "todo",
-      "notes": "the agent starts the server on 8020 itself"
+      "status": "doing",
+      "notes": "the agent starts the server on 8020 itself",
+      "base": "62ffcad",
+      "started_after": 35
     },
     {
       "id": "T09",
