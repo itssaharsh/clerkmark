@@ -1,0 +1,60 @@
+/* Clerkmark — print: the memo on letter paper, marks at 2px, no chrome. Loaded with media="print". */
+@page{size:letter;margin:.75in}
+
+html,body{background:#fff !important;color:#000}
+body{font-size:9.5px;line-height:1.3}
+.table{padding:0 !important;min-height:0 !important}
+.skip,.tabs,.banner,.credits,.status,.drop,.rowlinks,.footlinks,.notice .blink,
+.button-primary,.button-tonal,.blink,#drop-own,.panel-actions,.eval-stale .blink{display:none !important}
+.sheet{
+  width:100% !important;max-width:none !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 0 0 0 !important;
+  box-shadow:none !important;
+  --m:40px;--gap:12px;--pad-r:0px;
+}
+.sheet::before{left:40px}
+.panel[hidden]{display:none !important}
+.row{min-height:0;padding:0;margin-bottom:2px;break-inside:avoid}
+.rowbody{grid-template-columns:minmax(0,1fr) 262px;gap:1px 12px;box-shadow:none !important;background:none !important}
+.quote{display:none}
+.rowbody > .drawer{grid-column:1 / -1}
+.citetext{font-size:9.5px;line-height:1.3}
+.fp{font-size:8.5px}
+.label{font-size:9px;line-height:1.2}
+.rule{font-size:8.5px;line-height:1.2;margin-top:0;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.row.open .rule{display:block;-webkit-line-clamp:none}
+.memo-h1,.hl dt,.hl dd,.disclaimer,.litigant{font-size:9.5px;line-height:1.3}
+.hl{row-gap:2px}
+.disclaimer{margin-top:8px}
+.litigant{margin-top:2px}
+.ln > .num{padding-top:2px;line-height:13px;font-size:9px}
+.heading-grid{grid-template-columns:minmax(0,1fr) max-content;column-gap:24px}
+.stamp{min-width:150px;font-size:9px;border-width:2px;padding:5px 8px;letter-spacing:.05em}
+.stamp .stamp-word{font-size:12px}
+.body{margin-top:8px}
+.foot{margin-top:8px}
+.foot-inner{font-size:10px}
+.foot a{text-decoration:none;color:#000}
+/* Marks: the on-screen SVG overlay is measured against the screen layout and cannot follow the print reflow,
+   so print draws each mark with borders and text decorations on the same spans, 2px, same pen and pencil. */
+.mark{display:none !important}
+.row[data-mark="circle-all"] .citespan{border:2px solid #BE1E2D;border-radius:40% / 70%;padding:0 5px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.row[data-mark="circle-reporter"] .rep{border:2px solid #BE1E2D;border-radius:50%;padding:0 4px}
+.row[data-mark="strike-correct"] .pg{position:relative;text-decoration:line-through;text-decoration-color:#BE1E2D;text-decoration-thickness:2px}
+.row[data-mark="strike-correct"] .pg::after{content:attr(data-correct);position:absolute;left:0;right:0;top:-1.05em;text-align:center;color:#BE1E2D;font-weight:700;font-size:8.5px;line-height:1}
+.row[data-mark="strike-correct"] .citetext{padding-top:8px}
+.row[data-mark="underline-quote"] .qtext{text-decoration:underline;text-decoration-color:#BE1E2D;text-decoration-thickness:2px;text-underline-offset:2px}
+.row[data-mark="underline-pencil"] .citespan{text-decoration:underline dashed;text-decoration-color:#5B5750;text-decoration-thickness:2px;text-underline-offset:3px}
+.drawer{grid-template-rows:0fr}
+.drawer.open{grid-template-rows:1fr}
+.panel-page,.panel-shelf{box-shadow:inset 0 0 0 1px #999;background:#f6f6f6;padding:8px 10px;margin:4px 0}
+.excerpt{font-size:10px}
+a[href]::after{content:none}
+.print-footer{
+  display:block !important;
+  position:fixed;bottom:0;left:0;right:0;
+  font-size:9px;color:#333;
+  text-align:center;
+}
