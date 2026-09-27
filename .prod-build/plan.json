@@ -475,8 +475,10 @@
         "python3 .prod-build/pb.py report .prod-build/DELIVERY.md"
       ],
       "rollback": "git revert the T10 commit",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "[2026-09-27 start] parallel with T08/T09 under the deadline; docs-only files; DELIVERY.md numbers finalized by the orchestrator after T08/T09",
+      "base": "c346eb8",
+      "started_after": 36
     },
     {
       "id": "T11",
