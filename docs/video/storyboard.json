@@ -1,0 +1,290 @@
+{
+ "project": {
+  "name": "Clerkmark",
+  "url": "https://clerkmark.vercel.app/",
+  "target_seconds": 120,
+  "max_seconds": 180
+ },
+ "style": {
+  "voice": "af_heart",
+  "speed": 0.94,
+  "captions": true,
+  "music": "calm",
+  "sfx": true,
+  "gpu": false,
+  "viewport": [
+   1280,
+   720
+  ],
+  "dsf": 2,
+  "fps": 30,
+  "music_db": -16,
+  "palette": {
+   "bg": [
+    "#0e0c0a",
+    "#2b221c",
+    "#7b1c25"
+   ],
+   "accent": "#BE1E2D",
+   "site_bg": "#fbfaf6",
+   "chrome": "light",
+   "font": "Source Serif 4",
+   "display_font": "Courier Prime"
+  }
+ },
+ "pronounce": {
+  "Clerkmark": "Clerk-mark",
+  "eyecite": "eye-cite",
+  "Greenleaf": "Green-leaf",
+  "Garlock": "Gar-lock",
+  "Varghese": "Var-geese",
+  "Azar": "Ay-zar",
+  "Egyptair": "Egypt-air",
+  "F.3d": "F third"
+ },
+ "setup": [],
+ "scenes": [
+  {
+   "id": "hook",
+   "type": "clip",
+   "from": "aha",
+   "offset": -0.6,
+   "dur": 14,
+   "say": "When someone without a lawyer files a brief written with a chatbot, court staff look up every case by hand. [[0.4]] They are never sure whether a missing case is fake, or simply not in the free database.",
+   "card": {
+    "layout": "title",
+    "kicker": "Clerkmark",
+    "title": "Fake case citations, caught at intake."
+   },
+   "speed": 0.85
+  },
+  {
+   "id": "problem",
+   "type": "card",
+   "say": "Two thousand seventy-nine court decisions so far, more than half of them from people representing themselves. [[0.3]] Clerkmark fixes that at the intake desk.",
+   "card": {
+    "layout": "stat",
+    "value": "2,079",
+    "label": "court decisions on AI-hallucinated citations; 1,196 involve self-represented filers",
+    "sub": "Damien Charlotin, AI Hallucination Cases database, as of 25 Sep 2026",
+    "kicker": "The problem"
+   }
+  },
+  {
+   "id": "run",
+   "type": "live",
+   "say": "Drop the filing, and Clerkmark checks every citation against a free law library. [[0.4]] Twenty-three citations, classed in seconds, each with the rule that decided it printed under the row.",
+   "actions": [
+    {
+     "do": "click",
+     "sel": "text=Use the sample filing",
+     "at": "checks"
+    },
+    {
+     "do": "wait",
+     "for": "#stamp",
+     "timeout": 90000
+    },
+    {
+     "do": "mark",
+     "name": "aha"
+    },
+    {
+     "do": "camera",
+     "focus": "#stamp",
+     "zoom": 1.5,
+     "at": "Twenty-three"
+    },
+    {
+     "do": "pause",
+     "ms": 1200
+    },
+    {
+     "do": "camera",
+     "zoom": "out",
+     "at": "rule"
+    },
+    {
+     "do": "pause",
+     "ms": 800
+    }
+   ]
+  },
+  {
+   "id": "rows",
+   "type": "live",
+   "say": "Line eight is likely not a real case: page 366 belongs to Greenleaf v. Garlock, and no case named Miller sits in that volume. [[0.3]] Line nine is different: a state slip citation the free library cannot check. A naive checker prints the same not found for both.",
+   "actions": [
+    {
+     "do": "scroll",
+     "to": "#line-8",
+     "offset": 0.25,
+     "ms": 1300
+    },
+    {
+     "do": "camera",
+     "focus": "#line-8",
+     "zoom": 1.6,
+     "at": "eight"
+    },
+    {
+     "do": "pause",
+     "ms": 2500
+    },
+    {
+     "do": "camera",
+     "focus": "#line-9",
+     "zoom": 1.6,
+     "at": "nine"
+    },
+    {
+     "do": "pause",
+     "ms": 2000
+    }
+   ]
+  },
+  {
+   "id": "page",
+   "type": "live",
+   "say": "The evidence is one click away. The page line six cites belongs to J.D. v. Azar, and the reporter's own record says so, with links to the free files.",
+   "actions": [
+    {
+     "do": "scroll",
+     "to": "#line-6",
+     "offset": 0.2,
+     "ms": 1100
+    },
+    {
+     "do": "click",
+     "sel": "#line-6 >> text=Show the page",
+     "at": "click",
+     "zoom": 1.45,
+     "focus": "#line-6"
+    },
+    {
+     "do": "wait",
+     "for": "#line-6 >> text=Hide the page",
+     "timeout": 10000
+    },
+    {
+     "do": "pause",
+     "ms": 2600
+    }
+   ]
+  },
+  {
+   "id": "quote",
+   "type": "live",
+   "say": "Real case, wrong quote. On line sixteen the memo underlines the passage, marks the words that differ, and shows the closest text in the opinion.",
+   "actions": [
+    {
+     "do": "click",
+     "sel": "#line-6 >> text=Hide the page",
+     "offscreen": true
+    },
+    {
+     "do": "scroll",
+     "to": "#line-16",
+     "offset": 0.25,
+     "ms": 1300
+    },
+    {
+     "do": "camera",
+     "focus": "#line-16",
+     "zoom": 1.6,
+     "at": "sixteen"
+    },
+    {
+     "do": "pause",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "eval",
+   "type": "live",
+   "say": "Twenty citations with known answers, scored on every run. [[0.3]] Twenty of twenty right, and zero real cases called fake. That last number is the promise.",
+   "actions": [
+    {
+     "do": "scroll",
+     "to": "top",
+     "ms": 900
+    },
+    {
+     "do": "click",
+     "sel": "#tab-evaluation",
+     "at": "Twenty",
+     "zoom": "out"
+    },
+    {
+     "do": "wait",
+     "for": "text=Real cases marked likely not real",
+     "timeout": 20000
+    },
+    {
+     "do": "scroll",
+     "to": "text=Real cases marked likely not real",
+     "offset": 0.45,
+     "ms": 1200
+    },
+    {
+     "do": "camera",
+     "focus": "text=Real cases marked likely not real",
+     "zoom": 1.5,
+     "at": "zero"
+    },
+    {
+     "do": "pause",
+     "ms": 2200
+    }
+   ]
+  },
+  {
+   "id": "tech",
+   "type": "card",
+   "say": "Underneath, eyecite finds the citations, the Caselaw Access Project's free files supply every volume, page and opinion, a deterministic rule decides the class, and an optional model only advises. Statutes, short forms and pin pages stay out of scope, and the memo says so.",
+   "card": {
+    "layout": "flow",
+    "kicker": "How it works",
+    "title": "Deterministic rule; the model only advises",
+    "nodes": [
+     {
+      "label": "eyecite",
+      "sub": "finds every citation in the PDF",
+      "at": "eyecite"
+     },
+     {
+      "label": "Caselaw Access Project",
+      "sub": "free volumes, pages, opinion text",
+      "at": "Caselaw"
+     },
+     {
+      "label": "Rule engine",
+      "sub": "six classes, reasons printed",
+      "at": "deterministic"
+     },
+     {
+      "label": "Advisory",
+      "sub": "Gemini, optional, never changes a class",
+      "at": "optional"
+     }
+    ]
+   }
+  },
+  {
+   "id": "end",
+   "type": "clip",
+   "from": "aha",
+   "offset": 0.4,
+   "reveal": false,
+   "say": "Clerkmark. A triage aid, not a finding. Repo and live link in the description.",
+   "card": {
+    "layout": "end",
+    "title": "Clerkmark",
+    "sub": "A triage aid, not a finding.",
+    "url": "clerkmark.vercel.app",
+    "meta": "Built with eyecite \u00b7 Caselaw Access Project \u00b7 FastAPI \u00b7 Gemini (advisory)"
+   }
+  }
+ ]
+}
