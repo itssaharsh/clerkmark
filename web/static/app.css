@@ -115,6 +115,8 @@ svg{display:block}
   transition:background-color var(--dur-hover) var(--ease-out);
 }
 .tab[aria-selected="true"]{background:var(--canvas);color:var(--ink);font-weight:700}
+/* 320 px: three tabs on one line ("How it works" wrapped out of its 36 px tab) */
+@media (max-width:380px){.tab{padding:0 8px;font-size:var(--step-0);white-space:nowrap}}
 @media (hover:hover) and (pointer:fine){
   .tab[aria-selected="false"]:hover{background:var(--surface-2)}
 }
@@ -144,16 +146,24 @@ svg{display:block}
 .hl > div{display:contents}
 @media (max-width:480px){
   .hl{grid-template-columns:minmax(0,1fr);row-gap:2px}
-  .hl dd{margin-bottom:6px}
+  .hl dd{margin-bottom:4px}
 }
 .hl dt{font-weight:700;text-transform:uppercase;letter-spacing:var(--track-caps);white-space:nowrap}
 .hl dd{color:var(--ink);overflow-wrap:anywhere}
 .heading-right{
   display:flex;flex-direction:column;gap:16px;align-items:flex-start;
+  order:1;             /* after the heading lines in the grid layouts (source order puts it first for the float below) */
 }
-@media (min-width:901px){
-  .heading-grid{grid-template-columns:minmax(0,1fr) fit-content(232px);column-gap:32px}
-  .heading-right{align-items:flex-end}
+@media (max-width:480px){.heading-right{gap:12px}}
+/* Wide screens: the stamp and button float at the heading's top right and the TO/FROM/RE lines wrap around them
+   line by line, so a long RE: runs under the stamp at full width instead of down a 220 px column. */
+@media screen and (min-width:901px){
+  .heading-grid{display:flow-root}
+  .heading-right{float:right;align-items:flex-end;margin:0 0 16px 32px;max-width:232px}
+  .hl{display:block}
+  .hl > div{display:block;position:relative;padding-left:180px;margin-bottom:8px}
+  .hl > div:last-child{margin-bottom:0}
+  .hl dt{position:absolute;left:0;top:0}
 }
 .double-rule{
   margin-top:8px;
@@ -253,6 +263,8 @@ svg{display:block}
 .drop-inner{max-width:60ch}
 .drop-sentence{display:flex;flex-wrap:wrap;gap:12px 8px;align-items:center}
 .drop-sentence .button-primary,.drop-sentence .button-tonal{flex:1 1 100%}
+/* one column: the sentence's full stop after "Choose a PDF" would sit alone on a line between two full-width buttons */
+@media (max-width:900px){.drop-sentence > .button-primary + span{display:none}}
 @media (min-width:901px){
   .drop-sentence .button-primary,.drop-sentence .button-tonal{flex:0 0 auto}
 }
@@ -278,7 +290,7 @@ svg{display:block}
 .row{
   position:relative;
   min-height:var(--row-min);
-  padding:6px 0;
+  padding:6px var(--pad-r) 6px 0;   /* keep the sheet's right margin: notes stop 72 px from the paper edge at 1440 (UI-SPEC §5) */
   margin-bottom:var(--row-gap);
   border-radius:var(--r-sm);
 }
@@ -310,6 +322,7 @@ svg{display:block}
 
 .cite{position:relative;min-width:0}
 .citetext{font-size:var(--step-1);line-height:var(--lh-memo);color:var(--ink);overflow-wrap:anywhere}
+.citetext .rep{white-space:nowrap}   /* a reporter wraps as one unit so circle-reporter stays one ellipse ("Fed. Air Rptr. 3d" is 17 characters) */
 .row[data-class="skipped"] .citetext,.row[data-class="not_checked"] .citetext{color:var(--ink-muted)}
 .fp{font-size:var(--step--1);color:var(--ink-muted);margin-left:12px;white-space:nowrap}
 .quote{
@@ -357,6 +370,8 @@ svg{display:block}
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 .row.open .rule{display:block;-webkit-line-clamp:none}
+/* a row with no [Show the page]/[Show the shelf] has nowhere else to show its rule sentence, so it is never clamped */
+@media screen{.row:not(:has(.drawer)) .rule{display:block;-webkit-line-clamp:none}}
 .check{font-weight:400;color:var(--ink);margin-right:4px}
 
 /* evidence drawer */
@@ -416,7 +431,7 @@ svg{display:block}
 .notice{margin-top:16px}
 .notice-inner{font-size:var(--step-0);color:var(--warning);max-width:60ch}
 .notice .blink{margin-left:4px;color:var(--ink)}
-.foot{margin-top:24px}
+.foot{margin:0 0 24px}   /* now the first block of the body, above the rows */
 .foot-inner{max-width:60ch;font-size:var(--step-1)}
 .foot a{font-variant-numeric:tabular-nums}
 .foot.fade{opacity:0}

@@ -1,7 +1,9 @@
 // qa.mjs — Playwright + axe loop for the Clerkmark memo page.
 //   node qa/qa.mjs --static web --port 8765      (serves web/ with python3 -m http.server, unless the port already answers)
 //   node qa/qa.mjs http://localhost:8000          (a live base URL)
-// Screenshots go to qa/out/; every axe violation and every DOM assertion failure is printed; exit 1 on any.
+// Screenshots go to qa/out/; every axe violation, console error and DOM assertion failure is printed; exit 1 on any.
+// Against a live server it also forces the three envelopes the UI must render (a "Truncated:" warning, 413 too_large,
+// 429 rate_limited) and screenshots them; the 429 is primed for real, so it runs last (it throttles this client for a minute).
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import { spawn } from 'node:child_process';
@@ -65,15 +67,32 @@ const fail = (msg) => { failures.push(msg); console.log('FAIL', msg); };
 const ok = (msg) => console.log('ok  ', msg);
 const assert = (cond, msg) => (cond ? ok(msg) : fail(msg));
 
-async function settle(p) {
-  await p.waitForFunction(() => document.documentElement.dataset.ready, null, { timeout: 15000 }).catch(() => {});
+// A live ?demo=1 runs the sample (seconds), and app.js marks the page ready at every state change, so 'loading'
+// is not a settled state — except on ?state=loading, where the loading block is what we screenshot.
+async function settle(p, { loading = false } = {}) {
+  await p.waitForFunction((l) => { const r = document.documentElement.dataset.ready; return l ? !!r : !!(r && r !== 'loading'); }, loading, { timeout: 60000 }).catch(() => {});
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(400);
 }
 async function open(p, url, w) {
   await p.setViewportSize({ width: w, height: w < 500 ? 844 : (w < 1200 ? 768 : 900) });
   await p.goto(base + url, { waitUntil: 'load' });
-  await settle(p);
+  await settle(p, { loading: /[?&]state=loading/.test(url) });
+}
+const viewportH = (w) => (w < 500 ? 844 : (w < 1200 ? 768 : 900));
+// Console capture: any console.error or uncaught exception fails the run. Resource-load errors are counted too,
+// except font CDN fetches (the page has system fallbacks; an offline QA box must not fail on them) and, while the
+// forced-envelope section deliberately provokes 4xx answers, the "Failed to load resource" lines those produce.
+let allowResourceErrors = false;
+function watchConsole(p, label) {
+  p.on('pageerror', (e) => fail(`${label}: page error: ${e.message}`));
+  p.on('console', (m) => {
+    if (m.type() !== 'error') return;
+    const text = m.text();
+    if (/fonts\.(googleapis|gstatic)\.com/.test(text)) return;
+    if (allowResourceErrors && /Failed to load resource/.test(text)) return;
+    fail(`${label}: console error at ${p.url()}: ${text}`);
+  });
 }
 async function axe(p, label) {
   const { violations } = await new AxeBuilder({ page: p }).withTags(AXE_TAGS).analyze();
@@ -92,7 +111,7 @@ try {
   for (const reduced of [false, true]) {
     const ctx = await browser.newContext({ reducedMotion: reduced ? 'reduce' : 'no-preference', ignoreHTTPSErrors: !!proxy });
     const p = await ctx.newPage();
-    p.on('pageerror', (e) => fail(`page error: ${e.message}`));
+    watchConsole(p, reduced ? 'shots(rm)' : 'shots');
     for (const s of shots) for (const w of widths) {
       const file = `${s.name}-${w}${reduced ? '-rm' : ''}.png`;
       try {
@@ -100,6 +119,14 @@ try {
         await p.screenshot({ path: path.join(outDir, file), fullPage: true });
         const sw = await p.evaluate(() => document.documentElement.scrollWidth);
         assert(sw <= w, `${file}: no horizontal scroll (scrollWidth ${sw} ≤ ${w})`);
+        if (w < 500) {
+          // one filled primary action, rendered and whole inside the viewport's width (B10 320 px check); at 390×844 it must
+          // also sit inside the first viewport without scrolling (A8 gate 4; UI-SPEC §13 gate 4 names 390×844, not 320).
+          const box = await p.evaluate(() => { const bs = Array.from(document.querySelectorAll('.button-primary')).filter((x) => x.offsetParent !== null); const b = bs[0]; if (!b) return null; const r = b.getBoundingClientRect(); return { n: bs.length, left: r.left, right: r.right, width: r.width, height: r.height, top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, text: b.textContent.trim() }; });
+          const label = box ? box.text : 'none';
+          assert(box && box.n === 1 && box.width > 0 && box.height >= 40 && box.left >= 0 && box.right <= w, `${file}: one visible primary action "${label}" within the ${w} px width${box ? ` (${Math.round(box.left)}–${Math.round(box.right)}, ${Math.round(box.height)} px tall)` : ''}`);
+          if (w === 390) assert(box && box.bottom <= viewportH(w), `${file}: primary action "${label}" inside the first 390×844 viewport (bottom ${box ? Math.round(box.bottom) : '-'} ≤ ${viewportH(w)})`);
+        }
         if (w === 1440 && !reduced) await axe(p, `${s.name}@1440`);
       } catch (e) { fail(`${file}: ${e.message}`); }
     }
@@ -118,7 +145,9 @@ try {
   // ---------------------------------------------------------------- DOM assertions (AC-8, AC-9, AC-10)
   const ctx = await browser.newContext({ reducedMotion: 'no-preference' });
   const p = await ctx.newPage();
-  p.on('pageerror', (e) => fail(`page error: ${e.message}`));
+  watchConsole(p, 'assertions');
+  const live = (await ping(base + '/api/health')) === 200;
+  console.log(`[qa] ${base} is ${live ? 'a live API' : 'static (no /api/health)'}`);
   try {
 
   await open(p, '/?demo=1', 1440);
@@ -268,13 +297,17 @@ try {
   assert((await p.locator('#tab-memo').getAttribute('aria-selected')) === 'true', 'tabs: Home returns to Memo');
   // Alt+Shift+P → replay banner + REPLAY stamp
   await p.keyboard.press('Alt+Shift+P'); await p.waitForTimeout(800);
-  assert(/^Replay · run of .+ from .+\. Marks and seconds are from that run\./.test(await p.locator('#banner').innerText()), 'Alt+Shift+P: replay banner');
+  const bannerText = await p.locator('#banner').innerText();
+  assert(/^Replay · run of .+ from .+\. Marks and seconds are from that run\./.test(bannerText), 'Alt+Shift+P: replay banner');
+  if (live) assert(/ from seed\/replay\.json\./.test(bannerText), `Alt+Shift+P (live): the banner names the recorded run GET /api/replay served ("${bannerText.slice(0, 60)}…")`);
   assert((await p.evaluate(() => document.getElementById('stamp').textContent)).startsWith('REPLAY'), 'Alt+Shift+P: REPLAY stamp');
   await p.screenshot({ path: path.join(outDir, 'replay-1440.png'), fullPage: false });
   // Alt+Shift+R → first-run, three times
   for (let i = 0; i < 3; i++) { await p.keyboard.press('Alt+Shift+R'); await p.waitForTimeout(150); }
   assert(await p.evaluate(() => document.documentElement.dataset.ready === 'first-run'), 'Alt+Shift+R: back to first-run');
-  assert((await p.locator('#rows .row').count()) === 0 && (await p.locator('#banner').isHidden()), 'Alt+Shift+R: clean S1');
+  const s1Banner = (await p.locator('#banner').isHidden()) ? '' : await p.locator('#banner').innerText();
+  // a live server in CITEMEMO_OFFLINE mode keeps its standing "Offline · …" banner on S1 (app.js hideBanner); nothing else may remain
+  assert((await p.locator('#rows .row').count()) === 0 && (await p.locator('#stamp').isHidden()) && (s1Banner === '' || /^Offline · /.test(s1Banner)), `Alt+Shift+R: clean S1 (no rows, no stamp, banner ${s1Banner ? `"${s1Banner.slice(0, 40)}…"` : 'hidden'})`);
   await open(p, '/?reset=1', 1440);
   assert(await p.evaluate(() => document.documentElement.dataset.ready === 'first-run'), '?reset=1: first-run');
 
@@ -286,6 +319,60 @@ try {
   const pages = (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
   assert(pages === 1, `print: the sample memo with panels closed fits one letter page (${pages} page(s)) → qa/out/print-demo.pdf`);
   await p.emulateMedia({ media: 'screen' });
+
+  // ---------------------------------------------------------------- forced envelopes (live only): the strings T07 added must render
+  if (live) {
+    allowResourceErrors = true;
+    const samplePdf = path.join(root, 'seed', 'sample-motion.pdf');
+    // (a) "Truncated:" warning → the notice under the rows. The sample memo is fetched for real and the warning line is
+    //     appended in the wording of citememo/limits.py (cap_citations), so the whole render path runs on a real memo.
+    const TRUNC = 'Truncated: the filing has 312 full citations; only the first 250 were checked. Run the rest separately.';
+    await p.route('**/api/memo/sample/**', async (route) => {
+      const res = await route.fetch(); const json = await res.json();
+      json.warnings = [...(json.warnings || []), TRUNC];
+      await route.fulfill({ response: res, json });
+    });
+    await open(p, '/?demo=1', 1440);
+    await p.unroute('**/api/memo/sample/**');
+    const noticeText = await p.locator('#notice-inner').innerText().catch(() => '');
+    assert(await p.locator('#notice').isVisible() && noticeText.includes(TRUNC), `forced Truncated: the warning renders in the notice ("${noticeText.slice(0, 60)}…")`);
+    assert((await p.locator('#rows .row').count()) > 0 && !(await p.locator('#stamp').isHidden()), 'forced Truncated: the memo, rows and stamp still render around the warning');
+    await p.locator('#notice').scrollIntoViewIfNeeded(); await p.waitForTimeout(150);
+    await p.screenshot({ path: path.join(outDir, 'forced-truncated-1440.png'), fullPage: false });
+    // (b) 413 too_large — the client blocks > 4 MB before upload, so the server's own envelope is provoked by replaying
+    //     the upload with a body over the limit (the middleware answers on Content-Length) and handing that answer to the page.
+    let served413 = null;
+    await p.route('**/api/memo', async (route) => {
+      const res = await route.fetch({ method: 'POST', postData: Buffer.alloc(4 * 1024 * 1024 + 1, 0x20), headers: { 'content-type': 'application/octet-stream' } });
+      served413 = res.status();
+      await route.fulfill({ response: res });
+    });
+    await open(p, '/?demo=1', 1440);
+    await p.setInputFiles('#file-own', samplePdf);
+    await p.waitForFunction(() => document.documentElement.dataset.ready === 'error', null, { timeout: 15000 }).catch(() => {});
+    await p.unroute('**/api/memo');
+    const note413 = await p.locator('#drop-note').innerText().catch(() => '');
+    assert(served413 === 413, `forced 413: the server answered ${served413} to a body over 4 MB`);
+    assert(/^This PDF is larger than 4 MB\. This prototype reads files up to 4 MB\. /.test(note413), `forced 413: the §9 sentence with the contract's 4 MB renders in ink under the drop target ("${note413.slice(0, 70)}…")`);
+    assert(/sample-motion\.pdf/.test(await p.locator('#v-re').innerText()) && (await p.locator('.button-primary:visible').count()) === 1, 'forced 413: RE: keeps the file name and the drop target is kept');
+    assert((await p.title()) === 'Error: File too large · Clerkmark', `forced 413: title "${await p.title()}"`);
+    await p.screenshot({ path: path.join(outDir, 'forced-413-1440.png'), fullPage: false });
+    // (c) 429 rate_limited — for real: ten attempts at POST /api/memo from this address inside a minute (each counted at
+    //     arrival, whatever the body), then the eleventh, a real upload through the page's own button. Runs last.
+    await open(p, '/?demo=1', 1440);
+    // Attempts are counted per address over a sliding minute, and the 413 replay above (or an earlier qa run inside the
+    // minute) already used some, so prime until the limiter answers 429 (at most 11 attempts), then upload through the page.
+    const primed = await p.evaluate(async () => { const codes = []; for (let i = 0; i < 11; i++) { const c = (await fetch('/api/memo', { method: 'POST' })).status; codes.push(c); if (c === 429) break; } return codes; });
+    await p.setInputFiles('#file-own', samplePdf);
+    await p.waitForFunction(() => document.documentElement.dataset.ready === 'error', null, { timeout: 15000 }).catch(() => {});
+    const note429 = await p.locator('#drop-note').innerText().catch(() => '');
+    assert(primed[primed.length - 1] === 429 && primed.slice(0, -1).every((c) => c !== 429) && primed.length <= 11, `forced 429: the limiter throttles within 10 attempts a minute (primed ${primed.join(',')}; the 413 replay counted as one)`);
+    assert(/^Too many checks from this address: this prototype runs 10 memos per minute\. .*Your file is still selected\.$/.test(note429), `forced 429: the rate-limit sentence, its hint and "Your file is still selected." render ("${note429.slice(0, 70)}…")`);
+    assert(/sample-motion\.pdf/.test(await p.locator('#v-re').innerText()), 'forced 429: RE: keeps the file name');
+    assert((await p.title()) === 'Error: Too many checks · Clerkmark', `forced 429: title "${await p.title()}"`);
+    await p.screenshot({ path: path.join(outDir, 'forced-429-1440.png'), fullPage: false });
+    allowResourceErrors = false;
+  } else console.log('[qa] static mode: forced-envelope checks (Truncated, 413, 429) need a live server; skipped');
   } catch (e) { fail(`assertion block aborted: ${e.message}`); }
   await ctx.close();
 } finally {

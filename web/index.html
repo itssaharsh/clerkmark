@@ -31,6 +31,12 @@
     <section id="panel-memo" class="panel" role="tabpanel" aria-labelledby="tab-memo">
       <header class="heading ln">
         <div class="heading-grid">
+          <!-- first in source so it can float at the top right on wide screens and the RE: line wraps under it;
+               CSS order puts it after the heading lines in the one-column (≤900 px) and print layouts -->
+          <div class="heading-right">
+            <div id="stamp" class="stamp" hidden></div>
+            <label id="drop-own" class="button-primary" hidden><span id="drop-own-label"></span><input type="file" id="file-own" accept="application/pdf,.pdf"></label>
+          </div>
           <div class="heading-lines">
             <h1 id="memo-title" class="memo-h1"></h1>
             <dl class="hl">
@@ -41,10 +47,6 @@
               <div><dt id="k-against"></dt><dd id="v-against"></dd></div>
             </dl>
           </div>
-          <div class="heading-right">
-            <div id="stamp" class="stamp" hidden></div>
-            <label id="drop-own" class="button-primary" hidden><span id="drop-own-label"></span><input type="file" id="file-own" accept="application/pdf,.pdf"></label>
-          </div>
         </div>
         <div class="double-rule" aria-hidden="true"></div>
         <p id="disclaimer" class="disclaimer"></p>
@@ -52,13 +54,14 @@
       </header>
 
       <div class="body">
+        <!-- the verdict first: "Read these first: …" with links to the flagged rows sits above them (T08 skeptical-evaluator fix) -->
+        <div id="foot" class="foot ln" hidden><p id="foot-inner" class="foot-inner"></p></div>
         <div id="status" class="status ln" role="status" aria-live="polite">
           <div id="status-inner" class="status-inner"></div>
         </div>
         <div id="drop" class="drop ln" hidden><div id="drop-inner" class="drop-inner"></div></div>
         <ol id="rows" class="rows" aria-label="Citations in filing order"></ol>
         <div id="notice" class="notice ln" hidden><p id="notice-inner" class="notice-inner"></p></div>
-        <div id="foot" class="foot ln" hidden><p id="foot-inner" class="foot-inner"></p></div>
         <div id="footlinks" class="footlinks ln" hidden><p id="footlinks-inner"></p></div>
       </div>
     </section>

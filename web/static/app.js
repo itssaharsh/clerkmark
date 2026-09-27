@@ -165,6 +165,7 @@
     no_text_layer: 'No text layer', too_large: 'File too large', unsupported_type: 'Not a PDF',
     upstream_timeout: 'The free library did not answer', empty: 'Nothing to check', not_found: 'Not found',
     internal: 'Could not read this PDF', network: 'The server did not answer', blocked: 'File not accepted',
+    rate_limited: 'Too many checks',
   };
   const FIXTURE_URL = '/static/fixture-memo.json';
   const FIXTURE_NAME = 'web/static/fixture-memo.json';
@@ -857,7 +858,10 @@
     const underline = (rects, kind, dy = 2) => rects.forEach((rc) => add(`M${(rc.x).toFixed(2)} ${(rc.y + rc.h + dy).toFixed(2)} L${(rc.x + rc.w).toFixed(2)} ${(rc.y + rc.h + dy).toFixed(2)}`, kind));
     const circle = (rc, kind) => {
       const cx = rc.x + rc.w / 2, cy = rc.y + rc.h / 2;
-      add(ellipsePath(cx, cy, rc.w / 2 + 6, rc.h / 2 + 3, seed), kind, { transform: `rotate(-2 ${cx.toFixed(2)} ${cy.toFixed(2)})` });
+      // a hand tilt of up to 2°, flattened on wide ellipses so the ends lift no more than 2.5 px: at a full 2° a
+      // 400 px citation's ellipse dipped 7 px into its first and last letters and read as a strike-through
+      const rx = rc.w / 2 + 6, tilt = Math.min(2, Math.atan2(2.5, rx) * 180 / Math.PI);
+      add(ellipsePath(cx, cy, rx, rc.h / 2 + 3, seed), kind, { transform: `rotate(${(-tilt).toFixed(2)} ${cx.toFixed(2)} ${cy.toFixed(2)})` });
     };
     if (mark === 'circle-all') {
       const rects = rectsOf($('.citespan', li), base);
@@ -929,7 +933,8 @@
     panel.append(head);
     if (e.excerpt) {
       const ex = el('p', { class: 'excerpt' });
-      const t = e.excerpt; const hl = e.excerpt_highlight;
+      const hl = e.excerpt_highlight;
+      const t = tidyExcerpt(e.excerpt, Array.isArray(hl) && hl.length === 2 ? hl[1] : 0);
       if (Array.isArray(hl) && hl.length === 2 && hl[0] >= 0 && hl[1] <= t.length && hl[0] < hl[1]) {
         ex.append(t.slice(0, hl[0]));
         const hs = el('span', { class: 'hl-passage' });
@@ -1023,6 +1028,16 @@
     if (location.hash === `#line-${li.dataset.row}`) history.replaceState(null, '', `${location.pathname}${location.search}#memo`);
   }
 
+  // The excerpt is a fixed-length window of the opinion and can stop mid-word ("Unaccompanie"): end it at the last
+  // whole word with an ellipsis, never cutting into the highlighted passage (which ends at `keep`).
+  function tidyExcerpt(t, keep) {
+    if (typeof t !== 'string' || /[.!?:;"”’')\]]\s*$/.test(t)) return t;
+    const cut = t.search(/\s\S*$/);
+    const body = cut > keep ? t.slice(0, cut) : t;
+    const out = body.replace(/[\s,;:—–-]+$/, '');
+    return /[.!?"”’')\]]$/.test(out) ? out : out + '…';   // a whole sentence needs no ellipsis
+  }
+
   // ---------------------------------------------------------------- foot paragraph
   function renderFoot(memo, partial) {
     const c = memo.counts; const foot = dom['foot-inner']; clear(foot);
@@ -1042,7 +1057,7 @@
     };
     if (flagged.length) {
       foot.append(COPY.readFirst); appendList(flagged, ',', '.');
-      foot.append(' ' + COPY.then); appendList(rest, ';', '.');
+      foot.append(el('br'), COPY.then); appendList(rest, ';', '.');   // "Then:" starts its own line so the flagged list reads alone
     } else {
       foot.append(COPY.nothingFirst); appendList(rest, ';', '.');
     }
