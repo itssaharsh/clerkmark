@@ -510,12 +510,17 @@
         "AC-13"
       ],
       "verify": [
-        "python3 .prod-build/pb.py smoke $LIVE_URL --routes / /api/health /api/samples",
+        "python3 .prod-build/pb.py smoke https://clerkmark.vercel.app --routes / /api/health /api/samples",
         "observe: the sample run completes on the live URL in a logged-out incognito window; console clean"
       ],
       "rollback": "redeploy the previous commit from the Vercel dashboard",
-      "status": "todo",
-      "notes": "needs the user's Vercel login; blocked until then, with the exact steps in SUBMISSION-CHECKLIST.md"
+      "status": "done",
+      "notes": "needs the user's Vercel login; blocked until then, with the exact steps in SUBMISSION-CHECKLIST.md",
+      "evidence": [
+        "E0056",
+        "E0058",
+        "E0059"
+      ]
     },
     {
       "id": "T12",
