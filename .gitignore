@@ -7,3 +7,5 @@ qa/out/
 .env
 .vercel/
 seed/cache/tmp/
+.vercel
+.env*

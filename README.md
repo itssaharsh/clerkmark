@@ -95,6 +95,7 @@ open "http://localhost:8000/?demo=1"                    # Linux: xdg-open
 |---|---|---|
 | `COURTLISTENER_TOKEN` | unset | Adds CourtListener's v4 citation-lookup API as a second source for rows the free library does not hold; a confirmed row becomes "Found" with source CourtListener. Free Law Project documents a limit of 60 valid citations a minute |
 | `ANTHROPIC_API_KEY` | unset | Turns on the advisory column (Anthropic Messages API, model `claude-haiku-4-5-20251001`): at most 20 calls per memo, 15 s timeout; never changes a class |
+| Google Gemini API (`generativelanguage.googleapis.com`, REST via httpx) | `gemini-3.8-flash` (override with `CITEMEMO_ADVISORY_MODEL`) | Optional advisory column, preferred when `GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`) is set; one call per found row with a quote, at most 20 per memo, 15 s timeout; never changes a class | Google API terms |
 | `CITEMEMO_ADVISORY_MODEL` | `claude-haiku-4-5-20251001` | Overrides the advisory model id |
 | `CITEMEMO_OFFLINE` | unset | `1` = serve CAP files from the cache only; `memo.offline` is true and the page shows an offline banner |
 | `CITEMEMO_CACHE_DIR` | `seed/cache/cap` when writable, else `/tmp/citememo-cache` | Writable cache for fetched CAP files; the committed seed cache is always read as a fallback |

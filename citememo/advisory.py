@@ -23,9 +23,12 @@ Public surface
     or any SDK error leaves that row's ``advisory`` as None. Classes are never
     touched.
 
-Model: ``claude-haiku-4-5-20251001`` (BUILD-NOTES §2), overridable with
-``CITEMEMO_ADVISORY_MODEL``. The client is duck-typed (``client.messages.create``)
-so tests pass a fake.
+Providers: Google Gemini (``GEMINI_API_KEY`` / ``GOOGLE_GENERATIVE_AI_API_KEY`` /
+``GOOGLE_API_KEY``; default model ``gemini-3.8-flash``, the model Google names for new API users as of 2026-09-27) is used when its key is set;
+otherwise Anthropic (``ANTHROPIC_API_KEY``; ``claude-haiku-4-5-20251001``). Both are
+overridable with ``CITEMEMO_ADVISORY_MODEL``. The client is duck-typed
+(``client.messages.create`` returning ``.content`` text blocks) so tests pass a fake;
+``GeminiClient`` implements that surface over the Gemini REST API with httpx.
 """
 
 from __future__ import annotations
@@ -39,6 +42,9 @@ from typing import Any, Mapping, Optional
 from .models import Advisory, CitationResult
 
 DEFAULT_MODEL = os.environ.get("CITEMEMO_ADVISORY_MODEL", "claude-haiku-4-5-20251001")
+GEMINI_DEFAULT_MODEL = os.environ.get("CITEMEMO_ADVISORY_MODEL", "gemini-3.8-flash")
+GEMINI_KEY_VARS = ("GEMINI_API_KEY", "GOOGLE_GENERATIVE_AI_API_KEY", "GOOGLE_API_KEY")
+GEMINI_BASE_URL = os.environ.get("CITEMEMO_GEMINI_BASE_URL", "https://generativelanguage.googleapis.com")
 MAX_CALLS = 20
 TIMEOUT_S = 15.0
 VERDICTS = ("supports", "does_not_support", "cannot_tell")
@@ -55,17 +61,104 @@ SYSTEM = (
 _JSON_RE = re.compile(r"\{.*\}", re.S)
 
 
-def advisory_enabled(env: Optional[Mapping[str, str]] = None) -> bool:
-    """True when ``ANTHROPIC_API_KEY`` is set and non-blank."""
+def gemini_key(env: Optional[Mapping[str, str]] = None) -> str:
+    """The first non-blank Gemini key among ``GEMINI_KEY_VARS``, else ''."""
     e = os.environ if env is None else env
-    return bool((e.get("ANTHROPIC_API_KEY") or "").strip())
+    for name in GEMINI_KEY_VARS:
+        v = (e.get(name) or "").strip()
+        if v:
+            return v
+    return ""
+
+
+def provider(env: Optional[Mapping[str, str]] = None) -> Optional[str]:
+    """``"gemini"`` when a Gemini key is set, else ``"anthropic"`` when that key is set, else None."""
+    e = os.environ if env is None else env
+    if gemini_key(e):
+        return "gemini"
+    if (e.get("ANTHROPIC_API_KEY") or "").strip():
+        return "anthropic"
+    return None
+
+
+def advisory_enabled(env: Optional[Mapping[str, str]] = None) -> bool:
+    """True when a Gemini or Anthropic key is set and non-blank."""
+    return provider(env) is not None
+
+
+class _TextBlock:
+    type = "text"
+
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+
+class _Response:
+    def __init__(self, text: str, stop_reason: Optional[str] = None) -> None:
+        self.content = [_TextBlock(text)]
+        self.stop_reason = stop_reason
+
+
+class _GeminiMessages:
+    """``messages.create(...)`` over ``POST /v1beta/models/{model}:generateContent``."""
+
+    def __init__(self, api_key: str, timeout: float, base_url: str, transport: Any = None) -> None:
+        import httpx
+
+        self._key = api_key
+        self._base = base_url.rstrip("/")
+        self._http = httpx.Client(timeout=timeout, transport=transport)
+
+    def create(self, *, model: str, max_tokens: int, system: str, messages: list[dict[str, str]]) -> _Response:
+        user = "\n\n".join(str(m.get("content", "")) for m in messages if m.get("role") == "user")
+        body = {
+            "systemInstruction": {"parts": [{"text": system}]},
+            "contents": [{"role": "user", "parts": [{"text": user}]}],
+            "generationConfig": {
+                "temperature": 0,
+                "maxOutputTokens": max(int(max_tokens), 512),
+                "responseMimeType": "application/json",
+            },
+        }
+        if model.startswith("gemini-2.5"):
+            body["generationConfig"]["thinkingConfig"] = {"thinkingBudget": 0}
+        r = self._http.post(
+            f"{self._base}/v1beta/models/{model}:generateContent",
+            params={"key": self._key},
+            json=body,
+            headers={"Content-Type": "application/json"},
+        )
+        r.raise_for_status()
+        data = r.json()
+        cands = data.get("candidates") or []
+        if not cands:
+            return _Response("", stop_reason="refusal")
+        parts = (cands[0].get("content") or {}).get("parts") or []
+        text = "".join(str(p.get("text", "")) for p in parts if isinstance(p, dict))
+        finish = str(cands[0].get("finishReason") or "")
+        stop = "refusal" if finish in ("SAFETY", "PROHIBITED_CONTENT", "BLOCKLIST", "RECITATION") else None
+        return _Response(text, stop)
+
+
+class GeminiClient:
+    """Duck-typed Anthropic-shaped client over the Gemini REST API (httpx, no SDK)."""
+
+    provider = "gemini"
+
+    def __init__(self, api_key: str, *, timeout: float = TIMEOUT_S, model: Optional[str] = None,
+                 base_url: str = GEMINI_BASE_URL, transport: Any = None) -> None:
+        self.default_model = model or GEMINI_DEFAULT_MODEL
+        self.messages = _GeminiMessages(api_key, timeout, base_url, transport)
 
 
 def make_client(timeout: float = TIMEOUT_S) -> Optional[Any]:
-    """An Anthropic client when the key is configured; None otherwise (never raises)."""
-    if not advisory_enabled():
+    """A Gemini client when its key is set, else an Anthropic client, else None (never raises)."""
+    which = provider()
+    if which is None:
         return None
     try:
+        if which == "gemini":
+            return GeminiClient(gemini_key(), timeout=timeout)
         import anthropic  # type: ignore
 
         return anthropic.Anthropic(timeout=timeout, max_retries=0)
@@ -164,6 +257,8 @@ def run_advisory(
     """Attach an ``Advisory`` to eligible rows. Returns ``(rows, elapsed_ms)``; ``None`` elapsed = not run."""
     if client is None:
         return [r.model_copy(deep=True) for r in results], None
+    if model == DEFAULT_MODEL and getattr(client, "default_model", None):
+        model = str(client.default_model)
     t0 = time.perf_counter()
     out: list[CitationResult] = []
     calls = 0

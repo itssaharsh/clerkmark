@@ -41,12 +41,14 @@ Rollback: in the Vercel dashboard, open Deployments and roll back to (or promote
 
 Without it the memo heading reads "CourtListener: not configured" and citations beyond the free library read "Not in the free library".
 
-1. [ ] Create or sign in to a CourtListener account (courtlistener.com, Free Law Project) and copy the API token from the account's developer settings.
+1. [ ] Create or sign in to a CourtListener account: https://www.courtlistener.com/sign-in/ (register: https://www.courtlistener.com/register/), then copy the API token from https://www.courtlistener.com/profile/api/ (the "API" tab of your profile).
 2. [ ] Add it in Vercel as `COURTLISTENER_TOKEN` (Production), then redeploy.
 3. [ ] Check `<url>/api/health`: `"courtlistener": true`. Run the sample: the heading's CHECKED AGAINST line names CourtListener, and Biden v. Nebraska / Loper Bright may read "Found" with source CourtListener.
 4. [ ] Note: Free Law Project documents a limit of 60 valid citations a minute for citation lookup; the default limit for new accounts was not stated when we checked (2026-09-26). The code path is tested with mocked HTTP only; watch the first live run.
 
-## Optional: Anthropic API key (advisory column)
+## Optional: Gemini or Anthropic API key (advisory column)
+
+Gemini is preferred when both are set. `GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`) → model `gemini-3.8-flash`; Anthropic → `claude-haiku-4-5-20251001`. Either way the column is advisory only.
 
 Without it every row reads "Advisory: not run". With it, found rows that carry a quote get "Advisory: supports / does not support; read this first / cannot tell". It never changes a class.
 

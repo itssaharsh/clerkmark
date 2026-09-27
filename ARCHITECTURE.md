@@ -36,7 +36,7 @@ flowchart LR
 |---|---|---|---|---|
 | static.case.law (CAP) | reporters, volumes, cases, opinion text | timeout/404/5xx | cache; per-volume degrade to not_in_free_corpus | none published; we cache and cap concurrency at 6 |
 | CourtListener v4 citation-lookup | optional confirmation of not-held rows | 401 (no token), 429 | skip; heading "not configured" | 60 valid citations/min, 250/request, 64k chars |
-| Anthropic Messages API | optional advisory verdict | timeout, refusal, malformed JSON, quota | advisory None | ≤ 20 calls per memo |
+| Google Gemini API (preferred) or Anthropic Messages API | optional advisory verdict | timeout, refusal or safety block, malformed JSON, quota (404 for retired model names) | advisory None | ≤ 20 calls per memo |
 | Google Fonts | Courier Prime, Source Serif 4 | blocked network | system font fallbacks in tokens.css | n/a |
 
 ## Key decisions
