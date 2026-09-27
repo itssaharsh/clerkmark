@@ -1,0 +1,11 @@
+{
+ "source": "scripts/eval.py --offline on seed/sample-motion.pdf; timings from the recorded live run in seed/replay.json",
+ "scored": 20,
+ "correct": 20,
+ "real_total": 11,
+ "real_marked_likely_not_real": 0,
+ "citations": 23,
+ "elapsed_s": 4.1,
+ "recorded_at": "2026-09-26T16:28:52+00:00",
+ "scored_at": "2026-09-27T12:50:06Z"
+}

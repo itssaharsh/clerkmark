@@ -273,6 +273,8 @@
     window.addEventListener('hashchange', onHash);
 
     const params = new URLSearchParams(location.search);
+    if (params.has('state') || params.get('demo') === '1') document.documentElement.classList.add('cover-compact');
+    bindCover();
     const [health, fixture] = await Promise.all([fetchHealth(), fetchFixture()]);
     S.health = health; S.live = !!(health && health.ok !== false);
     S.fixture = fixture;
@@ -1078,6 +1080,30 @@
   }
 
   // ---------------------------------------------------------------- file intake
+  // ----- the cover sheet: links from /static/site.json, proof from /static/proof.json, the sample CTA
+  function bindCover() {
+    const tryBtn = document.getElementById('cover-try');
+    if (tryBtn) tryBtn.addEventListener('click', () => {
+      document.documentElement.classList.add('cover-compact');
+      startRun('sample');
+      const main = document.getElementById('main');
+      if (main) main.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'auto' : 'smooth' });
+    });
+    fetch('/static/site.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).then((site) => {
+      if (!site) return;
+      const src = document.getElementById('cover-source');
+      if (src && typeof site.repo === 'string' && /^https:\/\//.test(site.repo)) src.href = site.repo;
+      const vid = document.getElementById('cover-video');
+      if (vid && typeof site.video === 'string' && /^https:\/\//.test(site.video)) { vid.href = site.video; vid.hidden = false; }
+    }).catch(() => {});
+    fetch('/static/proof.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).then((p) => {
+      const out = document.getElementById('cover-proof');
+      if (!p || !out || typeof p.correct !== 'number') return;
+      const day = String(p.scored_at || '').slice(0, 10);
+      out.textContent = `On the synthetic sample filing: ${p.correct} of ${p.scored} citations classed correctly, and ${p.real_marked_likely_not_real} of ${p.real_total} real cases marked likely not real. ${p.citations} citations checked in ${p.elapsed_s} s on the recorded run. Scored ${day} with scripts/eval.py; the Evaluation tab scores the current run.`;
+    }).catch(() => {});
+  }
+
   function bindFileInputs() { dom['file-own'].addEventListener('change', onFileChosen); }
   function onFileChosen(ev) {
     const input = ev.target; const f = input.files && input.files[0]; if (!f) return;

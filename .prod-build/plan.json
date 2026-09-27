@@ -26,7 +26,8 @@
         "T09",
         "T10",
         "T11",
-        "T12"
+        "T12",
+        "T13"
       ]
     }
   ],
@@ -557,6 +558,47 @@
         "E0053",
         "E0054",
         "E0055"
+      ]
+    },
+    {
+      "id": "T13",
+      "title": "Cover sheet: the live URL explains the project",
+      "objective": "A first-time visitor at / learns what Clerkmark is, who it is for, why, how it works (real UI crops), the measured numbers, the limits and where the source and video are",
+      "role": "frontend-engineer",
+      "size": "M",
+      "deps": [
+        "T12"
+      ],
+      "writes": [
+        "web/index.html",
+        "web/static/cover.css",
+        "web/static/app.js",
+        "web/static/cover/**",
+        "web/static/proof.json",
+        "web/static/site.json",
+        "qa/cover_shot.mjs",
+        "qa/cover_axe.mjs",
+        "qa/make_crops.mjs"
+      ],
+      "acceptance": [
+        "AC-14",
+        "WHEN a first-time visitor opens / THE SYSTEM SHALL state what the product is, who it is for, the sourced problem number, how it works, the measured result, the limits and links to the source and the demo video",
+        "WHEN ?demo=1 is opened THE SYSTEM SHALL show a one-block cover above the populated memo, never the full cover"
+      ],
+      "verify": [
+        "node qa/cover_axe.mjs http://localhost:8060",
+        ".venv/bin/python -m pytest -q",
+        "observe: the cover at 1440, 390 and 320 states the product, the user, the problem with its source, three steps with real UI crops, the measured numbers, the limits and the source link; ?demo=1 shows the compact cover"
+      ],
+      "rollback": "git revert the T13 commit",
+      "status": "done",
+      "notes": "user asked for it after finding the bare URL carried no product information",
+      "base": "1755afb",
+      "started_after": 59,
+      "evidence": [
+        "E0060",
+        "E0061",
+        "E0062"
       ]
     }
   ],

@@ -12,12 +12,58 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap">
 <link rel="stylesheet" href="/tokens.css">
 <link rel="stylesheet" href="/static/app.css">
+<link rel="stylesheet" href="/static/cover.css">
 <link rel="stylesheet" href="/static/print.css" media="print">
 </head>
 <body>
 <a class="skip" href="#main">Skip to the memo</a>
 
 <div class="table">
+  <section id="cover" class="cover" aria-labelledby="cover-h1">
+    <p class="cover-kicker"><span class="cover-name">Clerkmark</span><span class="cover-kicker-rest"> · cover sheet · a LexHack 2026 entry</span></p>
+    <h1 id="cover-h1" class="cover-h1">Spot likely fake case citations at intake.</h1>
+    <p class="cover-lede">Clerkmark reads a filed brief, looks up every case citation in a free law library, and writes a one-page memo. It tells a citation that is likely not a real case from one the library simply does not hold, and prints the rule behind each call.</p>
+    <div class="cover-actions">
+      <button type="button" id="cover-try" class="button-primary cover-btn">Try the sample filing</button>
+      <a id="cover-video" class="button-tonal cover-btn" href="#" hidden>Watch the 2-minute demo</a>
+      <a id="cover-source" class="blink cover-link" href="https://github.com/itssaharsh/clerkmark">[View the source]</a>
+      <a class="blink cover-link" href="#how">[How it works]</a>
+    </div>
+
+    <div class="cover-more">
+      <dl class="cover-facts">
+        <div><dt>For</dt><dd>Court intake staff, self-help centres and pro se staff attorneys, at the moment a self-represented filing lands on the docket. The memo is written so the filer can read it too.</dd></div>
+        <div><dt>Why</dt><dd>2,079 court decisions on AI-hallucinated citations so far; 1,196 involve self-represented filers. Source: <a href="https://www.damiencharlotin.com/hallucinations/">Damien Charlotin, AI Hallucination Cases database</a>, as of 25 Sep 2026. Courts check each citation by hand today.</dd></div>
+        <div><dt>Not a database</dt><dd>A case database answers one lookup at a time. Clerkmark reads the whole filing, checks every citation and every quoted passage against the database, and writes up what it found.</dd></div>
+      </dl>
+
+      <h2 class="cover-h2">How it works</h2>
+      <ol class="cover-steps">
+        <li>
+          <p class="cover-step"><span class="cover-n">1</span>Reads the PDF and finds every case citation. The memo heading shows what was checked and how long it took.</p>
+          <figure class="cover-fig"><img src="/static/cover/step-1-heading.jpg" loading="lazy" alt="The memo heading for the synthetic sample filing, with a red CHECKED stamp that counts 23 citations."><figcaption>From the synthetic sample filing.</figcaption></figure>
+        </li>
+        <li>
+          <p class="cover-step"><span class="cover-n">2</span>Looks up each citation: which case sits at that volume and page, and whether the quoted words appear in the opinion. The reporter page is one click from the row.</p>
+          <figure class="cover-fig"><img src="/static/cover/step-2-page.jpg" loading="lazy" alt="A memo row marked likely not a real case, with the reporter page open underneath showing that the cited page belongs to a different case."><figcaption>The cited page belongs to a different case.</figcaption></figure>
+        </li>
+        <li>
+          <p class="cover-step"><span class="cover-n">3</span>Writes the memo: each row sorted into a class, with the rule that decided it. A likely fake and a citation the library does not hold never look the same.</p>
+          <figure class="cover-fig"><img src="/static/cover/step-3-rows.jpg" loading="lazy" alt="Two memo rows: one circled in red and marked likely not a real case, the next underlined in pencil and marked not in the free library."><figcaption>Line 8 is likely not a real case. Line 9 is only outside the free library.</figcaption></figure>
+        </li>
+      </ol>
+
+      <h2 class="cover-h2">Measured</h2>
+      <p id="cover-proof" class="cover-proof">Twenty sample citations with known answers are scored on every run. Open the Evaluation tab for the current numbers.</p>
+
+      <h2 class="cover-h2">Limits</h2>
+      <p class="cover-limits">United States case law only. Statutes, court rules, Id. and short-form citations are listed, not checked. Pin pages cannot be checked. The free library ends around 2019, so newer real cases read “Not in the free library”. A triage aid, not a finding.</p>
+
+      <h2 class="cover-h2">Built with</h2>
+      <p class="cover-built">eyecite and reporters_db (Free Law Project) · Caselaw Access Project free files (Harvard Library Innovation Lab) · FastAPI · pdfplumber · rapidfuzz · optional advisory by Google Gemini. The rule is deterministic; the model never changes a class.</p>
+    </div>
+  </section>
+
   <p id="banner" class="banner" hidden></p>
 
   <div class="tabs" role="tablist" aria-label="Sheets">

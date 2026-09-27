@@ -1,0 +1,76 @@
+/* Clerkmark — the cover sheet (landing): what it is, who it is for, why, how, proof, limits.
+   World: the cover sheet that travels with a filing. Same paper, ink and faces as the memo. */
+
+.cover{
+  background:var(--canvas);
+  padding:28px 16px 32px;
+  border-bottom:1px solid var(--line);
+}
+.cover-kicker{font-size:var(--step--1);color:var(--ink-muted)}
+.cover-name{font-weight:700;color:var(--ink);letter-spacing:var(--track-wordmark)}
+.cover-h1{
+  margin-top:14px;
+  font-weight:700;
+  font-size:clamp(1.75rem, 1.1rem + 3.2vw, 2.75rem);
+  line-height:1.12;
+  letter-spacing:-.02em;
+  max-width:18ch;
+  text-wrap:balance;
+}
+.cover-lede{margin-top:16px;max-width:62ch;font-size:var(--step-2);line-height:1.5;text-wrap:pretty}
+.cover-actions{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
+.cover-btn{width:100%;text-decoration:none}
+a.cover-btn{display:inline-flex}
+.cover-btn[hidden]{display:none}
+.cover-link{min-height:24px}
+@media (min-width:600px){.cover-btn{width:auto}}
+
+.cover-more{margin-top:32px}
+.cover-facts{display:grid;gap:14px;max-width:70ch}
+.cover-facts dt{font-weight:700;text-transform:uppercase;letter-spacing:var(--track-caps);font-size:var(--step--1)}
+.cover-facts dd{margin-top:2px}
+@media (min-width:901px){
+  .cover-facts > div{display:grid;grid-template-columns:168px minmax(0,1fr);column-gap:24px;align-items:baseline}
+  .cover-facts dd{margin-top:0}
+}
+.cover-h2{
+  margin-top:32px;padding-top:12px;border-top:1px solid var(--line);
+  font-weight:700;text-transform:uppercase;letter-spacing:var(--track-caps);font-size:var(--step--1);
+}
+.cover-steps{margin-top:12px;display:grid;gap:24px}
+.cover-step{max-width:70ch}
+.cover-n{display:inline-block;min-width:24px;font-weight:700}
+.cover-fig{margin:10px 0 0}
+.cover-fig img{
+  display:block;width:100%;height:auto;
+  border:1px solid var(--line);
+  border-radius:var(--r-sm);
+  background:var(--surface-1);
+}
+.cover-fig figcaption{margin-top:6px;font-size:var(--step--1);color:var(--ink-muted)}
+.cover-proof,.cover-limits,.cover-built{margin-top:10px;max-width:70ch}
+.cover-proof strong{font-weight:700}
+
+/* wide screens: the cover is a sheet of its own above the memo */
+@media (min-width:901px){
+  .cover{padding:48px var(--sheet-pad-right) 48px calc(var(--margin-w) + 24px)}
+}
+@media (min-width:1024px){
+  .cover{
+    width:var(--sheet-w);max-width:100%;
+    margin:0 auto 32px;
+    border-bottom:0;
+    box-shadow:var(--shadow-raised);
+  }
+}
+
+/* compact: a populated memo or a forced state is on screen, so the cover is one short block */
+.cover-compact .cover{padding-top:16px;padding-bottom:16px}
+.cover-compact .cover-h1{font-size:var(--step-2);margin-top:6px;max-width:none;letter-spacing:0}
+.cover-compact .cover-lede{font-size:var(--step-0);margin-top:6px;color:var(--ink-muted)}
+.cover-compact .cover-actions{margin-top:10px}
+.cover-compact .cover-more,
+.cover-compact #cover-try{display:none}
+@media (min-width:1024px){.cover-compact .cover{margin-bottom:20px}}
+
+@media print{.cover{display:none !important}}
