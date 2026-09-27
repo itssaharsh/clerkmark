@@ -1,8 +1,8 @@
 # Build state - Clerkmark (cite-intake)
-Updated: 2026-09-26 11:35 EDT | mode: hackathon | channel: direct | phase: 5-build (M2: T08 QA gate)
+Updated: 2026-09-26 11:35 EDT | mode: hackathon | channel: direct | phase: 5-build (M2: T08 resume || T09)
 
 ## Now
-- Phase / current task: M2 — T08 QA gate (server on 8020; qa.mjs live; demo flow ×3; skeptical evaluator) running as a single lane.
+- Phase / current task: Sunday 05:50 EDT, deadline 17:00 EDT. T08 QA gate RESUMED (first agent hit the Fable usage limit mid-task; partial diffs kept in qa/qa.mjs, app.js, qa/demo-flow.mjs; server on 8020) || T09 review+security restricted to backend files (server 8030); lane ledgers evidence.T08/T09.jsonl; subagents on opus to avoid the limit.
 - Last good commit: T07 committed (E0033–E0035: 334 tests; verify.sh PASS 20/20, 0 real red)            Last good deploy: none (user deploys at T11)
 
 ## What worked (with evidence IDs)
@@ -24,4 +24,4 @@ Updated: 2026-09-26 11:35 EDT | mode: hackathon | channel: direct | phase: 5-bui
 - none
 
 ## Exact next step
-When T08 reports: `pb.py verify T08` needs the server on 8020 (start it: CITEMEMO_OFFLINE=1 .venv/bin/python -m uvicorn main:app --port 8020), intake, `task T08 done`, commit "T08: …". Then `task start T09` (review + security + adversarial; may add models.ErrorCode rate_limited), then T10 docs + DELIVERY.md, then T11 handoff (user deploys; pb.py smoke).
+When both report: canonical `pb.py verify T08` (server on 8020 must be up) and `pb.py verify T09`, intake, task done, commit per task (T08: qa/ web/; T09: citememo main.py tests scripts). Then `task start T10`, run the docs/submission agent (README, DEVPOST.md, VIDEO-SCRIPT.md, SUBMISSION-CHECKLIST.md, LICENSE, DELIVERY.md; fix docs/API.md 15 MB→4 MB and UI-SPEC 20 MB→4 MB, add rate_limited to API.md). Then the T11 handoff to the user (deploy steps, smoke). Hard stop for my work: 10:00 EDT so the user has 7 h for deploy, video and the form.
