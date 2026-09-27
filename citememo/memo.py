@@ -35,8 +35,9 @@ Public surface
 ``load_samples() -> list[SampleInfo]`` and ``sample_path(sample_id) -> Path``
 ``KNOWN_SAMPLE_IDS``
 
-One JSON log line per run goes to stdout (run_id, sha256 of the input, n citations,
-class counts, stage timings, sources, offline).
+One JSON log line per run goes to stdout (run_id, sha256 of the input and of the file
+name, n citations, class counts, stage timings, sources, offline). No filing text and no
+file name is ever logged: a name like "Doe v. Roe - medical records.pdf" is PII.
 """
 
 from __future__ import annotations
@@ -567,7 +568,7 @@ def _log(memo: Memo, digest: str) -> None:
         "run_id": memo.run_id,
         "created_at": memo.created_at,
         "sha256": digest,
-        "filename": memo.filing.filename,
+        "filename_sha256": hashlib.sha256((memo.filing.filename or "").encode("utf-8")).hexdigest(),
         "pages": memo.filing.pages,
         "n_citations": memo.counts.total,
         "counts": memo.counts.model_dump(exclude={"total"}),

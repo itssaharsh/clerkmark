@@ -61,6 +61,9 @@ T6_ABBREVIATIONS: dict[str, str] = {
     "transp.": "transportation",
     "ctr.": "center",
     "auth.": "authority",
+    # T09: T6 contractions whose letters are not a prefix/subsequence of the word
+    "lab'ys": "laboratories",
+    "lab'y": "laboratory",
 }
 
 # Ordered longest first so "in the matter of" wins over "matter of".
@@ -274,6 +277,132 @@ def _against(norm_party: str, candidates: list[str]) -> tuple[float, float]:
     return best, best_sort
 
 
+# --------------------------------------------------------------------------- #
+# §5.1a brief-form abbreviations (T09 adversarial pass)
+#
+# Briefs cite by Bluebook R10.2 / T6: "Pac. Mar. Ass'n v. NLRB", "Dave v. D.C. Metro.
+# Police Dep't", "In re Diet Drugs Prods. Liab. Litig.". The T6 table above cannot list
+# every abbreviation, and agency / place initials (NLRB, EEOC, EPA, D.C., N.Y.C.) are
+# not words at all, so a real case cited at its own first page used to score "none"
+# and read "Likely not a real case." Each abbreviated filed token (it carries a period
+# or an apostrophe, or is written in initials) is aligned, in order, with the caption
+# being scored: an abbreviation fits a caption word it is a prefix of, or (3+ letters,
+# same first letter) a subsequence of ("Prods." -> products, "Comm'n" -> commission);
+# initials fit a run of caption words by first letters, skipping "of/and/the/for"
+# ("EEOC" -> equal employment opportunity commission, "D.C." -> district of columbia).
+# The aligned caption words replace the tokens and the ordinary §5.3 ratio is taken
+# again; the better of the two scores counts. Plain words are never expanded, so a
+# fabricated caption made of ordinary words scores exactly as before.
+# --------------------------------------------------------------------------- #
+
+_INITIALS_SKIP = frozenset({"of", "and", "the", "for", "in", "on", "de"})
+_DOTTED_INITIALS = re.compile(r"^(?:[A-Za-z]\.){2,}$")
+_CAPS_INITIALS = re.compile(r"^[A-Z]{2,6}$")
+_ABBR_MARK = re.compile(r"[.'\u2019]")
+_NOT_ALNUM = re.compile(r"[^a-z0-9]")
+
+
+@lru_cache(maxsize=65536)
+def _brief_units(party: str) -> tuple[tuple[str, str, str], ...]:
+    """``(kind, letters, raw)`` per filed token, kind ``initials`` / ``abbr`` / ``word``; ``()`` when nothing is abbreviated."""
+    text = unicodedata.normalize("NFKC", party).replace("&", " and ")
+    units: list[tuple[str, str, str]] = []
+    abbreviated = False
+    for tok in text.split():
+        raw = tok.strip(",;:()[]")
+        low = raw.lower()
+        letters_only = _NOT_ALNUM.sub("", low)
+        if not letters_only:
+            continue
+        if low in T6_ABBREVIATIONS:
+            units.append(("word", T6_ABBREVIATIONS[low], raw))
+        elif _DOTTED_INITIALS.match(raw) or _CAPS_INITIALS.match(raw):
+            units.append(("initials", letters_only, raw))
+            abbreviated = True
+        elif _ABBR_MARK.search(raw) and len(letters_only) >= 2:
+            units.append(("abbr", letters_only, raw))
+            abbreviated = True
+        else:
+            units.append(("word", letters_only, raw))
+    return tuple(units) if abbreviated else ()
+
+
+def _abbr_fits(abbr: str, word: str) -> bool:
+    if len(abbr) < 2 or len(word) < len(abbr):
+        return False
+    if word.startswith(abbr):
+        return True
+    if len(abbr) >= 3 and abbr[0] == word[0]:
+        rest = iter(word)
+        return all(ch in rest for ch in abbr)
+    return False
+
+
+def _initials_end(initials: str, words: list[str], start: int) -> int:
+    """End index of a run of ``words`` from ``start`` whose first letters spell ``initials``; 0 when none."""
+    if len(initials) < 2 or words[start] in _INITIALS_SKIP:
+        return 0
+    i, k = 0, start
+    while k < len(words) and i < len(initials):
+        w = words[k]
+        if i > 0 and w in _INITIALS_SKIP:
+            k += 1
+            continue
+        if w[0] != initials[i]:
+            return 0
+        i += 1
+        k += 1
+    return k if i == len(initials) else 0
+
+
+@lru_cache(maxsize=262144)
+def _expand_against(party: str, candidate_norm: str) -> Optional[str]:
+    """``party`` with its abbreviations replaced by the caption words they stand for, or ``None``."""
+    units = _brief_units(party)
+    if not units or not candidate_norm:
+        return None
+    words = candidate_norm.split()
+    out: list[str] = []
+    pos = 0
+    changed = False
+    for kind, letters_only, raw in units:
+        hit: Optional[tuple[int, int]] = None
+        for j in range(pos, len(words)):
+            w = words[j]
+            if kind in ("word", "initials") and w == letters_only:
+                hit = (j, j + 1)
+                break
+            if kind == "abbr" and _abbr_fits(letters_only, w):
+                hit = (j, j + 1)
+                break
+            if kind == "initials":
+                end = _initials_end(letters_only, words, j)
+                if end:
+                    hit = (j, end)
+                    break
+        if hit is None:
+            out.append(raw)
+            continue
+        out.append(" ".join(words[hit[0]:hit[1]]))
+        pos = hit[1]
+        changed = changed or kind != "word"
+    return " ".join(out) if changed else None
+
+
+def _against_party(party: str, candidates: list[str]) -> tuple[float, float]:
+    """:func:`_against` for a raw filed party, also scoring its brief-form expansion per candidate."""
+    best, best_sort = _against(normalize_party(party), candidates)
+    if best_sort >= 100.0 or not _brief_units(party):
+        return best, best_sort
+    for cand in candidates:
+        expanded = _expand_against(party, cand) if cand else None
+        if expanded:
+            set_r, sort_r = _ratio(normalize_party(expanded), cand)
+            best = max(best, set_r, sort_r)
+            best_sort = max(best_sort, sort_r)
+    return best, best_sort
+
+
 def evaluate(cite: Any, case: Any) -> tuple[str, Optional[float], Optional[float]]:
     """§5.3 in one pass: ``(match, plaintiff score, defendant score)``.
 
@@ -292,9 +421,9 @@ def evaluate(cite: Any, case: Any) -> tuple[str, Optional[float], Optional[float
     pl_score = df_score = None
     pl_sort = df_sort = 0.0
     if pl:
-        pl_score, pl_sort = _against(normalize_party(pl), pl_cands)
+        pl_score, pl_sort = _against_party(pl, pl_cands)
     if df:
-        df_score, df_sort = _against(normalize_party(df), df_cands)
+        df_score, df_sort = _against_party(df, df_cands)
     pl_generic = is_generic(pl) if pl else True
     df_generic = is_generic(df) if df else True
     if pl and df:
@@ -310,7 +439,7 @@ def evaluate(cite: Any, case: Any) -> tuple[str, Optional[float], Optional[float
     for party, generic in ((pl, pl_generic), (df, df_generic)):
         if not party or generic:
             continue
-        _, sort_r = _against(normalize_party(party), all_cands)
+        _, sort_r = _against_party(party, all_cands)
         if sort_r >= 90:
             return "partial", pl_score, df_score
     return "none", pl_score, df_score

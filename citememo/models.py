@@ -80,6 +80,7 @@ ErrorCode = Literal[
     "upstream_timeout",
     "empty",
     "not_found",
+    "rate_limited",
     "internal",
 ]
 

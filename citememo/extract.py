@@ -356,6 +356,33 @@ def _heuristic_name(before: str) -> Optional[tuple[int, str, Optional[str], Opti
     return start, f"{name_head} v. {defendant}", name_head, defendant
 
 
+def _reanchor_parties(cleaned: str, span_start: int, row: "ExtractedCitation", earlier: list[tuple[int, int]]) -> Optional[int]:
+    """eyecite's parties could not be anchored right before the cite: read them from the text there.
+
+    eyecite 2.7.8 hands a citation that follows ``"..., 540 U.S. 644 (2004). "`` the
+    previous citation's defendant and no plaintiff ("Husain, 174 F.3d 352" for
+    "Greenleaf v. Garlock, Inc., 174 F.3d 352"), which made real cases read "Likely not a
+    real case" (T09). The caption is re-read from the text between the previous citation
+    and this one; when none is there, parties that only occur before the previous
+    citation are dropped (they belong to it). Returns the case-name start offset or None.
+    """
+    prev_end = max((e for _s, e in earlier), default=0)
+    if prev_end and _PARALLEL_GAP.fullmatch(cleaned[prev_end:span_start]):
+        return None  # a parallel member ("516 U.S. 217, 116 S. Ct. 629"): it shares the first cite's caption
+    w0 = max(prev_end, span_start - 200)
+    window = cleaned[w0:span_start]
+    name = _heuristic_name(window)
+    if name:
+        rel_start, _full, pl, df = name
+        row.plaintiff = _ws(pl)
+        row.defendant = _ws(df)
+        return w0 + rel_start
+    if prev_end and not any(p and p in window for p in (row.plaintiff, row.defendant)):
+        row.plaintiff = None
+        row.defendant = None
+    return None
+
+
 def _year_and_court(cleaned: str, after_start: int, limit: int, metadata_year, volume: Optional[int], cite_type: Optional[str]) -> tuple[Optional[int], Optional[str]]:
     window = cleaned[after_start : min(limit, after_start + 60)]
     m = _YEAR_PAREN.search(window)
@@ -451,6 +478,8 @@ def extract_citations(text: str) -> list[CitationInput]:
             cite_type=cite_type,
         )
         name_start = _case_name_start(cleaned, s, row.plaintiff, row.defendant) if kind == "full" else None
+        if kind == "full" and name_start is None and (row.plaintiff or row.defendant):
+            name_start = _reanchor_parties(cleaned, s, row, [sp for sp in covered if sp[1] <= s])
         rows.append(row)
         spans.append((s, e))
         name_starts.append(name_start)

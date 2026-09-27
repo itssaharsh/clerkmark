@@ -29,7 +29,7 @@ import math
 import threading
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Optional, get_args
+from typing import Optional
 
 from fastapi import FastAPI, File, Form, Request, UploadFile
 from fastapi.concurrency import run_in_threadpool
@@ -73,14 +73,9 @@ class ApiError(Exception):
         self.hint = hint
 
 
-_KNOWN_CODES = frozenset(get_args(ErrorCode))
-
-
-def envelope(status: int, code: str, message: str, hint: Optional[str] = None) -> JSONResponse:
-    if code in _KNOWN_CODES:
-        content = ErrorEnvelope(error=ErrorBody(code=code, message=message, hint=hint)).model_dump(mode="json")  # type: ignore[arg-type]
-    else:  # ``rate_limited`` (ADR-0005) is not in models.ErrorCode; same shape, built by hand
-        content = {"error": {"code": code, "message": message, "hint": hint}}
+def envelope(status: int, code: ErrorCode, message: str, hint: Optional[str] = None) -> JSONResponse:
+    """The ``ErrorEnvelope`` ``{"error": {"code", "message", "hint"}}`` for every non-2xx answer (incl. 429 ``rate_limited``)."""
+    content = ErrorEnvelope(error=ErrorBody(code=code, message=message, hint=hint)).model_dump(mode="json")
     return JSONResponse(status_code=status, content=content)
 
 
@@ -126,7 +121,9 @@ class LimitsMiddleware:
 
     Applies to ``POST /api/memo`` only: the sample endpoint and ``/api/eval`` are exempt,
     and every other route is untouched. A body without ``Content-Length`` (chunked) is
-    measured by the route handler after it is read.
+    counted as it arrives and refused (413) as soon as it passes 4 MB, so a client cannot
+    make the multipart parser spool an unbounded upload to disk first (T09); the route
+    handler still re-checks the bytes it read.
     """
 
     def __init__(self, app: ASGIApp) -> None:
@@ -146,10 +143,69 @@ class LimitsMiddleware:
             if length.isdigit() and int(length) > limits.MAX_BODY_BYTES:
                 await envelope(413, "too_large", *limits.TOO_LARGE_PDF)(scope, receive, send)
                 return
+            await self.app(scope, _counting_receive(receive, limits.MAX_BODY_BYTES), send)
+            return
         await self.app(scope, receive, send)
 
 
+def _counting_receive(receive: Receive, limit: int) -> Receive:
+    """``receive`` that raises 413 once more than ``limit`` body bytes have arrived (mapped to ``too_large``)."""
+    seen = 0
+
+    async def wrapped():
+        nonlocal seen
+        message = await receive()
+        if message.get("type") == "http.request":
+            seen += len(message.get("body", b""))
+            if seen > limit:
+                raise StarletteHTTPException(status_code=413, detail="request body larger than the limit")
+        return message
+
+    return wrapped
+
+
+# Headers on every response. The page's policy allows only same-origin script (no inline
+# script, no eval) and Google Fonts for type; filing text is rendered with textContent
+# (web/static/app.js), and the policy is the second line of defence if that ever slips.
+CONTENT_SECURITY_POLICY = (
+    "default-src 'self'; script-src 'self'; "
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+    "font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; "
+    "object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+)
+SECURITY_HEADERS = [
+    (b"x-content-type-options", b"nosniff"),
+    (b"referrer-policy", b"strict-origin-when-cross-origin"),
+]
+
+
+class SecurityHeadersMiddleware:
+    """Add ``nosniff`` and a referrer policy to every response, and the CSP to HTML pages."""
+
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        async def send_with_headers(message) -> None:
+            if message["type"] == "http.response.start":
+                headers = list(message.get("headers", []))
+                present = {k.lower() for k, _ in headers}
+                headers += [(k, v) for k, v in SECURITY_HEADERS if k not in present]
+                ctype = next((v for k, v in headers if k.lower() == b"content-type"), b"")
+                if ctype.startswith(b"text/html") and b"content-security-policy" not in present:
+                    headers.append((b"content-security-policy", CONTENT_SECURITY_POLICY.encode()))
+                message = {**message, "headers": headers}
+            await send(message)
+
+        await self.app(scope, receive, send_with_headers)
+
+
 app.add_middleware(LimitsMiddleware)
+app.add_middleware(SecurityHeadersMiddleware)  # outermost: also covers 413/429 answered by LimitsMiddleware
 
 
 @app.exception_handler(ApiError)
@@ -165,6 +221,8 @@ async def _http_error(_: Request, exc: StarletteHTTPException) -> JSONResponse:
         return envelope(405, "internal", "Method not allowed.", None)
     if exc.status_code == 400 and "maximum size" in str(exc.detail or "").lower():  # multipart part > 1 MB (Starlette)
         return envelope(413, "too_large", *limits.TOO_LARGE_TEXT)
+    if exc.status_code == 413:  # a chunked body passed 4 MB while it was being read (_counting_receive)
+        return envelope(413, "too_large", *limits.TOO_LARGE_PDF)
     return envelope(exc.status_code, "internal", str(exc.detail or "Request failed."), None)
 
 

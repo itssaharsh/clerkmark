@@ -390,6 +390,28 @@ def _run_sync(coro: Awaitable[T]) -> T:
 # --------------------------------------------------------------------------- #
 
 
+def _shape_problem(rel: str, data: Any) -> Optional[str]:
+    """Why ``data`` is not the shape CAP serves for ``rel``, or None when it is.
+
+    ``*Metadata.json`` files are lists of objects (volume rows carry ``volume_number``,
+    case rows ``first_page``); a case file is one object. Anything else would be cached
+    and read as "not in the free library" (pages "None–None"), so it is refused instead.
+    """
+    name = rel.rsplit("/", 1)[-1]
+    if name.endswith("Metadata.json"):
+        if not isinstance(data, list):
+            return f"expected a list, got {type(data).__name__}"
+        if not all(isinstance(x, Mapping) for x in data):
+            return "expected a list of objects"
+        key = {"VolumesMetadata.json": "volume_number", "CasesMetadata.json": "first_page"}.get(name)
+        if key and data and not any(key in x for x in data):
+            return f"no row has {key!r}"
+        return None
+    if "/cases/" in rel and not isinstance(data, Mapping):
+        return f"expected an object, got {type(data).__name__}"
+    return None
+
+
 class CapClient:
     """Resolve reporters, volumes, cases and opinion text from static.case.law.
 
@@ -580,6 +602,9 @@ class CapClient:
             data = json.loads(body)
         except ValueError as exc:
             raise CorpusUnavailable(url, "non-json", str(exc)) from exc
+        problem = _shape_problem(rel, data)
+        if problem:  # valid JSON of the wrong shape is an unreadable reply too; never cached (T09)
+            raise CorpusUnavailable(url, "non-json", f"HTTP 200 with an unexpected JSON shape: {problem}")
         self.cache.put(rel, data)
         return data
 
