@@ -543,6 +543,14 @@ def run_memo(
     # 7. advisory (optional) ------------------------------------------------- #
     client = advisory_client if advisory_client is not None else advisory_mod.make_client()
     results, stage_advisory = advisory_mod.run_advisory(results, cleaned, client=client)
+    if stage_advisory is not None:
+        eligible_rows = [r for r in results if advisory_mod.eligible(r) is not None]
+        answered = sum(1 for r in eligible_rows if r.advisory is not None)
+        if answered < len(eligible_rows):
+            run.warnings.append(
+                f"Advisory answered {answered} of {len(eligible_rows)} quoted rows; the rest read 'not run' "
+                "(the model's rate limit or a timeout; classes are unaffected)."
+            )
 
     # 8. assemble ------------------------------------------------------------ #
     offline = bool(cap.offline)

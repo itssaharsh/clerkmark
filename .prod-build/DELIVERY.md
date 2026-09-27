@@ -33,6 +33,7 @@ Evidence ids (E0xxx) refer to the canonical ledger `.prod-build/evidence.jsonl`.
 - Lighthouse / LCP ≤ 2.5 s: not run (no deployed URL); command once deployed: `npx @lhci/cli autorun --collect.url=<url>/?demo=1`.
 
 ## Deployment
+- Deployed 2026-09-27 to https://clerkmark.vercel.app (Vercel project clerkmark, framework fastapi; first attempt built as a static site because of the root package.json, fixed by setting the framework preset; Vercel Authentication turned off). Smoke PASS on /, /api/health, /api/samples (E0052). Live sample run: 20/20, 0 real red, advisory via Gemini (observed).
 - Not deployed. The user deploys from their own Vercel account; the steps, the optional token and key, and the smoke command (`python3 .prod-build/pb.py smoke <url> --routes / /api/health /api/samples`) are in docs/SUBMISSION-CHECKLIST.md. AC-13 stays not verified until that smoke passes.
 
 ## Bugs found and fixed

@@ -4,7 +4,7 @@ Follows the contract's demo script (`.prod-build/contract.md`, "Demo script"; UI
 
 **Numbers are read off the screen, never from this page.** Where a line below contains a number, it is the number the sample showed on 27 September 2026 (for example "23 citations"; the Evaluation tab's "20 of 20" and "0 of 11"). If the screen shows something else on recording day, say what the screen shows. `{elapsed}` is always read from the stamp.
 
-Setup for every take: the live URL in an incognito window at 1920×1080, browser zoom so the memo sheet fills the frame, the tab opened at `LIVE_URL/?demo=1`.
+Setup for every take: the live URL in an incognito window at 1920×1080, browser zoom so the memo sheet fills the frame, the tab opened at `https://clerkmark.vercel.app/?demo=1`.
 
 ## Shot list
 
@@ -28,7 +28,7 @@ The spoken lines total under 200 words, which fits 2:45 at a calm pace. If a tak
 - [ ] **1080p.** Record at 1920×1080; export 1080p. Hide the bookmarks bar and other browser chrome that is not the address bar.
 - [ ] **Captions.** Upload the spoken lines above as captions (an SRT from the editor, or YouTube's editor), checked against the final cut; numbers in the captions match the screen.
 - [ ] **Incognito.** A fresh incognito window: no extensions, no autofill, nothing personal on screen; notifications off at the OS level.
-- [ ] **Warm the URL.** 1–2 minutes before each take, open `LIVE_URL/api/health` and run the sample once, so the serverless function is not cold on camera.
+- [ ] **Warm the URL.** 1–2 minutes before each take, open `https://clerkmark.vercel.app/api/health` and run the sample once, so the serverless function is not cold on camera.
 - [ ] **Replay fallback.** If the live run fails or stalls on camera, press Alt+Shift+P: the recorded run (`seed/replay.json`) paints under a "Replay · run of {date}" banner and a REPLAY stamp. Say "this is the recorded run" if that take is used; never present it as live.
 - [ ] **Reset between takes.** `?reset=1` or Alt+Shift+R returns to the empty sheet; reload `?demo=1` before shot 1.
 - [ ] **Console clean.** DevTools console shows no errors before the take (then close DevTools).

@@ -10,7 +10,7 @@ A LexHack 2026 entry. Triage aid, not a finding.
 ![Line 6 opened with Show the page: the drawer for page 1339 of 925 F.3d shows the running head 925 F.3d 1291 · J.D. v. AZAR, a different case from the Varghese v. China Southern Airlines citation above it, with the opinion text and the Caselaw Access Project links](qa/out/demo-line-6-open-1440.png)
 
 - **Video (under 3 minutes):** VIDEO_URL (add before submitting)
-- **Live demo:** LIVE_URL/?demo=1 (add before submitting)
+- **Live demo:** https://clerkmark.vercel.app/?demo=1 (add before submitting)
 - **Write-up:** [DEVPOST.md](DEVPOST.md) · **Video script:** [docs/VIDEO-SCRIPT.md](docs/VIDEO-SCRIPT.md) · **Submission checklist:** [docs/SUBMISSION-CHECKLIST.md](docs/SUBMISSION-CHECKLIST.md)
 
 ## What and why
@@ -95,7 +95,7 @@ open "http://localhost:8000/?demo=1"                    # Linux: xdg-open
 |---|---|---|
 | `COURTLISTENER_TOKEN` | unset | Adds CourtListener's v4 citation-lookup API as a second source for rows the free library does not hold; a confirmed row becomes "Found" with source CourtListener. Free Law Project documents a limit of 60 valid citations a minute |
 | `ANTHROPIC_API_KEY` | unset | Turns on the advisory column (Anthropic Messages API, model `claude-haiku-4-5-20251001`): at most 20 calls per memo, 15 s timeout; never changes a class |
-| Google Gemini API (`generativelanguage.googleapis.com`, REST via httpx) | `gemini-3.8-flash` (override with `CITEMEMO_ADVISORY_MODEL`) | Optional advisory column, preferred when `GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`) is set; one call per found row with a quote, at most 20 per memo, 15 s timeout; never changes a class | Google API terms |
+| Google Gemini API (`generativelanguage.googleapis.com`, REST via httpx) | `gemini-3.5-flash-lite` (override with `CITEMEMO_ADVISORY_MODEL`) | Optional advisory column, preferred when `GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`) is set; one call per found row with a quote, at most 20 per memo, 15 s timeout; never changes a class | Google API terms |
 | `CITEMEMO_ADVISORY_MODEL` | `claude-haiku-4-5-20251001` | Overrides the advisory model id |
 | `CITEMEMO_OFFLINE` | unset | `1` = serve CAP files from the cache only; `memo.offline` is true and the page shows an offline banner |
 | `CITEMEMO_CACHE_DIR` | `seed/cache/cap` when writable, else `/tmp/citememo-cache` | Writable cache for fetched CAP files; the committed seed cache is always read as a fallback |
@@ -164,7 +164,7 @@ Stages (ms): extract 1414 · lookup 727 · classify 269 · quotes 1674 · adviso
 
 1. Push the repo to GitHub and import it in Vercel (Add New, Project). Leave the build command and output directory empty.
 2. Optional: add `COURTLISTENER_TOKEN` and/or `ANTHROPIC_API_KEY` under Settings, Environment Variables.
-3. Deploy, then check the routes: `python3 .prod-build/pb.py smoke <url> --routes / /api/health /api/samples`, and open `<url>/?demo=1`.
+3. Deploy, then check the routes: `python3 .prod-build/pb.py smoke https://clerkmark.vercel.app --routes / /api/health /api/samples`, and open `https://clerkmark.vercel.app/?demo=1`.
 
 Vercel's file system is read-only except `/tmp`, so fetched CAP files are cached in `/tmp/citememo-cache`; the committed seed cache (`seed/cache/`, about 24 MB) is read for the sample. Vercel refuses request bodies over 4.5 MB, which is why uploads are capped at 4 MB.
 

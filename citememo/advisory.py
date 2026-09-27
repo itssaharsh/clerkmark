@@ -24,7 +24,7 @@ Public surface
     touched.
 
 Providers: Google Gemini (``GEMINI_API_KEY`` / ``GOOGLE_GENERATIVE_AI_API_KEY`` /
-``GOOGLE_API_KEY``; default model ``gemini-3.8-flash``, the model Google names for new API users as of 2026-09-27) is used when its key is set;
+``GOOGLE_API_KEY``; default model ``gemini-3.5-flash-lite``: on 2026-09-27 the free tier answered 4 of 4 concurrent calls on the lite model in about 1.5 s each, while ``gemini-3.8-flash`` returned 429/503 for most of them; ``gemini-2.5-flash`` is retired for new users) is used when its key is set;
 otherwise Anthropic (``ANTHROPIC_API_KEY``; ``claude-haiku-4-5-20251001``). Both are
 overridable with ``CITEMEMO_ADVISORY_MODEL``. The client is duck-typed
 (``client.messages.create`` returning ``.content`` text blocks) so tests pass a fake;
@@ -42,10 +42,13 @@ from typing import Any, Mapping, Optional
 from .models import Advisory, CitationResult
 
 DEFAULT_MODEL = os.environ.get("CITEMEMO_ADVISORY_MODEL", "claude-haiku-4-5-20251001")
-GEMINI_DEFAULT_MODEL = os.environ.get("CITEMEMO_ADVISORY_MODEL", "gemini-3.8-flash")
+GEMINI_DEFAULT_MODEL = os.environ.get("CITEMEMO_ADVISORY_MODEL", "gemini-3.5-flash-lite")
 GEMINI_KEY_VARS = ("GEMINI_API_KEY", "GOOGLE_GENERATIVE_AI_API_KEY", "GOOGLE_API_KEY")
 GEMINI_BASE_URL = os.environ.get("CITEMEMO_GEMINI_BASE_URL", "https://generativelanguage.googleapis.com")
-MAX_CALLS = 20
+MAX_CALLS = 20  # hard cap per memo (contract); the Gemini client sets its own smaller budget below
+GEMINI_MAX_CALLS = int(os.environ.get("CITEMEMO_ADVISORY_MAX_CALLS", "6"))
+CONCURRENCY = int(os.environ.get("CITEMEMO_ADVISORY_CONCURRENCY", "2"))
+RETRY_DELAYS_S = (2.0, 5.0)
 TIMEOUT_S = 15.0
 VERDICTS = ("supports", "does_not_support", "cannot_tell")
 
@@ -122,12 +125,13 @@ class _GeminiMessages:
         }
         if model.startswith("gemini-2.5"):
             body["generationConfig"]["thinkingConfig"] = {"thinkingBudget": 0}
-        r = self._http.post(
-            f"{self._base}/v1beta/models/{model}:generateContent",
-            params={"key": self._key},
-            json=body,
-            headers={"Content-Type": "application/json"},
-        )
+        url = f"{self._base}/v1beta/models/{model}:generateContent"
+        r = self._http.post(url, params={"key": self._key}, json=body, headers={"Content-Type": "application/json"})
+        for delay in RETRY_DELAYS_S:  # free-tier quota (429) and overload (503) are common; back off twice, then give up
+            if r.status_code not in (429, 503):
+                break
+            time.sleep(delay)
+            r = self._http.post(url, params={"key": self._key}, json=body, headers={"Content-Type": "application/json"})
         r.raise_for_status()
         data = r.json()
         cands = data.get("candidates") or []
@@ -148,6 +152,7 @@ class GeminiClient:
     def __init__(self, api_key: str, *, timeout: float = TIMEOUT_S, model: Optional[str] = None,
                  base_url: str = GEMINI_BASE_URL, transport: Any = None) -> None:
         self.default_model = model or GEMINI_DEFAULT_MODEL
+        self.max_calls = GEMINI_MAX_CALLS
         self.messages = _GeminiMessages(api_key, timeout, base_url, transport)
 
 
@@ -257,19 +262,36 @@ def run_advisory(
     """Attach an ``Advisory`` to eligible rows. Returns ``(rows, elapsed_ms)``; ``None`` elapsed = not run."""
     if client is None:
         return [r.model_copy(deep=True) for r in results], None
+    if max_calls == MAX_CALLS and getattr(client, "max_calls", None):
+        max_calls = int(client.max_calls)
     if model == DEFAULT_MODEL and getattr(client, "default_model", None):
         model = str(client.default_model)
     t0 = time.perf_counter()
-    out: list[CitationResult] = []
+    jobs: dict[int, tuple[str, str, str]] = {}
     calls = 0
-    for r in results:
+    for i, r in enumerate(results):
         quote = eligible(r)
         if quote is None or calls >= max_calls:
-            out.append(r.model_copy(deep=True))
             continue
         calls += 1
-        verdict = _ask(client, model, proposition_for(r, text), quote, r.cite_text)
-        out.append(r.model_copy(deep=True, update={"advisory": verdict}))
+        jobs[i] = (proposition_for(r, text), quote, r.cite_text)
+    verdicts: dict[int, Optional[Advisory]] = {}
+    if jobs:
+        from concurrent.futures import ThreadPoolExecutor
+
+        with ThreadPoolExecutor(max_workers=min(CONCURRENCY, len(jobs))) as ex:
+            futs = {i: ex.submit(_ask, client, model, *args) for i, args in jobs.items()}
+            for i, f in futs.items():
+                try:
+                    verdicts[i] = f.result()
+                except Exception:
+                    verdicts[i] = None
+    out: list[CitationResult] = []
+    for i, r in enumerate(results):
+        if i in jobs:
+            out.append(r.model_copy(deep=True, update={"advisory": verdicts.get(i)}))
+        else:
+            out.append(r.model_copy(deep=True))
     return out, round((time.perf_counter() - t0) * 1000, 1)
 
 
