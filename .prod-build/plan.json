@@ -444,8 +444,10 @@
         "observe: security checklist walked; findings file .prod-build/reports/T09-review.md with every blocking finding reproduced and fixed"
       ],
       "rollback": "git revert fix commits individually",
-      "status": "todo",
-      "notes": ""
+      "status": "doing",
+      "notes": "[2026-09-27 start] run in parallel with the T08 remainder under the deadline; T09 restricted to backend files (citememo, main.py, tests, scripts); web/ stays with T08",
+      "base": "f292766",
+      "started_after": 36
     },
     {
       "id": "T10",
