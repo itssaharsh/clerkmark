@@ -1,27 +1,22 @@
 # Build state - Clerkmark (cite-intake)
-Updated: 2026-09-26 11:35 EDT | mode: hackathon | channel: direct | phase: 5-build (M2: T08 resume || T09)
+Updated: 2026-09-27 07:05 EDT | mode: hackathon | channel: direct | phase: 12-delivered (T11 deploy pending on the user)
 
 ## Now
-- Phase / current task: Sunday 05:50 EDT, deadline 17:00 EDT. T08 QA gate RESUMED (first agent hit the Fable usage limit mid-task; partial diffs kept in qa/qa.mjs, app.js, qa/demo-flow.mjs; server on 8020) || T09 review+security restricted to backend files (server 8030); lane ledgers evidence.T08/T09.jsonl; subagents on opus to avoid the limit.
-- Last good commit: T07 committed (E0033–E0035: 334 tests; verify.sh PASS 20/20, 0 real red)            Last good deploy: none (user deploys at T11)
+- Phase / current task: T01–T10 done with canonical evidence (E0001–E0047). T11 (release deploy + live verification) needs the user's Vercel account; steps in docs/SUBMISSION-CHECKLIST.md.
+- Last good commit: see `git log -1`            Last good deploy: none yet
 
 ## What worked (with evidence IDs)
-- T01 contracts: models parse the UI fixture (E0003).
-- T02 corpus client (E0010/E0011), T03 extraction+quotes (E0012/E0013), T04 rule engine (E0014/E0015): 292 passed, 1 skipped.
-- T07 limits/degrade/verify.sh/vercel.json/Procfile/CI (E0033–E0035). Known: docs/API.md says 15 MB and UI-SPEC 20 MB (contract: 4 MB) → T10; models.ErrorCode lacks rate_limited (envelope built by hand) → T09 may add it.
-- T05 orchestrator/API/demo world: live sample 3.9 s, offline eval 20/20, seed/replay.json recorded 2026-09-26T16:28Z (E0016–E0018, 323 tests). T06 memo UI: qa.mjs static PASS, axe 0, print 1 page (E0019–E0021). Key paths: main.py, citememo/memo.py, web/static/app.js, qa/qa.mjs, seed/replay.json.
-- Upstream: docs/UI-SPEC.md, docs/DECISION-RULE.md, seed/ (20 verified citations, PDF, CAP cache) from the design workflow.
+- Suite 380 passed, 1 skipped (E0040/E0041). Offline demo proof `scripts/verify.sh` PASS 20/20, 0 real red (E0042). Eval 20/20 (E0017). QA gate axe 0, demo ×3 identical (E0039, E0043). Security review 6 blocking fixed (E0044). README check (E0045), DELIVERY report (E0047).
+- Key paths: main.py, citememo/{memo,rules,names,extract,quotes,cap,limits}.py, web/static/app.js, seed/replay.json, scripts/verify.sh, qa/qa.mjs, README.md, DEVPOST.md, docs/VIDEO-SCRIPT.md, docs/SUBMISSION-CHECKLIST.md.
 
 ## What failed (memory IDs) - do not retry without a new root cause
-- E0002: whole-suite pytest exits 5 with no tests; T01 opted out of the suite (suite:false). Not a bug.
-- Earlier build workflow (wf_c2a47723-c6b) died with the session after the contracts agent; rebuilt as pb.py tasks.
+- F-0001 eyecite span/year overshoot; F-0002 per-volume rescans; F-0003 WSL2 clock; F-0004 lane ledgers share logs/ and ids.
 
 ## Not tried yet / open questions
-- CourtListener token (optional; user's account). Anthropic key (optional).
-- Deploy account: the user runs `vercel deploy` (T11).
+- Live CourtListener and Anthropic paths (mocked only). Sample endpoint uncached (T09 finding 8). Popular-name captions read amber (finding 10).
 
-## Changes that need care (migrations applied, deploys, destructive ops)
-- none
+## Changes that need care
+- none (no deploy yet; no secrets committed)
 
 ## Exact next step
-When both report: canonical `pb.py verify T08` (server on 8020 must be up) and `pb.py verify T09`, intake, task done, commit per task (T08: qa/ web/; T09: citememo main.py tests scripts). Then `task start T10`, run the docs/submission agent (README, DEVPOST.md, VIDEO-SCRIPT.md, SUBMISSION-CHECKLIST.md, LICENSE, DELIVERY.md; fix docs/API.md 15 MB→4 MB and UI-SPEC 20 MB→4 MB, add rate_limited to API.md). Then the T11 handoff to the user (deploy steps, smoke). Hard stop for my work: 10:00 EDT so the user has 7 h for deploy, video and the form.
+User: push to GitHub, import into Vercel (zero config), run `python3 .prod-build/pb.py smoke <url> --routes / /api/health /api/samples`, then the incognito checks in docs/SUBMISSION-CHECKLIST.md; record the video from docs/VIDEO-SCRIPT.md; fill DEVPOST.md into the form. Then `pb.py task T11 done` with the smoke evidence.

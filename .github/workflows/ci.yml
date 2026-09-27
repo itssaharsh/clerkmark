@@ -29,8 +29,5 @@ jobs:
 
       - name: Demo proof (offline PASS/FAIL, AC-7)
         run: CITEMEMO_OFFLINE=1 bash scripts/verify.sh
-
-      # README.md lands in T10 (tech-stack and live-vs-simulated tables); until then this
-      # step reports the missing items without failing the workflow. Remove the flag with T10.
       - name: README check (AC-14)
         run: bash scripts/check_readme.sh

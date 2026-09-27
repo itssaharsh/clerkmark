@@ -16,8 +16,8 @@ Deadline: 27 September 2026, 17:00 EDT (Devpost). Rules: https://lexhack-2026.de
 
 ## Before the repo goes public
 
-- [ ] The two README stills are in git. `qa/out/` is listed in `.gitignore`, so add them explicitly: `git add -f qa/out/demo-1440.png qa/out/demo-line-6-open-1440.png`, then check that both render on the GitHub README page.
-- [ ] The CI step "README check (AC-14)" in `.github/workflows/ci.yml` still has `continue-on-error: true` (added until the README existed). Remove that line so a README regression fails CI.
+- [x] The two README stills are in git (added with `git add -f`; also demo-390 and the three skeptic stills). `qa/out/` is listed in `.gitignore`, so add them explicitly: `git add -f qa/out/demo-1440.png qa/out/demo-line-6-open-1440.png`, then check that both render on the GitHub README page.
+- [x] The CI step "README check (AC-14)" is required (the `continue-on-error` line was removed once the README passed).
 - [ ] No secrets in the repo: `.env` is ignored; only `.env.example` (empty values) is committed.
 - [ ] LICENSE (MIT) is in the root.
 
@@ -62,6 +62,6 @@ Without it every row reads "Advisory: not run". With it, found rows that carry a
 - [ ] **Warm-up**: open `<url>/api/health` and run the sample once a few minutes before judges might look, and before recording.
 - [ ] **Links**: every link in README.md and DEVPOST.md opens logged out (video, live URL, repo, the Charlotin, Princeton and arXiv sources).
 - [ ] **Placeholders gone**: `grep -n "add before submitting" README.md DEVPOST.md` prints nothing.
-- [ ] **Numbers match**: the README and DEVPOST numbers (20 of 20, 0 of 11, 334 tests) match the latest run; re-run `.venv/bin/python scripts/eval.py --offline` and `.venv/bin/python -m pytest -q` if code changed after 27 September 2026.
+- [ ] **Numbers match**: the README and DEVPOST numbers (20 of 20, 0 of 11, 380 tests) match the latest run; re-run `.venv/bin/python scripts/eval.py --offline` and `.venv/bin/python -m pytest -q` if code changed after 27 September 2026.
 - [ ] **Video** is under 3:00 and plays logged out.
 - [ ] **Devpost form**: every optional field filled; the tagline from DEVPOST.md; the tracks that fit (Legal Automation & Workflow Innovation; Access to Justice & Civic Tech) if the form offers tracks.

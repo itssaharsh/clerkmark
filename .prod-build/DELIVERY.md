@@ -26,7 +26,7 @@ Evidence ids (E0xxx) refer to the canonical ledger `.prod-build/evidence.jsonl`.
 - T06 UI QA against the static page: axe-core 0 violations on 10 views at 1440 px, screenshots at 320/390/1024/1440, keyboard, replay, reset and print (one letter page) checks all passed (E0019); `?demo=1` at 1440 and 390 observed with the marks on the Miller and Shaboon rows and J.D. v. AZAR in the line-6 drawer (E0021).
 - T07 abuse limits and outage degrade: RED first (E0022, expected failure: 9 failed, 4 passed), then 13 passed (E0023); deploy files and CI shape checked (E0027).
 - Offline demo proof `scripts/verify.sh`: PASS, 20/20, 0 real cases red (E0029, E0034). T10 lane #3 re-ran `env CITEMEMO_OFFLINE=1 PORT=8040 bash scripts/verify.sh` on 2026-09-27: PASS, "citations 20 · correct 20/20 · real cases marked likely-not-real 0 · elapsed 4.0 s".
-- Full suite: 334 passed, 1 skipped (E0035). T10 lane #4 re-ran `.venv/bin/python -m pytest -q` on 2026-09-27: 334 passed, 1 skipped in 90 s.
+- Full suite: 380 passed, 1 skipped (E0040, E0041 on 2026-09-27, after the T08/T09 fixes; 334 at E0035 before them).
 - README check (AC-14): RED while README.md did not exist (E0026, expected failure; also T10 lane #1), PASS once written (T10 lane #5).
 - T08 QA gate against the running server: its first run failed (E0036, failed with 4 failures: demo title, rows rendered, the line-8 mark, an aborted assertion block); the resumed QA gate had not reported when this was written, so its result is not verified here.
 - T09 fresh review and security pass: not run to completion when this report was written (pending).
@@ -41,8 +41,9 @@ Evidence ids (E0xxx) refer to the canonical ledger `.prod-build/evidence.jsonl`.
 - `POST /api/memo` had no size or rate limits: RED run (E0022, expected failure) then fixed with `citememo/limits.py` (E0023).
 - `scripts/verify.sh` printed a false "FAIL: elapsed 5.3 s > 5 s" on WSL2, whose monotonic clock ran fast (F-0003; that failing run was outside the ledger); the time gate is now opt-in and the script passes with a NOTE line (E0029).
 - UI: the partial-state stamp overflowed at 320 and 390 px, print took 2 pages, and drawer links failed axe's target-size rule; all fixed before the passing QA run (E0019; the RED runs are #1–#4 in `.prod-build/evidence.T06.jsonl`).
-- T08 QA and T09 review findings: pending, not run to completion when this report was written.
-<!-- ORCHESTRATOR: fill T08/T09 findings -->
+- T08 QA and T09 review findings: done, evidence E0039–E0044 (see Bugs found and fixed).
+- T09 fresh review + security (E0041 suite, E0042 verify.sh, E0044 observed checklist; findings file .prod-build/reports/T09-review.md): 15 findings; 6 blocking fixed RED→GREEN (Bluebook party matching; eyecite party bleed across string cites; file name in the run log; chunked upload cut at 4 MB; wrong-shape corpus JSON no longer cached; security headers + CSP), 1 hardening, 8 open/dismissed non-blocking (uncached sample endpoint; forgeable X-Forwarded-For key per ADR-0005; popular-name captions read amber; HEAD / 405; cache path in /api/health; pytest and fpdf2 in the bundle). pip-audit: no known vulnerabilities.
+- T08 QA gate (E0039 qa.mjs live: axe 0 on every state, console clean; E0040 suite; E0043 observed): demo flow ×3 with reset, identical counts; 8 RED failures at resume fixed (320 px primary action, 429 priming, title settle, reporter-circle wrap); two-round skeptical evaluation on stills (qa/out/skeptic.md); tally moved to the top.
 
 ## Known limitations
 - Checks case citations only: statutes, court rules, Id., supra and short forms are listed as "Not checked"; pin cites are never verified (CAP text has no page breaks).

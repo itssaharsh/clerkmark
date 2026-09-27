@@ -10,7 +10,7 @@ evidence: ARCHITECTURE.md#Key-decisions
 verified_at: 2026-09-26@e81940d
 relates: 
 supersedes: 
-helpful: 0
+helpful: 1
 harmful: 0
 cite_hash: ae638f7d585646ce
 created: 2026-09-26

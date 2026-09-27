@@ -43,7 +43,7 @@ An Evaluation tab scores the seeded sample against 20 citations with known answe
 - **The rule:** plain Python, no model. For each citation it checks the reporter, the volume range, who sits at the cited page (a case can begin there or span it), and then searches every case in the volume for the cited party names. Only when the page belongs to another case and no case in the volume carries either name does it say "Likely not a real case". Quotes are matched against the opinion text with rapidfuzz after normalizing curly quotes, hyphenation and bracketed alterations.
 - **Optional:** CourtListener's v4 citation-lookup API re-checks rows the free library does not hold when a token is set; the Anthropic Messages API (model claude-haiku-4-5-20251001) adds an advisory "supports / does not support / cannot tell" on found rows with a quote when a key is set. Neither ever changes a class.
 - **App:** one FastAPI app (`main.py`) serving a plain HTML, CSS and JavaScript page; no framework, no database. Deployable to Vercel with zero configuration.
-- **Proof:** 334 pytest tests, a PASS/FAIL offline demo script, a Playwright and axe-core QA script, and CI on GitHub Actions.
+- **Proof:** 380 pytest tests, a PASS/FAIL offline demo script, a Playwright and axe-core QA script, and CI on GitHub Actions.
 - **AI assistance:** the code was written with AI coding assistants (Claude Code, with Anthropic's Claude models) under human direction during the event. Every module is explained in ARCHITECTURE.md and the design decisions in docs/memory/decisions; the assistants' instructions are committed in AGENTS.md.
 
 ## Challenges we ran into
@@ -56,7 +56,7 @@ An Evaluation tab scores the seeded sample against 20 citations with known answe
 
 - On the seeded 20-citation evaluation, all 20 land in their expected class, and **0 of 11** real cases at their cited page are marked likely not real (`scripts/eval.py --offline`, 27 September 2026).
 - The row the demo is built on works: "Miller v. United Airlines, Inc., 174 F.3d 366" is circled red because page 366 belongs to Greenleaf v. Garlock and no case named Miller is in volume 174, while "Shaboon v. Egyptair, 2013 IL App (1st) 111279" sits in pencil as "Not in the free library".
-- 334 automated tests pass (1 opt-in live test skipped), and `scripts/verify.sh` proves the demo path offline with PASS/FAIL (27 September 2026).
+- 380 automated tests pass (1 opt-in live test skipped), and `scripts/verify.sh` proves the demo path offline with PASS/FAIL (27 September 2026).
 - A recorded live run checked the sample's 23 citations in 4.1 s with the network on (`seed/replay.json`, 26 September 2026).
 - 0 axe-core accessibility violations on 10 views at 1440 px, every state reachable by URL, and a memo that prints on one letter page (QA run, 26 September 2026).
 
