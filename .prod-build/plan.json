@@ -403,10 +403,15 @@
         "observe: demo flow run three times in a row with a reset between runs; screenshots at 320/390/1024/1440 reviewed; skeptical evaluator names the product, user and differentiator from still 1 and 2"
       ],
       "rollback": "git revert the T08 commit",
-      "status": "doing",
+      "status": "done",
       "notes": "the agent starts the server on 8020 itself",
       "base": "62ffcad",
-      "started_after": 35
+      "started_after": 35,
+      "evidence": [
+        "E0039",
+        "E0040",
+        "E0043"
+      ]
     },
     {
       "id": "T09",
@@ -444,10 +449,15 @@
         "observe: security checklist walked; findings file .prod-build/reports/T09-review.md with every blocking finding reproduced and fixed"
       ],
       "rollback": "git revert fix commits individually",
-      "status": "doing",
+      "status": "done",
       "notes": "[2026-09-27 start] run in parallel with the T08 remainder under the deadline; T09 restricted to backend files (citememo, main.py, tests, scripts); web/ stays with T08",
       "base": "f292766",
-      "started_after": 36
+      "started_after": 36,
+      "evidence": [
+        "E0041",
+        "E0042",
+        "E0044"
+      ]
     },
     {
       "id": "T10",
