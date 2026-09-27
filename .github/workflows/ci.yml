@@ -34,4 +34,3 @@ jobs:
       # step reports the missing items without failing the workflow. Remove the flag with T10.
       - name: README check (AC-14)
         run: bash scripts/check_readme.sh
-        continue-on-error: true

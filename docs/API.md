@@ -22,7 +22,7 @@ One FastAPI app in `main.py` (module-level `app`), JSON under `/api/*`, the page
 | GET | `/static/*` | — | files under `web/static/` | `app.css`, `app.js`, `fixture-memo.json`, `fixtures/*.json`, `favicon.svg`, fonts if self-hosted. Immutable caching is fine; the fixture changes only with a deploy. |
 | GET | `/api/health` | — | `Health` | `{"ok": true, "version": "0.1.0", "offline": false, "courtlistener": false, "advisory": false, "replay_available": true, "cache_dir": "seed/cache"}`. `offline` mirrors `CITEMEMO_OFFLINE=1`; `courtlistener` = token configured; `advisory` = `ANTHROPIC_API_KEY` set. |
 | GET | `/api/samples` | — | `list[SampleInfo]` | The seeded samples. v1 has one: `id: "sample-motion"`. |
-| POST | `/api/memo` | multipart `file` (PDF, ≤ 15 MB) **or** form field `text` | `Memo` | Live run. 60 s budget on Vercel (`maxDuration`). `filing.filename` is the upload's name (or `"pasted-text"`); `filing.label` is `null` for uploads. |
+| POST | `/api/memo` | multipart `file` (PDF, ≤ 4 MB) **or** form field `text` (≤ 200,000 characters) | `Memo` | Live run. 60 s budget on Vercel (`maxDuration`). `filing.filename` is the upload's name (or `"pasted-text"`); `filing.label` is `null` for uploads. Limits (ADR-0005, `citememo/limits.py`): request body ≤ 4 MB (Vercel functions refuse bodies over 4.5 MB), ≤ 250 citations processed per memo, 10 runs per minute per client address (429 `rate_limited`). |
 | POST | `/api/memo/sample/{id}` | — | `Memo` | Runs the seeded sample live, with CAP calls served from `seed/cache` when present. When `CITEMEMO_OFFLINE=1`, or when the network fails for a cached file, the cache answers and `memo.offline = true`. Unknown id → 404 `not_found`. `memo.sample_id = id`. |
 | GET | `/api/replay` | — | `Memo` | The recorded run `seed/replay.json` (`replay: true`; `created_at` is the recording time). 404 `not_found` with hint "Run scripts/record_replay.py." when the file is missing. |
 | GET | `/api/eval` | optional `?rerun=1` | `EvalReport` | Runs the seed sample through the pipeline (from cache when offline), compares each of the 20 scored items of `seed/ground_truth.json` with its `accepted_classes`, and reports accuracy, the count of real cases predicted `likely_fabricated`, per-class counts and timings. Matches memo rows to items by `cite_text`. The page-1 Mata label citation and skipped rows are not scored. Implementations may serve the last run's report and set `run_created_at`; `?rerun=1` forces a fresh run. |
@@ -33,7 +33,7 @@ CORS: not needed (same origin). The page never calls CAP or CourtListener direct
 
 ### 1.1 Errors
 
-Every non-2xx JSON body is an `ErrorEnvelope`:
+Every non-2xx JSON body is an `ErrorEnvelope`. (Revised 2026-09-27: the upload cap is 4 MB, not the 15 MB this page first gave, because Vercel functions refuse request bodies over 4.5 MB; `rate_limited` (429) was added. Source: `citememo/limits.py`, ADR-0005.)
 
 ```json
 {"error": {"code": "no_text_layer", "message": "No text layer in this PDF. It looks like a scan; this prototype does not run OCR.", "hint": "Try a PDF saved from a word processor, or the sample filing."}}
@@ -42,7 +42,8 @@ Every non-2xx JSON body is an `ErrorEnvelope`:
 | HTTP | `code` | When | `message` (UI-SPEC §9 wording) |
 |---|---|---|---|
 | 422 | `no_text_layer` | pdfplumber returns no text (or < 40 characters) for every page | "No text layer in this PDF. It looks like a scan; this prototype does not run OCR." hint: "Try a PDF saved from a word processor, or the sample filing." |
-| 413 | `too_large` | upload > 15 MB (the UI blocks at 20 MB client-side; the server's limit is the smaller one and the message names it) | "This PDF is larger than 15 MB. This prototype reads files up to 15 MB." |
+| 413 | `too_large` | request body > 4 MB (checked on `Content-Length` before the body is parsed, then on the bytes read; the UI blocks files over 4 MB before upload), or pasted `text` > 200,000 characters | PDF: "This PDF is larger than 4 MB. This prototype reads files up to 4 MB." hint: "Export a smaller PDF or split the filing, or use the sample filing." · text: "This text is longer than 200,000 characters. This prototype reads up to 200,000 characters." hint: "Paste the filing in parts, or upload it as a PDF." |
+| 429 | `rate_limited` | more than 10 `POST /api/memo` runs in 60 s from one client address (in-memory sliding window per process, keyed by the first `X-Forwarded-For` hop, else the connection's host); the response carries a `Retry-After` header in seconds. `POST /api/memo/sample/{id}` and `GET /api/eval` are not limited. | "Too many checks from this address: this prototype runs 10 memos per minute." hint: "Wait a minute and run again, or use the sample filing." |
 | 415 | `unsupported_type` | not `application/pdf` (sniffed: `%PDF-` magic), and no `text` field | "This file is not a PDF." hint: "Choose a PDF saved from a word processor, or use the sample filing." |
 | 504 | `upstream_timeout` | the whole run exceeded its budget before any row was classified (per-row timeouts become `not_checked` rows, never an error) | "The free library did not answer in time." hint: "Run again; large filings take longer." |
 | 400 | `empty` | no `file` and no `text`, or `text` is blank | "Nothing to check: send a PDF as `file` or text as `text`." |
@@ -266,7 +267,7 @@ Stamp and heading mapping: `created_at` → the stamp's date/time and the DATE l
 | `replay_available` | `bool` | default `False`.  |
 | `cache_dir` | `Optional[str]` | default `None`.  |
 
-`ErrorEnvelope` = `{"error": {"code": ErrorCode, "message": str, "hint": str|null}}`, codes: `no_text_layer`, `too_large`, `unsupported_type`, `upstream_timeout`, `empty`, `not_found`, `internal`.
+`ErrorEnvelope` = `{"error": {"code": ErrorCode, "message": str, "hint": str|null}}`, codes: `no_text_layer`, `too_large`, `unsupported_type`, `upstream_timeout`, `empty`, `not_found`, `internal`, and `rate_limited` (429, added with ADR-0005).
 
 ## 3. Example: `POST /api/memo/sample/sample-motion` → Memo (three rows)
 

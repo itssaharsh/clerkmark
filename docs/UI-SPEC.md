@@ -89,7 +89,7 @@ deviations:
 
 | id | route | why it exists | entered from | primary action | states |
 |---|---|---|---|---|---|
-| S1 | `/` (no query) | the memo sheet with an empty RE: and the drop target typed as the body; the user's first sight when they arrive without the demo flag | direct | drop / Choose a PDF / Use the sample filing | first-run, blocked (not a PDF, >20 MB) |
+| S1 | `/` (no query) | the memo sheet with an empty RE: and the drop target typed as the body; the user's first sight when they arrive without the demo flag | direct | drop / Choose a PDF / Use the sample filing | first-run, blocked (not a PDF, >4 MB) |
 | S2 | same page | the run: RE: fills, the four planned steps and the live timer show, then the memo returns | S1, S3 | wait; dropping another file cancels and restarts | loading, partial, error |
 | S3 | `/?demo=1` (default on the live URL) | the populated memo over the sample; the artifact | S2, direct | Show the page / Show the shelf; Drop your own PDF | ideal, no-results |
 | S4 | same page, one row expanded | the reporter page (or the shelf) as evidence under the row | S3 | Hide the page; open another row | loading, error, metadata-only |
@@ -103,7 +103,7 @@ Demo plumbing: `?state=first-run|loading|partial|error|no-results` renders each 
 ```
 S1(first-run) --drop / Choose a PDF--> S2(loading) --memo returns--> S3(populated)
 S1 --Use the sample filing--> S2 --returns--> S3
-S1 --not a PDF / >20 MB--> S1(blocked: sentence under the buttons, input kept)
+S1 --not a PDF / >4 MB--> S1(blocked: sentence under the buttons, input kept)
 S2 --server error--> S1(error: sentence in the body, RE: keeps the file name) --Try again--> S2
 S2 --some rows timed out--> S3(partial: pencil "Could not reach the free library." + [Retry {n} citations]) --Retry--> S2(those rows only)
 S2 --0 citations--> S3(no-results: one typed paragraph, drop target kept)
@@ -141,7 +141,7 @@ any --Alt+Shift+R--> S1 ; any --Alt+Shift+P--> S3(replay banner)
 | Foot paragraph ("Read these first") | secondary | productive | a typed closing paragraph, not tiles: 15px Courier Prime `--ink`, `max-width: 60ch`; each count a bracket-less underlined link that scrolls to that class's first row and focuses its line number; counts `font-variant-numeric: tabular-nums` | empty: omitted · partial: appends "{n} not answered yet." | none |
 | Pleading line numbers + margin rule | tertiary | system | 12px `--ink-muted` Courier Prime, right-aligned in the 56px margin, one per row (the row id "line 7" is what the status region, the eval table and `#line-7` use); a single 1px `--line` rule at x=56 | the focused row's line number is `--ink` 700 | — |
 | Folder tabs (Memo · Evaluation · How it works) | interactive | system | 36px tabs on the sheet's top edge; active = `--canvas` continuous with the sheet, 15px/700 `--ink`; inactive = `--tab-inactive`, 15px/400 `--ink-muted`; radius 2px top corners, 0 at the bottom; padding 0 16px; 2px gap between tabs; `role=tablist`, ←/→, Home/End | hover (inactive): `--surface-2` · focus-visible: 2px `--focus` outline inset | content swaps instantly (tens-of-times-a-day rule), no animation |
-| Drop target (S1 body) | interactive (S1 primary) | productive | typed on the sheet, not a dashed box: the sentence "Drop a filed PDF here, or" then **Choose a PDF** (the one filled button, h40) then "Use the sample filing" as a tonal `--surface-2` button (h40, `--ink` label, radius 2px) followed by "(synthetic, 6 pages)" in `--ink-muted`; under them the privacy sentence 14px `--ink-muted`; the whole sheet is the drop area | drag-over: the sheet body gets a 2px `--line-input` inset outline, and the sentence reads "Release to check this PDF." · blocked (not a PDF / >20 MB): the sentence under the buttons names the reason in `--ink`; the input keeps its value | none |
+| Drop target (S1 body) | interactive (S1 primary) | productive | typed on the sheet, not a dashed box: the sentence "Drop a filed PDF here, or" then **Choose a PDF** (the one filled button, h40) then "Use the sample filing" as a tonal `--surface-2` button (h40, `--ink` label, radius 2px) followed by "(synthetic, 6 pages)" in `--ink-muted`; under them the privacy sentence 14px `--ink-muted`; the whole sheet is the drop area | drag-over: the sheet body gets a 2px `--line-input` inset outline, and the sentence reads "Release to check this PDF." · blocked (not a PDF / >4 MB): the sentence under the buttons names the reason in `--ink`; the input keeps its value | none |
 | Status line (C-09) | system | system | one typed block at the body's top while loading: four planned steps, each "○ {step name}" 15px Courier `--ink-muted` on its own line, then "Elapsed {t} s" 14px `--ink` updating every 100 ms from `performance.now()`; `role=status aria-live=polite` (the live region announces the start and the end only, not the timer) | done: all four circles become "●" with the real per-stage seconds from `memo.timings` beside each ("● Looking up the free library · 3.1 s"), the block reads "Done in {elapsed} s." for 1 s, then collapses (height via grid 1fr→0fr, 150 ms) as the rows reveal · error: the block is replaced by the error sentence | collapse only |
 | [Print memo] | interactive | productive | typed bracket link 14px Courier at the sheet's foot, after the foot paragraph; `@media print` hides surround, tabs, links, buttons, the status line and the replay banner; letter, 0.75in margins; marks stroke 2px | — | — |
 | Sheet shadow + surround | decorative | — | `--shadow-raised` on the sheet over `--surround` at ≥1024 only; the sheet is the only raised object; the credits line 13px `--ink-muted` under the sheet | absent below 1024 and in print | — |
@@ -174,10 +174,10 @@ States:
   press ....... scale .97, 120 ms
   focus-visible 2px `--focus` outline, offset 2
   drag-over ... sheet body outline 2px `--line-input` inset; the sentence reads "Release to check this PDF."
-  blocked ..... not a PDF: sentence under the buttons "This file is not a PDF. Choose a PDF saved from a word processor, or use the sample filing." in `--ink`; >20 MB: "This PDF is larger than 20 MB. This prototype reads files up to 20 MB."; the input keeps its value; `aria-describedby` points at the sentence
+  blocked ..... not a PDF: sentence under the buttons "This file is not a PDF. Choose a PDF saved from a word processor, or use the sample filing." in `--ink`; >4 MB: "This PDF is larger than 4 MB. This prototype reads files up to 4 MB."; the input keeps its value; `aria-describedby` points at the sentence
   loading ..... hands off to C-09; the buttons get `aria-disabled="true"` and ignore clicks (no native disabled)
   error ....... the server's sentence replaces the privacy sentence; RE: keeps the file name; "[Try again]" resubmits the same file
-Transitions: idle -DRAGENTER-> drag-over -DROP(pdf ≤20 MB)-> loading ; drag-over -DROP(other)-> blocked ; idle -CHOOSE-> loading ; idle -SAMPLE-> loading ; loading -RETURN-> S3 ; loading -FAIL-> error -TRY AGAIN-> loading
+Transitions: idle -DRAGENTER-> drag-over -DROP(pdf ≤4 MB)-> loading ; drag-over -DROP(other)-> blocked ; idle -CHOOSE-> loading ; idle -SAMPLE-> loading ; loading -RETURN-> S3 ; loading -FAIL-> error -TRY AGAIN-> loading
 Motion: none (T-00)
 Responsive: ≤900 the two buttons stack with 8px gap, each full width h44.
 Keyboard / a11y: the input is the real `<input type=file accept="application/pdf">` behind **Choose a PDF** (label wraps input); Enter/Space on the sample button; status region announces "Reading {file name}." on start.
@@ -362,7 +362,7 @@ Reduced motion (`prefers-reduced-motion: reduce`): T-01 keeps the opacity fade a
 
 ## 8. State machines (lite)
 
-**Run:** `first-run → loading → (populated | partial | error | no-results)`; guards: file is `application/pdf` and ≤ 20 MB (client) else `blocked`; timeout 60 s on the fetch → `error` with "The server did not answer."; a new drop during `loading` aborts the in-flight request (`AbortController`) and restarts. `partial` → `loading(rows subset)` on [Retry {n} citations]; the retry response merges into the existing memo and re-runs T-02 for the retried rows only.
+**Run:** `first-run → loading → (populated | partial | error | no-results)`; guards: file is `application/pdf` and ≤ 4 MB (client) else `blocked`; timeout 60 s on the fetch → `error` with "The server did not answer."; a new drop during `loading` aborts the in-flight request (`AbortController`) and restarts. `partial` → `loading(rows subset)` on [Retry {n} citations]; the retry response merges into the existing memo and re-runs T-02 for the retried rows only.
 
 **Row:** `collapsed → opening → loading → (page | shelf | metadata-only | error) → collapsed`; only one row is open at a time.
 
@@ -388,7 +388,7 @@ Reduced motion (`prefers-reduced-motion: reduce`): T-01 keeps the opacity fade a
 
 **First-run body (S1):** "Drop a filed PDF here, or [Choose a PDF]. [Use the sample filing] (synthetic, {pages} pages)." Privacy sentence: "The PDF is read on this server and not kept. Citations are looked up in the Caselaw Access Project's free files." Drag-over: "Release to check this PDF."
 
-**Blocked (S1, in ink, under the buttons):** "This file is not a PDF. Choose a PDF saved from a word processor, or use the sample filing." · "This PDF is larger than 20 MB. This prototype reads files up to 20 MB."
+**Blocked (S1, in ink, under the buttons):** "This file is not a PDF. Choose a PDF saved from a word processor, or use the sample filing." · "This PDF is larger than 4 MB. This prototype reads files up to 4 MB." (Revised 2026-09-27 from 20 MB: Vercel functions refuse request bodies over 4.5 MB, so the server caps uploads at 4 MB; contract "Known deviations", ADR-0005, `citememo/limits.py`.)
 
 **Loading (S2 status block):** "○ Reading the PDF" · "○ Finding citations" · "○ Looking up the free library" · "○ Matching quotes" · "Elapsed {t} s". After 10 s: "Still working. Large filings take longer; the page stays here." Done: "● Reading the PDF · {t} s" (and so on) · "Done in {elapsed} s."
 
