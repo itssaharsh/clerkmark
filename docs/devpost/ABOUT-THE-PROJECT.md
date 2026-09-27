@@ -1,19 +1,3 @@
-# Devpost write-up — Clerkmark
-
-Fields in the order the Devpost form asks for them, ready to paste. Every number carries its source. Replace the three placeholders under "Links" before submitting.
-
----
-
-## Project name
-
-Clerkmark
-
-## Tagline
-
-Spot likely fake case citations before the judge reads them
-
-(59 characters.)
-
 ## Inspiration
 
 When someone without a lawyer files a brief drafted with a chatbot, court staff look up every cited case by hand. Damien Charlotin's [AI Hallucination Cases database](https://www.damiencharlotin.com/hallucinations/) lists 2,079 court decisions that found hallucinated or misquoted citations in filings, and 1,196 of them involve a self-represented litigant (figures as of the database's 25 September 2026 update). The same database lists September 2026 sanctions of $3,000 to $15,000.
@@ -73,15 +57,3 @@ An Evaluation tab scores the seeded sample against 20 citations with known answe
 - Statutes and court rules, which are listed as "Not checked" today.
 - Pin-cite checks using CourtListener's opinion text, which keeps page breaks.
 - A correction kit for the litigant: the memo's findings in plain words, so a self-represented filer can fix the brief.
-
-## Built with
-
-python, fastapi, uvicorn, pydantic, python-multipart, pdfplumber, eyecite, reporters-db, courts-db, httpx, rapidfuzz, google-gemini, anthropic, caselaw-access-project, courtlistener, html5, css3, javascript, google-fonts, pytest, fpdf2, playwright, axe-core, github-actions, vercel
-
-The full table, with versions, purposes and licenses, is in the README's "Tech stack" section.
-
-## Links
-
-- Video (under 3 minutes): VIDEO_URL (add before submitting)
-- Live demo: https://clerkmark.vercel.app/?demo=1
-- Code: https://github.com/itssaharsh/clerkmark
