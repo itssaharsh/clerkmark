@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clerkmark · presentation</title>
+<meta name="description" content="Nine slides for the LexHack 2026 awards ceremony. Arrow keys to move. The live product does the real work.">
+<link rel="icon" type="image/svg+xml" href="../../web/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  :root{
+    --canvas:#FCFBF7; --surround:#E8E5DC; --ink:#1B1A17; --ink-muted:#5B5750;
+    --line:#C9C4B6; --accent:#BE1E2D; --surface-2:#EFEDE4;
+    --mono:"Courier Prime",ui-monospace,"Courier New",monospace;
+    --serif:"Source Serif 4",Georgia,serif;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--surround); color:var(--ink);
+    font-family:var(--serif); -webkit-font-smoothing:antialiased;
+    display:grid; place-items:center; overflow:hidden;
+  }
+  .deck{
+    position:relative; width:min(96vw,1600px); aspect-ratio:16/9; max-height:94vh;
+    background:var(--canvas); box-shadow:0 24px 60px -24px rgba(0,0,0,.45);
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute; inset:0; padding:5.5% 7% 9%;
+    display:none; flex-direction:column; justify-content:center; gap:.7em;
+  }
+  .slide[data-on]{display:flex}
+  .kicker{
+    font-family:var(--mono); font-weight:700; text-transform:uppercase;
+    letter-spacing:.10em; font-size:clamp(11px,1.15vw,17px); color:var(--accent);
+  }
+  h1,h2{
+    margin:0; font-family:var(--mono); font-weight:700; letter-spacing:-.02em;
+    line-height:1.1; text-wrap:balance;
+  }
+  h1{font-size:clamp(30px,4.6vw,70px)}
+  h2{font-size:clamp(24px,3.3vw,50px)}
+  p{margin:0; font-size:clamp(15px,1.7vw,26px); line-height:1.5; max-width:34ch; text-wrap:pretty}
+  p.wide{max-width:52ch}
+  .muted{color:var(--ink-muted)}
+  .src{font-size:clamp(11px,1.05vw,15px); color:var(--ink-muted); line-height:1.4; max-width:60ch}
+  .big{font-family:var(--mono); font-weight:700; font-size:clamp(54px,10vw,150px); line-height:.95; letter-spacing:-.03em}
+  .row{display:flex; gap:6%; align-items:center}
+  .col{flex:1; min-width:0; display:flex; flex-direction:column; gap:.6em}
+  /* an image slide: the picture takes the space left over, letterboxed, caption always visible */
+  .slide > figure{margin:0; flex:1 1 auto; min-height:0; min-width:0; display:flex; flex-direction:column; gap:.5em}
+  .slide > figure img{
+    flex:1 1 auto; min-height:0; width:100%; height:100%;
+    object-fit:contain; object-position:center;
+    display:block; border:1px solid var(--line); background:var(--canvas);
+  }
+  .row figure{margin:0; flex:1.15; min-width:0}
+  .row figure img{width:100%; height:auto; display:block; border:1px solid var(--line)}
+  figcaption{flex:0 0 auto; font-size:clamp(11px,1.05vw,15px); line-height:1.4; color:var(--ink-muted); max-width:78ch}
+  .facts{display:grid; gap:.55em; margin-top:.3em}
+  .fact{display:grid; grid-template-columns:auto 1fr; gap:.9em; align-items:baseline;
+        font-size:clamp(14px,1.55vw,24px); line-height:1.4}
+  .fact b{font-family:var(--mono); font-weight:700; color:var(--accent); white-space:nowrap}
+  .pen{color:var(--accent)}
+  .rule{height:1px; background:var(--line); margin:.2em 0 .4em}
+  .mark{
+    display:inline-block; padding:0 .18em;
+    box-shadow:inset 0 -.08em 0 0 var(--accent), inset 0 -.09em 0 0 var(--accent);
+  }
+  .meta{
+    position:absolute; left:7%; right:7%; bottom:3.2%;
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:var(--mono); font-size:clamp(10px,1vw,14px); color:var(--ink-muted);
+    letter-spacing:.04em;
+  }
+  .hint{position:fixed; bottom:10px; right:14px; font-family:var(--mono); font-size:12px; color:var(--ink-muted)}
+  @media (prefers-reduced-motion:no-preference){
+    .slide[data-on]{animation:in .22s ease-out both}
+    @keyframes in{from{opacity:0}to{opacity:1}}
+  }
+  @media print{
+    body{background:#fff; display:block; overflow:visible}
+    .deck{width:100%; aspect-ratio:auto; box-shadow:none}
+    .slide{display:flex !important; position:static; min-height:98vh; break-after:page}
+    .hint{display:none}
+  }
+</style>
+</head>
+<body>
+<main class="deck" id="deck" tabindex="0" aria-label="Clerkmark presentation. Use the arrow keys to move between slides.">
+
+  <section class="slide">
+    <p class="kicker">LexHack 2026 · third place</p>
+    <h1>Clerkmark</h1>
+    <p class="wide">Fake case citations, caught at the intake desk. It tells a citation that is
+      likely not a real case from one the free law library simply does not have.</p>
+    <p class="src">clerkmark.vercel.app · github.com/itssaharsh/clerkmark</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">The problem</p>
+    <div class="row">
+      <div class="col">
+        <p class="big">2,079</p>
+        <p>court decisions have found hallucinated or misquoted citations in filings.</p>
+      </div>
+      <div class="col">
+        <p class="big pen">1,196</p>
+        <p>of them involve someone representing themselves, with no lawyer.</p>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <p class="src">Damien Charlotin, AI Hallucination Cases database, as of 25 September 2026.
+      Court staff find these by looking up every cited case by hand.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">The idea the product is built on</p>
+    <h2>Absence is not evidence<br>of fabrication.</h2>
+    <p class="wide">A free lookup says “not found” for a case that was invented. It says exactly the
+      same thing for a real case the database does not happen to hold.</p>
+    <p class="wide muted">If intake staff read both as fake, the person who gets hurt is the filer
+      who had no lawyer. Keeping those two apart is the whole product.</p>
+    <p class="src">Princeton CITP found that weaker models “treat absence from CourtListener as
+      evidence of hallucination” (arXiv 2606.21155, August 2026).</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Two rows, two different answers</p>
+    <figure>
+      <img src="img/rows.jpg" alt="Line 8 circled in red and labelled likely not a real case; line 9 underlined in pencil and labelled not in the free library.">
+      <figcaption>Line 8: page 366 belongs to Greenleaf v. Garlock, and no case named Miller is in that volume.
+        Line 9: a state citation the free library does not index, so the memo says so and stops.</figcaption>
+    </figure>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Every call shows its work</p>
+    <figure>
+      <img src="img/evidence.jpg" alt="A memo row with the reporter page opened underneath, showing that the cited page belongs to a different case.">
+      <figcaption>One click opens the page the citation points at. The reporter’s own record names
+        a different case, with links to the free files it came from.</figcaption>
+    </figure>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">Measured, on every run</p>
+    <div class="facts">
+      <p class="fact"><b>20 of 20</b><span>citations with known answers land in their expected class.</span></p>
+      <p class="fact"><b>0 of 11</b><span>real cases marked likely not real. This is the number we optimised for.</span></p>
+      <p class="fact"><b>23 in 4.1 s</b><span>citations checked in a recorded live run.</span></p>
+      <p class="fact"><b>380</b><span>automated tests, plus a PASS or FAIL script that proves the demo path offline.</span></p>
+    </div>
+    <p class="src">scripts/eval.py and scripts/verify.sh, 27 September 2026. The Evaluation tab
+      scores the current run, not a stored result.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">“Can’t you just ask a chatbot?”</p>
+    <h2>We measured it instead<br>of arguing.</h2>
+    <div class="facts">
+      <p class="fact"><b>16 / 20</b><span>same filing pasted into a chat model, first run.</span></p>
+      <p class="fact"><b>15 / 20</b><span>second run, same prompt, temperature zero.</span></p>
+      <p class="fact"><b>15 / 20</b><span>answers that were identical across the two runs.</span></p>
+    </div>
+    <p class="src">It called a fabricated case real, and confirmed two quotes we had deliberately
+      altered. A grounded model would score higher. It still cannot know whether a citation is
+      missing because it was invented or because the corpus stops in 2019.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">What it cannot do</p>
+    <p class="wide">United States case law only. The free library stops around 2019, so newer real
+      cases read <span class="mark">not in the free library</span>, never “fake”.</p>
+    <p class="wide">No statutes, no court rules, no short forms, no pin pages. Scanned filings
+      without a text layer are not read.</p>
+    <p class="wide"><strong>A triage aid, not a finding.</strong> Every limit above is printed on
+      the product itself, not just in the write-up.</p>
+  </section>
+
+  <section class="slide">
+    <p class="kicker">What’s next</p>
+    <div class="facts">
+      <p class="fact"><b>1</b><span>CourtListener as a live second source, so post-2019 cases resolve instead of reading “not held”.</span></p>
+      <p class="fact"><b>2</b><span>Statutes and court rules, which are listed as “not checked” today.</span></p>
+      <p class="fact"><b>3</b><span>The memo rewritten for the filer, so a self-represented person can fix the brief instead of being sanctioned for it.</span></p>
+    </div>
+    <div class="rule"></div>
+    <p class="src">clerkmark.vercel.app · github.com/itssaharsh/clerkmark · built on the Caselaw
+      Access Project and Free Law Project’s eyecite. Thank you.</p>
+  </section>
+
+  <div class="meta"><span id="label">Clerkmark</span><span id="count">1 / 9</span></div>
+</main>
+<p class="hint">← → to move · F for full screen</p>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const count = document.getElementById('count');
+  const label = document.getElementById('label');
+  const names = ['Clerkmark', 'The problem', 'The idea', 'Two rows', 'Evidence', 'Measured',
+                 'The chatbot question', 'Limits', 'What’s next'];
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => k === i ? s.setAttribute('data-on', '') : s.removeAttribute('data-on'));
+    count.textContent = `${i + 1} / ${slides.length}`;
+    label.textContent = names[i] || 'Clerkmark';
+    if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+  }
+  addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f' || e.key === 'F') {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen().catch(() => {});
+    }
+  });
+  document.getElementById('deck').addEventListener('click', (e) => {
+    show(e.clientX < innerWidth / 2 ? i - 1 : i + 1);
+  });
+  const fromHash = () => Math.max(0, (parseInt(location.hash.slice(1), 10) || 1) - 1);
+  addEventListener('hashchange', () => { if (fromHash() !== i) show(fromHash()); });
+  show(fromHash());
+  document.getElementById('deck').focus();
+</script>
+</body>
+</html>
